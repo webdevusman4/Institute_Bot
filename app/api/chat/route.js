@@ -1,9 +1,9 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import path from "path";
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+// 1. Setup Groq with the key
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 let cachedPdfText = "";
 
@@ -14,7 +14,20 @@ async function getPdfText() {
     const loader = new PDFLoader(filePath);
     const docs = await loader.load();
     const fullText = docs.map(doc => doc.pageContent).join("\n");
-    cachedPdfText = fullText.substring(0, 10000); 
+
+    // --- NEW LOGIC: LINE LIMITER ---
+    // 1. Split the text into an array of lines
+    const lines = fullText.split('\n');
+
+    // 2. Check if it's too long
+    console.log(`📄 PDF Total Lines: ${lines.length}`);
+
+    // 3. Take only the first 500 lines (or less if the file is short)
+    const selectedLines = lines.slice(0, 500).join('\n');
+
+    cachedPdfText = selectedLines;
+    console.log("✅ Loaded Context: 500 Lines");
+    
     return cachedPdfText;
   } catch (error) {
     console.error("❌ PDF Read Error:", error.message);
@@ -24,45 +37,46 @@ async function getPdfText() {
 
 export async function POST(req) {
   try {
-    // 1. Get the FULL conversation history (not just the last message)
     const { messages } = await req.json();
-    
-    // 2. Get the last message (the user's new question)
-    const lastMessage = messages[messages.length - 1];
-    console.log("📩 User Asked:", lastMessage.content);
-
-    // 3. Get PDF Context
     const context = await getPdfText();
 
-    // 4. Format the history for Gemini
-    // We turn the previous messages into a script like: "User: Hi", "Bot: Hello"
-    const historyText = messages.slice(0, -1).map(m => 
-      `${m.role === 'user' ? 'Student' : 'Assistant'}: ${m.content}`
-    ).join("\n");
-
-    const prompt = `
+    // 2. Prepare the System Prompt (The Brain Instructions)
+    const systemPrompt = `
       You are an AI assistant for 'Unity Institute'. 
       Answer the question based strictly on the text below.
       
       --- PROSPECTUS DATA ---
       ${context}
       --- END DATA ---
-
-      --- CONVERSATION HISTORY ---
-      ${historyText}
-      ----------------------------
-
-      Student's New Question: ${lastMessage.content}
+      
+      If the answer is not in the data, say "I don't have that information in the prospectus."
+      Keep your answers helpful, professional, and concise.
     `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const reply = response.text();
-    
+    // 3. Format History for Groq 
+    // We put the System Prompt first, then the chat history
+    const conversation = [
+      { role: "system", content: systemPrompt },
+      ...messages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }))
+    ];
+
+    // 4. Ask Groq (Using Llama 3 70B)
+    const chatCompletion = await groq.chat.completions.create({
+      messages: conversation,
+      model: "llama-3.3-70b-versatile", 
+      temperature: 0.5,
+      max_tokens: 1024,
+    });
+
+    const reply = chatCompletion.choices[0]?.message?.content || "Sorry, I couldn't generate a response.";
+
     return Response.json({ reply });
 
   } catch (error) {
     console.error("🔥 API ERROR:", error);
-    return Response.json({ reply: "I'm having trouble thinking right now." });
+    return Response.json({ reply: "I'm having trouble connecting to Groq right now." });
   }
 }
