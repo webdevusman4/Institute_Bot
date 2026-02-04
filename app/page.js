@@ -1,220 +1,155 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
-import { 
-  Send, Menu, Sparkles, Settings, LogOut, 
-  History, X, Moon, Sun, BookOpen 
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { BookOpen, ArrowRight, User, Mail, Lock, Sparkles, CheckCircle } from "lucide-react";
 
-export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+export default function LoginPage() {
+  const router = useRouter();
+  const [isLogin, setIsLogin] = useState(true); 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // <--- NEW: Success Message State
 
-  // Initial Chat State
-  const [messages, setMessages] = useState([
-    { role: "ai", content: "Salam! **StudyMate** here. Powered by Gemini 2.5. How can I help you today?" }
-  ]);
-
+  // Redirect if already logged in
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (localStorage.getItem("currentUser")) {
+      router.push("/dashboard");
+    }
+  }, []);
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [goal, setGoal] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess(""); // Clear previous success messages
+    setLoading(true);
+
+    setTimeout(() => {
+      const users = JSON.parse(localStorage.getItem("studymate_users")) || [];
+
+      if (isLogin) {
+        // --- LOGIN LOGIC ---
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          router.push("/dashboard");
+        } else {
+          setError("Invalid email or password.");
+          setLoading(false);
+        }
+      } else {
+        // --- SIGNUP LOGIC ---
+        if (users.find(u => u.email === email)) {
+          setError("User already exists.");
+          setLoading(false);
+          return;
+        }
+
+        // 1. Save the new user
+        const newUser = { name, email, password, goal };
+        users.push(newUser);
+        localStorage.setItem("studymate_users", JSON.stringify(users));
+        
+        // 2. SHOW SUCCESS MESSAGE
+        setLoading(false);
+        setSuccess("Account created successfully! Redirecting to login...");
+
+        // 3. WAIT 3 SECONDS, THEN SWITCH TO LOGIN
+        setTimeout(() => {
+           setIsLogin(true);      // Switch to Login Form
+           setSuccess("");        // Clear the message
+           setPassword("");       // Clear password for security
+           // We keep the 'email' filled in so they don't have to type it again!
+        }, 3000);
+      }
+    }, 1000);
   };
 
-  async function sendMessage() {
-    if (!input.trim()) return;
-
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
-      });
-      
-      if (!res.ok) throw new Error("Network error");
-      const data = await res.json();
-      setMessages(prev => [...prev, { role: "ai", content: data.reply }]);
-
-    } catch (e) {
-      console.error(e);
-      setMessages(prev => [...prev, { role: "ai", content: "Error: Could not connect to the AI." }]);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   return (
-    <div className={isDarkMode ? "dark" : ""}>
-      <div className="flex h-screen font-sans overflow-hidden transition-colors duration-300 
-        bg-[#f5f6fa] text-gray-800 
-        dark:bg-[#0f1117] dark:text-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f6fa] p-4 font-sans text-gray-800">
+      <div className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
         
-        {/* --- SIDEBAR --- */}
-        {sidebarOpen && (
-          <div 
-            className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-        
-        <aside className={`
-          fixed lg:static inset-y-0 left-0 z-50 w-72 transform transition-transform duration-300 ease-in-out border-r shadow-2xl
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-          
-          bg-[#1a237e] border-blue-900 text-white
-          dark:bg-[#161b22] dark:border-gray-800 dark:text-gray-100
-        `}>
-          <div className="flex flex-col h-full p-5">
-            <div className="flex items-center justify-between mb-10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20">
-                  <BookOpen size={22} className="text-[#ffd700]" />
-                </div>
-                <div>
-                  <h1 className="font-bold text-xl tracking-tight text-white">StudyMate</h1>
-                  <p className="text-xs text-[#ffd700] font-medium tracking-wide">AI TUTOR</p>
-                </div>
+        {/* LEFT SIDE */}
+        <div className="md:w-1/2 bg-gradient-to-br from-[#000051] to-[#1a237e] p-8 text-white flex flex-col justify-between relative overflow-hidden">
+          <div className="z-10">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20">
+                <BookOpen size={24} className="text-[#ffd700]" />
               </div>
-              <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white">
-                <X size={20} />
-              </button>
+              <h1 className="text-2xl font-bold tracking-tight">StudyMate</h1>
             </div>
-
-            <div className="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar">
-              <div className="text-xs font-bold text-white/50 px-3 mb-3 uppercase tracking-wider">Recent Topics</div>
-              {["Math: Integration", "Physics: Motion", "Chemistry: Bonds"].map((item, i) => (
-                <button key={i} className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm text-white/80 hover:bg-white/10 hover:text-white transition-all group border border-transparent hover:border-white/5">
-                  <History size={16} className="text-white/60 group-hover:text-[#ffd700]" />
-                  {item}
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-auto pt-4 border-t border-white/10 space-y-2">
-              <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                <Settings size={18} /> Settings
-              </button>
-              <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-red-300 hover:text-red-200 hover:bg-red-500/20 rounded-lg transition-colors">
-                <LogOut size={18} /> Sign Out
-              </button>
-            </div>
-          </div>
-        </aside>
-
-        {/* --- MAIN CHAT AREA --- */}
-        <main className="flex-1 flex flex-col h-full relative transition-colors duration-300">
-          
-          <header className="h-16 flex items-center justify-between px-6 sticky top-0 z-10 backdrop-blur-md
-            bg-white/80 border-b border-gray-200 shadow-sm
-            dark:bg-[#0f1117]/80 dark:border-gray-800 dark:shadow-none
-          ">
-            <div className="flex items-center gap-4">
-              <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 lg:hidden rounded-lg">
-                <Menu size={24} />
-              </button>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-sm font-semibold text-[#1a237e] dark:text-gray-300">Gemini 2.5 Flash</span>
-                <span className="text-[10px] font-bold bg-[#1a237e]/10 text-[#1a237e] px-2 py-0.5 rounded-full border border-[#1a237e]/20 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20">LIVE</span>
-              </div>
-            </div>
-
-            <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-full transition-all duration-200
-              bg-gray-100 text-gray-600 hover:bg-gray-200
-              dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700"
-            >
-              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-          </header>
-
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scroll-smooth">
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`
-                  max-w-[85%] sm:max-w-[75%] p-4 rounded-2xl text-[15px] leading-relaxed shadow-sm relative
-                  ${msg.role === "user" 
-                    ? "bg-[#1a237e] text-white rounded-br-none shadow-blue-900/20 dark:bg-indigo-600 dark:shadow-indigo-500/10" 
-                    : "bg-white border border-gray-100 text-gray-800 rounded-bl-none shadow-gray-200/50 dark:bg-[#1e232e] dark:border-gray-800 dark:text-gray-200 dark:shadow-none"}
-                `}>
-                  <ReactMarkdown 
-                    components={{
-                      strong: ({node, ...props}) => <span className={`font-bold ${msg.role === 'user' ? 'text-[#ffd700]' : 'text-[#1a237e] dark:text-indigo-400'}`} {...props} />,
-                      ul: ({node, ...props}) => <ul className="list-disc ml-4 my-2 space-y-1" {...props} />,
-                      ol: ({node, ...props}) => <ol className="list-decimal ml-4 my-2 space-y-1" {...props} />,
-                      code: ({node, ...props}) => <code className={`px-1 py-0.5 rounded font-mono text-sm ${msg.role === 'user' ? 'bg-white/20' : 'bg-gray-100 dark:bg-black/30'}`} {...props} />
-                    }}
-                  >
-                    {msg.content}
-                  </ReactMarkdown>
-                </div>
-              </div>
-            ))}
-            
-            {isLoading && (
-              <div className="flex justify-start animate-pulse">
-                <div className="p-4 rounded-2xl rounded-bl-none border flex items-center gap-2
-                  bg-white border-gray-100 dark:bg-[#1e232e] dark:border-gray-800">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-75"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-150"></div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          <div className="p-4 border-t transition-colors
-            bg-white border-gray-100 
-            dark:bg-[#0f1117] dark:border-gray-800">
-            
-            <div className="max-w-4xl mx-auto relative flex items-end gap-2">
-              <div className="flex-1 rounded-2xl flex items-center px-4 py-3 transition-all shadow-sm border
-                bg-gray-50 border-gray-200 focus-within:border-[#1a237e] focus-within:ring-1 focus-within:ring-[#1a237e]/20
-                dark:bg-[#1e232e] dark:border-gray-700 dark:focus-within:border-indigo-500
-              ">
-                <input
-                  className="flex-1 bg-transparent border-0 outline-none min-h-[24px] max-h-32 resize-none
-                    text-gray-800 placeholder-gray-400
-                    dark:text-gray-100 dark:placeholder-gray-500"
-                  placeholder="Ask a question..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                  autoComplete="off"
-                />
-              </div>
-              
-              <button 
-                onClick={sendMessage}
-                disabled={isLoading || !input.trim()}
-                className="p-4 rounded-2xl transition-all shadow-lg active:scale-95 flex-shrink-0
-                  bg-[#1a237e] text-white hover:bg-[#151b60] shadow-blue-900/20
-                  disabled:opacity-50 disabled:hover:bg-[#1a237e]
-                  dark:bg-indigo-600 dark:hover:bg-indigo-500 dark:shadow-indigo-500/25"
-              >
-                <Send size={20} />
-              </button>
-            </div>
-            <p className="text-xs text-center mt-3 select-none
-              text-gray-400 dark:text-gray-600">
-              AI can make mistakes. Always verify important info.
+            <p className="text-blue-100 text-lg leading-relaxed italic opacity-90">
+              "Productivity is never an accident. It is always the result of a commitment to excellence, intelligent planning, and focused effort."
             </p>
           </div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-[#ffd700] rounded-full opacity-10 blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-500 rounded-full opacity-20 blur-3xl"></div>
+          <div className="z-10 mt-12">
+            <div className="flex items-center gap-2 text-sm font-medium text-[#ffd700] bg-white/10 w-fit px-3 py-1 rounded-full border border-white/10">
+              <Sparkles size={14} /> <span>AI-Powered Learning</span>
+            </div>
+          </div>
+        </div>
 
-        </main>
+        {/* RIGHT SIDE */}
+        <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-[#1a237e] mb-2">{isLogin ? "Welcome Back" : "Join StudyMate"}</h2>
+            <p className="text-gray-500">{isLogin ? "Please enter your details to sign in." : "Start your productivity journey today."}</p>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {!isLogin && (
+              <>
+                <div className="relative group">
+                  <User className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-[#1a237e]" size={20} />
+                  <input type="text" placeholder="Full Name" required className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1a237e] focus:ring-1 focus:ring-[#1a237e]/20 transition-all" value={name} onChange={(e) => setName(e.target.value)} />
+                </div>
+                <div className="relative group">
+                  <Sparkles className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-[#1a237e]" size={20} />
+                  <input type="text" placeholder="Current Goal" required className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1a237e] focus:ring-1 focus:ring-[#1a237e]/20 transition-all" value={goal} onChange={(e) => setGoal(e.target.value)} />
+                </div>
+              </>
+            )}
+            
+            <div className="relative group">
+              <Mail className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-[#1a237e]" size={20} />
+              <input type="email" placeholder="Email Address" required className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1a237e] focus:ring-1 focus:ring-[#1a237e]/20 transition-all" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            
+            <div className="relative group">
+              <Lock className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-[#1a237e]" size={20} />
+              <input type="password" placeholder="Password" required className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1a237e] focus:ring-1 focus:ring-[#1a237e]/20 transition-all" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+
+            {/* ERROR MESSAGE (Red) */}
+            {error && <p className="text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded-lg border border-red-100">{error}</p>}
+            
+            {/* SUCCESS MESSAGE (Green) */}
+            {success && (
+                <div className="flex items-center gap-2 text-green-600 text-sm font-medium bg-green-50 p-3 rounded-lg border border-green-100 justify-center animate-pulse">
+                    <CheckCircle size={16} /> {success}
+                </div>
+            )}
+
+            <button type="submit" disabled={loading || success} className="w-full bg-[#1a237e] text-white py-3.5 rounded-xl font-semibold text-lg shadow-lg shadow-blue-900/20 hover:bg-[#151b60] hover:shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+              {loading ? <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> : <>{isLogin ? "Sign In" : "Create Account"} <ArrowRight size={18} /></>}
+            </button>
+          </form>
+
+          <div className="mt-8 text-center">
+            <p className="text-gray-600">
+              {isLogin ? "Don't have an account?" : "Already have an account?"}
+              <button onClick={() => { setIsLogin(!isLogin); setError(""); setSuccess(""); }} className="ml-2 text-[#1a237e] font-bold hover:underline transition-all">{isLogin ? "Sign up" : "Sign in"}</button>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
