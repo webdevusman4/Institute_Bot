@@ -1,0 +1,35 @@
+[33mcommit 54ee9e3fe836fa8e6996a1b3dd089351a4bd1176[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: webdevusman4 <webdevusman4@gmail.com>
+Date:   Wed Feb 4 13:48:45 2026 +0500
+
+    fix: downgrade pdf-parse to match langchain peer dependency
+
+[33mcommit 0e873ba32705a4c95d83dea9f886d6fbd90e6496[m
+Author: webdevusman4 <webdevusman4@gmail.com>
+Date:   Thu Jan 29 05:19:39 2026 +0500
+
+    new UI
+
+[33mcommit 9c2ae72dbefae65fc33e8530fe5442fe212d2188[m
+Author: webdevusman4 <webdevusman4@gmail.com>
+Date:   Sun Jan 11 14:16:12 2026 +0500
+
+    changed the api
+
+[33mcommit a1be39ce5add3ae77b3fcca729d7db5dcbf818da[m
+Author: webdevusman4 <webdevusman4@gmail.com>
+Date:   Sat Jan 10 21:04:53 2026 +0500
+
+    MEMO ADDED
+
+[33mcommit 5d9a6223ce5b56cf16ed5b25f3fb747b9e6ed32b[m
+Author: webdevusman4 <webdevusman4@gmail.com>
+Date:   Sat Jan 10 12:47:05 2026 +0500
+
+    use this
+
+[33mcommit 8b1dbf9a63080281a35ee724054168c04e960aac[m
+Author: webdevusman4 <webdevusman4@gmail.com>
+Date:   Sat Jan 10 12:29:21 2026 +0500
+
+    Initial commit
