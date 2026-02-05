@@ -1,32 +1,28 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Added for redirection
+import { useRouter } from "next/navigation"; 
 import ReactMarkdown from "react-markdown";
 import { 
   Send, Menu, Sparkles, Settings, LogOut, 
-  History, X, Moon, Sun, BookOpen 
+  History, X, Moon, Sun, BookOpen, Trash2, Plus, MessageSquare 
 } from "lucide-react";
 
-export default function Dashboard() { // Renamed to Dashboard
+export default function Dashboard() { 
   const router = useRouter();
   const [userName, setUserName] = useState("Student");
+  const [userEmail, setUserEmail] = useState("");
   
-  // --- 🔒 SECURITY CHECK ---
+  // --- 🔒 AUTHENTICATION ---
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     if (!user) {
-      router.push("/"); // Kick back to Login if not signed in
+      router.push("/"); 
     } else {
-      setUserName(user.name); // Get the name for the Sidebar
+      setUserName(user.name);
+      setUserEmail(user.email);
     }
   }, []);
-
-  // --- LOGOUT LOGIC ---
-  const handleLogout = () => {
-    localStorage.removeItem("currentUser");
-    router.push("/");
-  };
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,47 +30,166 @@ export default function Dashboard() { // Renamed to Dashboard
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Initial Chat State
-  const [messages, setMessages] = useState([
-    { role: "ai", content: "Salam! **StudyMate** here. Powered by Gemini 2.5. How can I help you today?" }
-  ]);
+  // --- 📚 MULTI-CHAT DATABASE LOGIC ---
+  const [sessions, setSessions] = useState([]); 
+  
+  // activeSessionId = NULL means we are in "New Chat" (Draft) mode
+  const [activeSessionId, setActiveSessionId] = useState(null);
 
+  // 1. Load Sessions on Startup
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (userEmail) {
+      const savedSessions = JSON.parse(localStorage.getItem(`studymate_sessions_${userEmail}`));
+      if (savedSessions && savedSessions.length > 0) {
+        setSessions(savedSessions);
+        // Optional: Open the last chat automatically? 
+        // setActiveSessionId(savedSessions[0].id); 
+        // OR start with a new chat:
+        setActiveSessionId(null);
+      } else {
+        setActiveSessionId(null);
+      }
+    }
+  }, [userEmail]);
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+  // 2. Save Sessions whenever they change
+  useEffect(() => {
+    if (userEmail && sessions.length > 0) {
+      localStorage.setItem(`studymate_sessions_${userEmail}`, JSON.stringify(sessions));
+    } else if (userEmail && sessions.length === 0) {
+      // If user deleted all chats, clear storage
+      localStorage.removeItem(`studymate_sessions_${userEmail}`);
+    }
+  }, [sessions, userEmail]);
+
+  // --- ACTIONS ---
+
+  // Create a New Chat (DRAFT MODE)
+  // This NO LONGER creates a folder immediately. It just clears the screen.
+  const createNewChat = () => {
+    setActiveSessionId(null); // Null means "Fresh Screen"
+    setSidebarOpen(false);
+  };
+
+  // Switch Chat
+  const switchChat = (id) => {
+    setActiveSessionId(id);
+    setSidebarOpen(false);
+  };
+
+  // Delete All History
+  const clearAllHistory = () => {
+    if (confirm("Are you sure? This will delete ALL your chats.")) {
+      setSessions([]);
+      localStorage.removeItem(`studymate_sessions_${userEmail}`);
+      createNewChat(); 
+    }
+  };
+
+  // Helper: Get Messages to Display
+  const getDisplayMessages = () => {
+    if (activeSessionId === null) {
+        // DRAFT MODE: Show only the welcome message
+        return [{ role: "ai", content: `Salam **${userName}**! I'm ready. Ask me anything about your studies.` }];
+    }
+    // ACTIVE MODE: Find the session and show its messages
+    const session = sessions.find(s => s.id === activeSessionId);
+    return session ? session.messages : [];
+  };
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    router.push("/");
   };
 
   async function sendMessage() {
     if (!input.trim()) return;
 
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
+    const userMsg = { role: "user", content: input };
+    const currentInput = input; // Store for title generation
     setInput("");
     setIsLoading(true);
 
+    let targetSessionId = activeSessionId;
+    let newSessionsList = [...sessions];
+
+    // --- CASE 1: IS THIS A NEW CHAT? ---
+    if (activeSessionId === null) {
+        // 1. Create the Session Object NOW (only after sending)
+        targetSessionId = Date.now();
+        const welcomeMsg = { role: "ai", content: `Salam **${userName}**! I'm ready. Ask me anything about your studies.` };
+        
+        // 2. Name the folder automatically based on the first question
+        const autoTitle = currentInput.length > 25 ? currentInput.substring(0, 25) + "..." : currentInput;
+
+        const newSession = {
+            id: targetSessionId,
+            title: autoTitle, // <--- NAMED AUTOMATICALLY
+            messages: [welcomeMsg, userMsg]
+        };
+
+        // 3. Update State
+        newSessionsList = [newSession, ...sessions];
+        setSessions(newSessionsList);
+        setActiveSessionId(targetSessionId);
+    } 
+    // --- CASE 2: EXISTING CHAT ---
+    else {
+        // Update existing session
+        newSessionsList = sessions.map(session => 
+            session.id === activeSessionId 
+            ? { ...session, messages: [...session.messages, userMsg] }
+            : session
+        );
+        setSessions(newSessionsList);
+    }
+
     try {
+      // Get the message history for context
+      const currentHistory = newSessionsList.find(s => s.id === targetSessionId).messages;
+
+      // Call API
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: currentHistory }),
       });
       
       if (!res.ok) throw new Error("Network error");
       const data = await res.json();
-      setMessages(prev => [...prev, { role: "ai", content: data.reply }]);
+      const aiMsg = { role: "ai", content: data.reply };
+
+      // Update UI with AI Response
+      setSessions(prevSessions => 
+        prevSessions.map(session => 
+          session.id === targetSessionId 
+            ? { ...session, messages: [...session.messages, aiMsg] } 
+            : session
+        )
+      );
 
     } catch (e) {
       console.error(e);
-      setMessages(prev => [...prev, { role: "ai", content: "Error: Could not connect to the AI." }]);
+      // Add Error Message to chat
+      setSessions(prevSessions => 
+        prevSessions.map(session => 
+          session.id === targetSessionId 
+            ? { ...session, messages: [...session.messages, { role: "ai", content: "Error: Connection failed. Please try again." }] } 
+            : session
+        )
+      );
     } finally {
       setIsLoading(false);
     }
   }
 
-  // Prevent flashing content before redirect
+  // Scroll to bottom when messages change
+  const currentMessages = getDisplayMessages();
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [currentMessages]);
+
   if (!userName) return null; 
 
   return (
@@ -92,14 +207,15 @@ export default function Dashboard() { // Renamed to Dashboard
         )}
         
         <aside className={`
-          fixed lg:static inset-y-0 left-0 z-50 w-72 transform transition-transform duration-300 ease-in-out border-r shadow-2xl
+          fixed lg:static inset-y-0 left-0 z-50 w-72 transform transition-transform duration-300 ease-in-out border-r shadow-2xl flex flex-col
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
           
           bg-[#1a237e] border-blue-900 text-white
           dark:bg-[#161b22] dark:border-gray-800 dark:text-gray-100
         `}>
-          <div className="flex flex-col h-full p-5">
-            <div className="flex items-center justify-between mb-10">
+          <div className="p-5 flex-shrink-0">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20">
                   <BookOpen size={22} className="text-[#ffd700]" />
@@ -114,34 +230,59 @@ export default function Dashboard() { // Renamed to Dashboard
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar">
-              <div className="text-xs font-bold text-white/50 px-3 mb-3 uppercase tracking-wider">Welcome</div>
-              {/* Show User Name Here */}
-              <div className="px-3 py-2 text-sm text-white/90">
-                Salam, <span className="font-bold text-[#ffd700]">{userName}</span>!
-              </div>
-              
-              <div className="mt-4 text-xs font-bold text-white/50 px-3 mb-3 uppercase tracking-wider">Recent Topics</div>
-              {["Math: Integration", "Physics: Motion", "Chemistry: Bonds"].map((item, i) => (
-                <button key={i} className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm text-white/80 hover:bg-white/10 hover:text-white transition-all group border border-transparent hover:border-white/5">
-                  <History size={16} className="text-white/60 group-hover:text-[#ffd700]" />
-                  {item}
-                </button>
-              ))}
-            </div>
+            {/* NEW CHAT BUTTON */}
+            <button 
+              onClick={createNewChat}
+              className="w-full flex items-center gap-2 justify-center bg-white/10 hover:bg-white/20 border border-white/10 text-white py-3 rounded-xl font-medium transition-all shadow-sm active:scale-95 mb-4"
+            >
+              <Plus size={18} /> New Chat
+            </button>
 
-            <div className="mt-auto pt-4 border-t border-white/10 space-y-2">
-              <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                <Settings size={18} /> Settings
-              </button>
-              
-              {/* LOGOUT BUTTON */}
+            <div className="text-xs font-bold text-white/50 px-2 uppercase tracking-wider mb-2">History</div>
+          </div>
+
+          {/* CHAT HISTORY LIST (Scrollable) */}
+          <div className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar">
+            {sessions.map((session) => (
               <button 
-                onClick={handleLogout}
-                className="flex items-center gap-3 w-full px-3 py-2 text-sm text-red-300 hover:text-red-200 hover:bg-red-500/20 rounded-lg transition-colors">
-                <LogOut size={18} /> Sign Out
+                key={session.id}
+                onClick={() => switchChat(session.id)}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm text-left transition-all border border-transparent
+                  ${activeSessionId === session.id 
+                    ? "bg-white/20 text-white font-medium border-white/10 shadow-sm" 
+                    : "text-white/70 hover:bg-white/10 hover:text-white"
+                  }`}
+              >
+                <MessageSquare size={16} className={activeSessionId === session.id ? "text-[#ffd700]" : "opacity-70"} />
+                <span className="truncate">{session.title}</span>
               </button>
-            </div>
+            ))}
+            {sessions.length === 0 && (
+                <div className="text-white/40 text-sm text-center py-4 italic">No history yet</div>
+            )}
+          </div>
+
+          {/* BOTTOM ACTIONS */}
+          <div className="p-4 mt-auto border-t border-white/10 space-y-1 bg-[#151b60] dark:bg-[#0d1117]">
+            <button className="flex items-center gap-3 w-full px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+              <Settings size={18} /> Settings
+            </button>
+            
+            {/* CLEAR HISTORY */}
+            <button 
+              onClick={clearAllHistory}
+              className="flex items-center gap-3 w-full px-3 py-2 text-sm text-red-300 hover:text-red-200 hover:bg-red-500/20 rounded-lg transition-colors"
+            >
+              <Trash2 size={18} /> Clear History
+            </button>
+
+            {/* LOGOUT */}
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-3 w-full px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            >
+              <LogOut size={18} /> Sign Out
+            </button>
           </div>
         </aside>
 
@@ -173,8 +314,9 @@ export default function Dashboard() { // Renamed to Dashboard
             </button>
           </header>
 
+          {/* MESSAGES AREA */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scroll-smooth">
-            {messages.map((msg, i) => (
+            {currentMessages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`
                   max-w-[85%] sm:max-w-[75%] p-4 rounded-2xl text-[15px] leading-relaxed shadow-sm relative

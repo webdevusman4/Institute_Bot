@@ -4,7 +4,7 @@ import path from "path";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-// 1. FIX: Use the correct model name (1.5 Flash is the current fast model)
+// 1. FIX: Use the correct model name (2.5 Flash is the current fast model)
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 let cachedPdfText = "";
