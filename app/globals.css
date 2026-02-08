@@ -1,59 +1,57 @@
 @import "tailwindcss";
 
-/* 1. Map Variables for V4 */
+/* 1. DEFAULT THEME: "Midnight Bloom" (Applied to Root) */
+:root {
+  --background: #0f172a; /* Slate 900 */
+  --surface: #1e293b;    /* Slate 800 */
+  --primary: #4f46e5;    /* Indigo 600 */
+  --primary-dark: #4338ca;
+  --secondary: #7c3aed;  /* Violet 600 */
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+/* 2. SECOND THEME: "Emerald Breeze" (This was missing!) */
+.emerald-breeze {
+  --background: #022c22; /* Deep Jungle Green */
+  --surface: #064e3b;    /* Emerald 900 */
+  --primary: #10b981;    /* Emerald 500 */
+  --primary-dark: #059669;
+  --secondary: #34d399;  /* Emerald 400 */
+  --text: #ecfdf5;       /* Emerald 50 */
+  --text-muted: #6ee7b7; /* Emerald 300 */
+  --border: rgba(255, 255, 255, 0.15);
+}
+
+/* 3. Map Variables to Tailwind */
 @theme {
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
 }
 
-/* 2. Define Variables */
-@layer base {
-  :root {
-    /* Fallback / Light Mode */
-    --background: #0f172a; /* Slate 900 */
-    --surface: #1e293b;    /* Slate 800 */
-    --primary: #6366f1;    /* Indigo 500 */
-    --primary-dark: #4f46e5;
-    --text: #e0f2fe;
-    --text-muted: #94a3b8;
-  }
-
-  /* ✅ MIDNIGHT BLOOM THEME */
-  .midnight-bloom {
-    --background: #0f172a; /* Slate 900 */
-    --surface: #1e293b;    /* Slate 800 */
-    --primary: #6366f1;    /* Indigo 500 */
-    --primary-dark: #4f46e5;
-    
-    /* REPLACED WHITE TEXT WITH LIGHT BLUE */
-    --text: #e0f2fe;       /* Sky 100 */
-    --text-muted: #94a3b8; /* Slate 400 */
-    
-    /* Apply immediately */
-    background-color: var(--background);
-    color: var(--text);
-  }
-
-  body {
-    background-color: var(--background);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-  }
+/* 4. Base Styles */
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* 3. Utilities */
+/* 5. Dynamic Glass Panel */
 .glass-panel {
-  background: rgba(30, 41, 59, 0.7);
+  /* This ensures the glass effect matches the current theme color */
+  background-color: color-mix(in srgb, var(--surface), transparent 30%);
   backdrop-filter: blur(12px);
-  /* REPLACED WHITE BORDER WITH LIGHT BLUE RGB (224, 242, 254) */
-  border: 1px solid rgba(224, 242, 254, 0.1); 
+  border: 1px solid var(--border);
 }
 
-/* 4. Fix Scrollbar */
+/* 6. Dynamic Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -61,6 +59,27 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #1e293b; /* Sky 400 (Blue scrollbar) */
+  background-color: var(--surface);
   border-radius: 9999px;
+  border: 1px solid var(--border);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
+}
+
+/* 7. Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.scale-up-center {
+  animation: scaleUp 0.2s ease-out forwards;
 }
