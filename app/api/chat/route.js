@@ -12,7 +12,7 @@ let cachedPdfText = "";
 async function getPdfText() {
   if (cachedPdfText) return cachedPdfText;
   try {
-    const filePath = path.join(process.cwd(), "docs", "data.pdf");
+    const filePath = path.join(process.cwd(), "data", "data.pdf");
     const loader = new PDFLoader(filePath);
     const docs = await loader.load();
     const fullText = docs.map(doc => doc.pageContent).join("\n");
