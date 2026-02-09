@@ -12,6 +12,7 @@
     "@google/generative-ai": "^0.24.1",
     "@langchain/community": "^1.1.11",
     "@langchain/core": "^1.1.12",
+    "dotenv": "^17.2.4",
     "katex": "^0.16.28",
     "langchain": "^1.2.7",
     "lucide-react": "^0.563.0",

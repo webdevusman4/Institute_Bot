@@ -1,0 +1,558 @@
+{
+  "chapter": "Matrices & Determinants",
+  "sections": [
+    {
+      "id": "2.1",
+      "title": "Matrices",
+      "subtopics": [
+        {
+          "id": "2.1.1",
+          "title": "Recall the concept of",
+          "notes": [
+            {
+              "title": "Note on Symmetric Elements",
+              "content": "Elements of the square matrix of type $a_{ij}$ and $a_{ji}$ are called symmetric elements, where $i \\neq j$."
+            },
+            {
+              "title": "Note on Trace of a Matrix",
+        "content": "The **trace** of a square matrix $A$ is the sum of the elements of the main diagonal, denoted by $\\text{tr}(A)$.\n\n**Examples:**\nUsing the square matrices from the previous section:\n$$ \\text{tr}(B) = 1 + 4 = 5 $$\n$$ \\text{tr}(C) = 1 + 5 + 9 = 15 $$"
+            }
+
+          ]
+        },
+        {
+          "id": "2.1.1(a)",
+          "title": "A matrix and its notation",
+          "notes": []
+        },
+        {
+          "id": "2.1.1(b)",
+          "title": "Order of a matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.1(c)",
+          "title": "Equality of two matrices",
+          "notes": []
+        },
+        {
+          "id": "2.1.2",
+          "title": "Know row matrix, column matrix, square matrix, rectangular matrix, zero/null matrix, diagonal matrix, scalar matrix, identity matrix",
+          "notes": [
+            {
+              "title": "Note on Scalar Matrix",
+              "content": "Every scalar matrix is also a diagonal matrix."
+            },
+            {
+              "title": "Note on Identity Matrix",
+              "content": "Every identity matrix is also a scalar matrix."
+            }
+          ]
+        },
+        {
+          "id": "2.1.2(i)",
+          "title": "Row Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(ii)",
+          "title": "Column Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(iii)",
+          "title": "Square Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(iv)",
+          "title": "Rectangular Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(v)",
+          "title": "Zero/Null Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(vi)",
+          "title": "Diagonal Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(vii)",
+          "title": "Scalar Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.2(viii)",
+          "title": "Unit or Identity Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3",
+          "title": "Define upper and lower triangular matrix, transpose of a matrix, symmetric matrix and skew-symmetric matrix, Idempotent, Nilpotent, Involutory, Periodic, Hermitian matrix and Skew Hermitian matrix of order up to 4",
+          "notes": [
+            {
+              "title": "Note on Triangular Matrix",
+              "content": "If a matrix is upper triangular or lower triangular then it is said to be a triangular matrix"
+            },
+            {
+              "title": "Note on Diagonal Matrices",
+              "content": "All the diagonal matrices are both upper triangular and lower triangular."
+            },
+            {
+              "title": "Note on Transpose of Row/Column Matrix",
+              "content": "The transpose of a row matrix is a column matrix and vice-versa."
+            },
+            {
+              "title": "Note on Transpose of Triangular Matrix",
+              "content": "The transpose of an upper triangular matrix is a lower triangular matrix and vice-versa."
+            },
+            {
+              "title": "Note on Transpose of Diagonal Matrix",
+              "content": "All the diagonal matrices are self transposed."
+            },
+            {
+              "title": "Note on Skew-Symmetric Matrix Diagonal Elements",
+              "content": "In skew-symmetric matrix, all the main diagonal elements are always zero."
+            },
+            {
+              "title": "Note on Symmetric and Skew-Symmetric Matrix Formation",
+              "content": "If A is any square matrix then $A + A^t$ and $A-A^t$ are always symmetric and skew-symmetric matrices respectively."
+            },
+            {
+              "title": "Note on Idempotent Matrix Powers",
+              "content": "If A is an idempotent matrix then $A^n = A, \\forall n \\in \\text{N}$."
+            },
+            {
+              "title": "Note on Matrix Multiplication",
+              "content": "Matrix multiplication will be discussed in detail in section 2.2.1."
+            },
+            {
+              "title": "Note on Nilpotent Matrix Powers",
+              "content": "If $A^p$ is a nilpotent matrix of index $p$ then $A^2 \\neq O, A^3 \\neq O, \\dots A^{p-1} \\neq O$."
+            },
+            {
+              "title": "Note on Square Null Matrices",
+              "content": "Square null matrices are nilpotent matrices of index 1."
+            },
+            {
+              "title": "Note on Trace of Nilpotent Matrix",
+              "content": "The trace of nilpotent matrix is always zero."
+            },
+            {
+              "title": "Properties of Involutory Matrix Powers",
+              "content": "If $A$ is an involutory matrix (meaning $A^2 = I$), then for any natural number $k \\in \\mathbb{N}$:\n\n**1. Even Powers equal the Identity Matrix:**\n$$ A^2 = A^4 = A^6 = \\dots = A^{2k} = I $$\n\n**2. Odd Powers equal the Matrix itself:**\n$$ A = A^3 = A^5 = \\dots = A^{2k+1} = A $$"
+            },
+            {
+              "title": "Note on Involutory Matrix and Inverse",
+              "content": "If $A^2= I \\implies A^{-1} (A^2) = A^{-1}(I) \\implies A = A^{-1}$"
+            },
+            {
+              "title": "Note on Idempotent Matrix Period",
+              "content": "Idempotent matrix is a periodic matrix of period 1."
+            },
+            {
+              "title": "Note on Hermitian Matrix Transpose",
+              "content": "If A is any square matrix over C then $(\\bar{A})^t = (A^t)$."
+            },
+            {
+              "title": "Note on Hermitian Matrix Elements",
+              "content": "In Hermitian matrix elements of the main diagonal are always real numbers, and symmetric elements are conjugate of each other."
+            },
+            {
+              "title": "Note on Hermitian and Skew-Hermitian Matrix Combinations",
+              "content": "If A is any square matrix over C, then matrices $A+ (\\bar{A})^t$ and $A-(\\bar{A})^t$ are always Hermitian and Skew-Hermitian respectively."
+            },
+            {
+              "title": "Note on Skew Hermitian Matrix Elements",
+              "content": "In Skew Hermitian matrix, elements of the main diagonal are either purely imaginary or zero. Furthermore, the symmetric elements are additive inverses of each other if they are real or same in case of imaginary numbers."
+            }
+          ]
+        },
+        {
+          "id": "2.1.3(i)",
+          "title": "Upper Triangular Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(ii)",
+          "title": "Lower Triangular Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(iii)",
+          "title": "Transpose of a Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(iv)",
+          "title": "Symmetric Matrix and Skew-Symmetric Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(v)",
+          "title": "Idempotent matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(vi)",
+          "title": "Nilpotent matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(vii)",
+          "title": "Involutory matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(viii)",
+          "title": "Periodic matrix",
+          "notes": []
+        },
+        {
+          "id": "2.1.3(ix)",
+          "title": "Hermitian Matrix and Skew Hermitian Matrix",
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "2.2",
+      "title": "Algebra of Matrices",
+      "subtopics": [
+        {
+          "id": "2.2.1",
+          "title": "Carryout scalar multiplication, addition/ subtraction of matrices, multiplication of matrices with real and complex entries (3 by 3)",
+          "notes": []
+        },
+        {
+          "id": "2.2.1(i)",
+          "title": "Scalar Multiplication of a Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.2.1(ii)",
+          "title": "Addition of Matrices",
+          "notes": []
+        },
+        {
+          "id": "2.2.1(iii)",
+          "title": "Subtraction of Matrices",
+          "notes": []
+        },
+        {
+          "id": "2.2.1(iv)",
+          "title": "Multiplication of Matrices",
+          "notes": []
+        },
+        {
+          "id": "2.2.2",
+          "title": "Show that commutative property:",
+          "notes": []
+        },
+        {
+          "id": "2.2.2(i)",
+          "title": "Commutative property holds under addition i.e., A + B = B + A",
+          "notes": []
+        },
+        {
+          "id": "2.2.2(ii)",
+          "title": "Commutative property does not hold under multiplication, in general",
+          "notes": []
+        },
+        {
+          "id": "2.2.3",
+          "title": "Verify that $(AB)^t = B^tA^t$ (3 by 3)",
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "2.3",
+      "title": "Determinants",
+      "subtopics": [
+        {
+          "id": "2.3.1",
+          "title": "Describe determinant of a square matrix, minor and cofactor of an element of a matrix",
+          "notes": [
+            {
+              "title": "Note on Determinant of Order 1",
+              "content": "The determinant of a square matrix of order 1 is the just the element itself."
+            }
+          ]
+        },
+        {
+          "id": "2.3.1(i)",
+          "title": "Determinant of a square matrix",
+          "notes": []
+        },
+        {
+          "id": "2.3.1(ii)",
+          "title": "Minors and Cofactors of an element of a Matrix",
+          "notes": []
+        },
+        {
+          "id": "2.3.2",
+          "title": "Evaluate determinant of square matrix using cofactors",
+          "notes": []
+        },
+        {
+          "id": "2.3.3",
+          "title": "Define singular and non-singular matrices",
+          "notes": []
+        },
+        {
+          "id": "2.3.3(a)",
+          "title": "Singular Matrix:",
+          "notes": []
+        },
+        {
+          "id": "2.3.3(b)",
+          "title": "Non-Singular Matrix:",
+          "notes": []
+        },
+        {
+          "id": "2.3.4",
+          "title": "Describe the Adjoint of a square matrix and a diagonal matrix",
+          "notes": []
+        },
+        {
+          "id": "2.3.4(a)",
+          "title": "Adjoint of square matrix",
+          "notes": []
+        },
+        {
+          "id": "2.3.4(b)",
+          "title": "Adjoint of diagonal matrix",
+          "notes": []
+        },
+        {
+          "id": "2.3.5",
+          "title": "Use adjoint method to calculate inverse of a square matrix and verify",
+          "notes": [
+            {
+              "title": "Note on Inverse of Inverse",
+              "content": "If $B = A^{-1}$, then $B^{-1} = A$"
+            },
+            {
+              "title": "Note on Inverse of Inverse of a Matrix",
+              "content": "$(A^{-1})^{-1} = A$, i.e., inverse of the inverse of a matrix A is A itself."
+            },
+            {
+              "title": "Note on Scalar Multiple of Inverse",
+              "content": "$(kA)^{-1} = \\frac{1}{k}A^{-1}, \\forall k \\in \\text{R} - \\{0\\}$"
+            }
+          ]
+        },
+        {
+          "id": "2.3.6",
+          "title": "Verify the result $(AB)^{-1} = B^{-1} A^{-1}$",
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "2.4",
+      "title": "Properties of Determinants",
+      "subtopics": [
+        {
+          "id": "2.4.1",
+          "title": "State and verify the properties of determinants",
+          "notes": [
+            {
+              "title": "Note on Determinant of Triangular Matrices",
+              "content": "The determinant of diagonal, scalar, identity, upper triangular & and lower triangular matrices is the product of the elements of the main diagonal."
+            }
+          ]
+        },
+        {
+          "id": "2.4.1.Property 1",
+          "title": "The values of the determinants of any square matrix $A$ and its transpose are always the same.",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 2",
+          "title": "The interchange of any two rows or columns of a square matrix $A$ changes the sign of its determinant without altering its numerical value.",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 3",
+          "title": "If two rows or columns of a square matrix are identical, then its determinant is zero.",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 4",
+          "title": "If all the elements of a row or column of a square matrix are zero, then its determinant is zero.",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 5",
+          "title": "If every element in a row or column of a square matrix $A$ is multiplied by the same number $k$, then $|A|$ gets multiplied by $k$.",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 6",
+          "title": "If every element of a row or column of a square matrix $A$ is expressed as the sum of two terms then $|A|$ can be expressed as the sum of determinants of two matrices...",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 7",
+          "title": "If the elements of one row or column of a square matrix $A$ are $k$ times the corresponding elements of its another row or column then $|A| = 0$.",
+          "notes": []
+        },
+        {
+          "id": "2.4.1.Property 8",
+          "title": "If to each element of a row or column of a square matrix A is added, a constant multiple of the corresponding element of another row or column then the value of |A| is unaltered.",
+          "notes": []
+        },
+        {
+          "id": "2.4.2",
+          "title": "Evaluate the determinant without expansion (i.e., using properties of determinants)",
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "2.5",
+      "title": "Row and Column Operations",
+      "subtopics": [
+        {
+          "id": "2.5.1",
+          "title": "Describe the elementary row and column operations on matrices",
+          "notes": []
+        },
+        {
+          "id": "2.5.1(a)",
+          "title": "Row operations on matrices:",
+          "notes": []
+        },
+        {
+          "id": "2.5.1(b)",
+          "title": "Column operations on matrices",
+          "notes": []
+        },
+        {
+          "id": "2.5.2",
+          "title": "Define echelon and reduced echelon form of a matrix",
+          "notes": []
+        },
+        {
+          "id": "2.5.2(a)",
+          "title": "Echelon form of a matrix",
+          "notes": []
+        },
+        {
+          "id": "2.5.2(b)",
+          "title": "Reduced Echelon form of a matrix",
+          "notes": []
+        },
+        {
+          "id": "2.5.3",
+          "title": "Reduce a matrix to its echelon and reduced echelon form",
+          "notes": []
+        },
+        {
+          "id": "2.5.4",
+          "title": "Recognize the rank of a matrix",
+          "notes": [
+            {
+              "title": "Note on Rank and Determinant",
+              "content": "If $|A| \\neq 0$, then rank $(A)$ = order of the matrix A."
+            },
+            {
+              "title": "Note on Rank Value",
+              "content": "Rank $(A) \\ge 0$."
+            },
+            {
+              "title": "Note on Rank of Row/Column Matrix",
+              "content": "Rank of a non-zero row or column matrix is 1."
+            }
+          ]
+        },
+        {
+          "id": "2.5.5",
+          "title": "Use row operations to find the inverse and the rank of a matrix",
+          "notes": []
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "2.6",
+      "title": "Solving System of Linear Equations",
+      "subtopics": [
+        {
+          "id": "2.6.1",
+          "title": "Distinguish between homogeneous and non-homogeneous systems of linear equations in 2 and 3 unknowns",
+          "notes": []
+        },
+        {
+          "id": "2.6.2",
+          "title": "Solve a system of three homogeneous linear equations in three unknowns",
+          "notes": [
+            {
+              "title": "Note on Homogeneous System Solutions",
+              "content": "If $AX = O$ is homogenous system of linear equations with “n” unknowns, then:\n(i) it has only trivial solution if rank of $A = n$ or $|A| \\neq 0$\n(ii) it has trivial as well as infinitely many non-trivial solutions iff rank $(A) < n$ or $|A| = 0$"
+            }
+          ]
+        },
+        {
+          "id": "2.6.3",
+          "title": "Define a consistent and inconsistent system of linear equations and demonstrate through examples",
+          "notes": []
+        },
+        {
+          "id": "2.6.4",
+          "title": "Solve a system of 3 by 3 non-homogeneous linear equations using:",
+          "notes": [
+            {
+              "title": "Note on Matrix Inversion Method Applicability",
+              "content": "The \"Matrix Inversion Method\" works when the given system is consistent and also has unique solution."
+            },
+            {
+              "title": "Note on Cramer's Rule Applicability",
+              "content": "This method works only when the given system has non-singular coefficient matrix."
+            }
+          ]
+        },
+        {
+          "id": "2.6.4(i)",
+          "title": "Matrix Inversion Method",
+          "notes": []
+        },
+        {
+          "id": "2.6.4(i).Example",
+          "title": "Matrix Inversion Method Example",
+          "notes": []
+        },
+        {
+          "id": "2.6.4(ii)",
+          "title": "Cramer's rule",
+          "notes": []
+        },
+        {
+          "id": "2.6.4(ii).Example",
+          "title": "Cramer's Rule Example",
+          "notes": []
+        },
+        {
+          "id": "2.6.4(iii)",
+          "title": "Gauss elimination method (echelon form)",
+          "notes": []
+        },
+        {
+          "id": "2.6.4(iv)",
+          "title": "Gauss - Jordan Method (reduced echelon form)",
+          "notes": []
+        }
+      ],
+      "notes": []
+    }
+  ]
+}

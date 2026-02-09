@@ -1,0 +1,353 @@
+{
+    "javaStringMethods": [
+        {
+            "category": "Checking String Content (Booleans)",
+            "methods": [
+                {
+                    "name": "contains()",
+                    "explanation": "Checks if the string contains a specific sequence of characters. It returns true if the sequence is found, otherwise false.",
+                    "examples": [
+                        {
+                            "description": "Check for existing word",
+                            "code": "String str = \"Hello Java World\";\nboolean hasJava = str.contains(\"Java\"); // true"
+                        },
+                        {
+                            "description": "Check for missing word (case sensitive)",
+                            "code": "boolean hasPython = str.contains(\"python\"); // false"
+                        }
+                    ]
+                },
+                {
+                    "name": "contentEquals()",
+                    "explanation": "Compares the string to any CharSequence (like String, StringBuffer, or StringBuilder). It checks if the actual content is exactly the same.",
+                    "examples": [
+                        {
+                            "description": "Compare String to StringBuffer",
+                            "code": "String str = \"example\";\nStringBuffer sb = new StringBuffer(\"example\");\nboolean isSameBuffer = str.contentEquals(sb); // true"
+                        },
+                        {
+                            "description": "Compare to different content",
+                            "code": "boolean isSameText = str.contentEquals(\"test\"); // false"
+                        }
+                    ]
+                },
+                {
+                    "name": "endsWith()",
+                    "explanation": "Checks if the string ends with a specified suffix. Useful for checking file extensions.",
+                    "examples": [
+                        {
+                            "description": "Check file extension",
+                            "code": "String filename = \"document.pdf\";\nboolean isPdf = filename.endsWith(\".pdf\"); // true"
+                        },
+                        {
+                            "description": "Check for wrong ending",
+                            "code": "boolean isTxt = filename.endsWith(\".txt\"); // false"
+                        }
+                    ]
+                },
+                {
+                    "name": "startsWith()",
+                    "explanation": "Checks if the string begins with a specified prefix. You can also specify an offset to start checking from a specific index.",
+                    "examples": [
+                        {
+                            "description": "Check protocol",
+                            "code": "String url = \"https://google.com\";\nboolean isSecure = url.startsWith(\"https\"); // true"
+                        },
+                        {
+                            "description": "Check with offset (start check from index 8)",
+                            "code": "boolean domainCheck = url.startsWith(\"google\", 8); // true"
+                        }
+                    ]
+                },
+                {
+                    "name": "equalsIgnoreCase()",
+                    "explanation": "Compares two strings content-wise, but ignores whether the letters are upper or lower case ('A' is treated the same as 'a').",
+                    "examples": [
+                        {
+                            "description": "Match with different casing",
+                            "code": "String user = \"Admin\";\nboolean login1 = user.equalsIgnoreCase(\"admin\"); // true"
+                        },
+                        {
+                            "description": "Mismatch",
+                            "code": "boolean login2 = user.equalsIgnoreCase(\"Guest\"); // false"
+                        }
+                    ]
+                },
+                {
+                    "name": "isBlank()",
+                    "version": "Java 11+",
+                    "explanation": "Returns true if the string is empty or contains only white space (like spaces, tabs, or newlines).",
+                    "examples": [
+                        {
+                            "description": "String with only whitespace",
+                            "code": "String s1 = \"   \";\nboolean check1 = s1.isBlank(); // true"
+                        },
+                        {
+                            "description": "String with text",
+                            "code": "String s2 = \"text\";\nboolean check2 = s2.isBlank(); // false"
+                        }
+                    ]
+                },
+                {
+                    "name": "isEmpty()",
+                    "explanation": "Returns true only if the string length is 0. Unlike isBlank(), a string with just spaces is NOT considered empty.",
+                    "examples": [
+                        {
+                            "description": "Length is 0",
+                            "code": "String s1 = \"\";\nboolean empty1 = s1.isEmpty(); // true"
+                        },
+                        {
+                            "description": "Length is not 0 (whitespace counts as a character)",
+                            "code": "String s2 = \" \";\nboolean empty2 = s2.isEmpty(); // false"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Getting Information & Characters",
+            "methods": [
+                {
+                    "name": "length()",
+                    "explanation": "Returns the number of characters contained in the string.",
+                    "examples": [
+                        {
+                            "description": "Standard length",
+                            "code": "String pwd = \"Pass\";\nint len1 = pwd.length(); // 4"
+                        },
+                        {
+                            "description": "Empty string length",
+                            "code": "int len2 = \"\".length(); // 0"
+                        }
+                    ]
+                },
+                {
+                    "name": "charAt()",
+                    "explanation": "Returns the character located at the specified index. Indices start at 0.",
+                    "examples": [
+                        {
+                            "description": "Get first character",
+                            "code": "String word = \"Java\";\nchar first = word.charAt(0); // 'J'"
+                        },
+                        {
+                            "description": "Get last character",
+                            "code": "char last = word.charAt(word.length() - 1); // 'a'"
+                        }
+                    ]
+                },
+                {
+                    "name": "codePointAt()",
+                    "explanation": "Returns the Unicode code point (integer representation) of the character at the specified index.",
+                    "examples": [
+                        {
+                            "description": "Code point for 'A' (ASCII 65)",
+                            "code": "String text = \"A$\";\nint cp1 = text.codePointAt(0); // 65"
+                        },
+                        {
+                            "description": "Code point for '$' (ASCII 36)",
+                            "code": "int cp2 = text.codePointAt(1); // 36"
+                        }
+                    ]
+                },
+                {
+                    "name": "indexOf()",
+                    "explanation": "Returns the index of the first occurrence of a specified character or substring. Returns -1 if not found.",
+                    "examples": [
+                        {
+                            "description": "Find first 'o'",
+                            "code": "String sentence = \"Hello World\";\nint idx1 = sentence.indexOf('o'); // 4"
+                        },
+                        {
+                            "description": "Find substring \"World\"",
+                            "code": "int idx2 = sentence.indexOf(\"World\"); // 6"
+                        }
+                    ]
+                },
+                {
+                    "name": "lastIndexOf()",
+                    "explanation": "Returns the index of the last occurrence of a specified character or substring, searching backwards from the end.",
+                    "examples": [
+                        {
+                            "description": "Find last 'a'",
+                            "code": "String banana = \"banana\";\nint lastA = banana.lastIndexOf('a'); // 5"
+                        },
+                        {
+                            "description": "Find 'z' (not found returns -1)",
+                            "code": "int missing = banana.lastIndexOf('z'); // -1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Comparison",
+            "methods": [
+                {
+                    "name": "compareTo()",
+                    "explanation": "Compares two strings lexicographically (dictionary order). Returns 0 if equal, a negative number if this string is 'less than' the other, or positive if 'greater'.",
+                    "examples": [
+                        {
+                            "description": "\"Apple\" comes before \"Banana\"",
+                            "code": "String a = \"Apple\";\nString b = \"Banana\";\nint result1 = a.compareTo(b); // Negative number"
+                        },
+                        {
+                            "description": "Equal strings",
+                            "code": "int result2 = a.compareTo(\"Apple\"); // 0"
+                        }
+                    ]
+                },
+                {
+                    "name": "compareToIgnoreCase()",
+                    "explanation": "Same as compareTo, but ignores case differences (e.g., 'a' and 'A' are treated as equal).",
+                    "examples": [
+                        {
+                            "description": "Case insensitive equality",
+                            "code": "String a = \"apple\";\nString b = \"APPLE\";\nint res1 = a.compareToIgnoreCase(b); // 0"
+                        },
+                        {
+                            "description": "Compare different words ignoring case",
+                            "code": "int res2 = a.compareToIgnoreCase(\"Zebra\"); // Negative number"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Modifying & Extracting",
+            "methods": [
+                {
+                    "name": "toLowerCase()",
+                    "explanation": "Converts all characters in the string to lower case using the rules of the default locale.",
+                    "examples": [
+                        {
+                            "description": "Convert all to lower",
+                            "code": "String loud = \"HELLO\";\nString quiet = loud.toLowerCase(); // \"hello\""
+                        },
+                        {
+                            "description": "Mixed case to lower",
+                            "code": "String mixed = \"JaVa\".toLowerCase(); // \"java\""
+                        }
+                    ]
+                },
+                {
+                    "name": "toUpperCase()",
+                    "explanation": "Converts all characters in the string to upper case using the rules of the default locale.",
+                    "examples": [
+                        {
+                            "description": "Convert all to upper",
+                            "code": "String tiny = \"hello\";\nString big = tiny.toUpperCase(); // \"HELLO\""
+                        },
+                        {
+                            "description": "Ignore non-letters",
+                            "code": "String sym = \"abc_123\".toUpperCase(); // \"ABC_123\""
+                        }
+                    ]
+                },
+                {
+                    "name": "replace()",
+                    "explanation": "Returns a new string where all occurrences of a specified character or substring are replaced with a new one.",
+                    "examples": [
+                        {
+                            "description": "Replace character 'o' with 'a'",
+                            "code": "String soup = \"potato soup\";\nString s1 = soup.replace('o', 'a'); // \"patata saup\""
+                        },
+                        {
+                            "description": "Replace substring \"soup\" with \"salad\"",
+                            "code": "String s2 = soup.replace(\"soup\", \"salad\"); // \"potato salad\""
+                        }
+                    ]
+                },
+                {
+                    "name": "split()",
+                    "explanation": "Splits the string into an array of strings based on a given delimiter (regular expression).",
+                    "examples": [
+                        {
+                            "description": "Split by dash",
+                            "code": "String date = \"2024-12-31\";\nString[] parts = date.split(\"-\"); // [\"2024\", \"12\", \"31\"]"
+                        },
+                        {
+                            "description": "Split by space",
+                            "code": "String[] words = \"Hello World\".split(\" \"); // [\"Hello\", \"World\"]"
+                        }
+                    ]
+                },
+                {
+                    "name": "strip()",
+                    "version": "Java 11+",
+                    "explanation": "Removes leading and trailing whitespace. It is 'Unicode-aware', meaning it removes all types of whitespace spaces.",
+                    "examples": [
+                        {
+                            "description": "Remove surrounding spaces",
+                            "code": "String padded = \"  text  \";\nString clean = padded.strip(); // \"text\""
+                        },
+                        {
+                            "description": "Handling unicode whitespace (better than trim)",
+                            "code": "String uni = \"\\u2005 text \\u2005\".strip(); // \"text\""
+                        }
+                    ]
+                },
+                {
+                    "name": "trim()",
+                    "explanation": "Removes leading and trailing whitespace, but only recognizes characters with ASCII value <= 32 (standard space, tab, etc.).",
+                    "examples": [
+                        {
+                            "description": "Remove surrounding ASCII spaces",
+                            "code": "String padded = \"  text  \";\nString clean = padded.trim(); // \"text\""
+                        },
+                        {
+                            "description": "Doesn't remove internal spaces",
+                            "code": "String internal = \" a b \".trim(); // \"a b\""
+                        }
+                    ]
+                },
+                {
+                    "name": "substring()",
+                    "explanation": "Returns a part of the string. You can specify just a start index, or both start (inclusive) and end (exclusive) indices.",
+                    "examples": [
+                        {
+                            "description": "From index 2 to the end",
+                            "code": "String str = \"Unbelievable\";\nString sub1 = str.substring(2); // \"believable\""
+                        },
+                        {
+                            "description": "From index 0 to 5 (exclusive)",
+                            "code": "String sub2 = str.substring(0, 5); // \"Unbel\""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Conversion",
+            "methods": [
+                {
+                    "name": "getBytes()",
+                    "explanation": "Encodes the string into a sequence of bytes and returns them as a byte array.",
+                    "examples": [
+                        {
+                            "description": "Get byte array",
+                            "code": "String str = \"ABC\";\nbyte[] b1 = str.getBytes(); // [65, 66, 67]"
+                        },
+                        {
+                            "description": "Check array length",
+                            "code": "int byteCount = str.getBytes().length; // 3"
+                        }
+                    ]
+                },
+                {
+                    "name": "toCharArray()",
+                    "explanation": "Converts the string into a new character array.",
+                    "examples": [
+                        {
+                            "description": "Convert to array",
+                            "code": "String str = \"Hi\";\nchar[] chars = str.toCharArray(); // ['H', 'i']"
+                        },
+                        {
+                            "description": "Access array element",
+                            "code": "char firstChar = str.toCharArray()[0]; // 'H'"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
