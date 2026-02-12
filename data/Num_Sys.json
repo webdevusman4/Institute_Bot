@@ -1,0 +1,316 @@
+{
+    "title": "Comprehensive Guide to Number Systems",
+    "description": "A detailed mathematical breakdown of conversions between Decimal, Binary, Octal, and Hexadecimal systems, prioritizing long-form logic over shortcuts.",
+    "introduction": {
+        "definition": "A Number System is defined by its Base (or Radix), which tells you how many unique digits it uses before it has to 'carry over' to the next place value.",
+        "systems": [
+            {
+                "name": "Decimal",
+                "base": "10",
+                "digits": "0-9",
+                "description": "The human standard."
+            },
+            {
+                "name": "Binary",
+                "base": "2",
+                "digits": "0, 1",
+                "description": "The machine standard."
+            },
+            {
+                "name": "Octal",
+                "base": "8",
+                "digits": "0-7",
+                "description": "An older computing standard."
+            },
+            {
+                "name": "Hexadecimal",
+                "base": "16",
+                "digits": "0-9, A-F",
+                "description": "The modern shorthand for binary."
+            }
+        ]
+    },
+    "master_reference_table": [
+        {
+            "decimal": 0,
+            "binary": "0000",
+            "octal": "0",
+            "hex": "0"
+        },
+        {
+            "decimal": 1,
+            "binary": "0001",
+            "octal": "1",
+            "hex": "1"
+        },
+        {
+            "decimal": 2,
+            "binary": "0010",
+            "octal": "2",
+            "hex": "2"
+        },
+        {
+            "decimal": 3,
+            "binary": "0011",
+            "octal": "3",
+            "hex": "3"
+        },
+        {
+            "decimal": 4,
+            "binary": "0100",
+            "octal": "4",
+            "hex": "4"
+        },
+        {
+            "decimal": 5,
+            "binary": "0101",
+            "octal": "5",
+            "hex": "5"
+        },
+        {
+            "decimal": 6,
+            "binary": "0110",
+            "octal": "6",
+            "hex": "6"
+        },
+        {
+            "decimal": 7,
+            "binary": "0111",
+            "octal": "7",
+            "hex": "7"
+        },
+        {
+            "decimal": 8,
+            "binary": "1000",
+            "octal": "10",
+            "hex": "8"
+        },
+        {
+            "decimal": 9,
+            "binary": "1001",
+            "octal": "11",
+            "hex": "9"
+        },
+        {
+            "decimal": 10,
+            "binary": "1010",
+            "octal": "12",
+            "hex": "A"
+        },
+        {
+            "decimal": 11,
+            "binary": "1011",
+            "octal": "13",
+            "hex": "B"
+        },
+        {
+            "decimal": 12,
+            "binary": "1100",
+            "octal": "14",
+            "hex": "C"
+        },
+        {
+            "decimal": 13,
+            "binary": "1101",
+            "octal": "15",
+            "hex": "D"
+        },
+        {
+            "decimal": 14,
+            "binary": "1110",
+            "octal": "16",
+            "hex": "E"
+        },
+        {
+            "decimal": 15,
+            "binary": "1111",
+            "octal": "17",
+            "hex": "F"
+        }
+    ],
+    "conversions": {
+        "from_decimal": {
+            "general_rule": "Repeated Division Method: Divide by target base (2, 8, or 16) and record the remainder.",
+            "targets": [
+                {
+                    "to": "Binary",
+                    "method": "Divide by 2, keep remainder.",
+                    "verification": "Sum the Powers: Take your binary result, mentally add the powers of 2 for every '1'. Does it equal the Decimal?",
+                    "example": {
+                        "problem": "Convert $13_{10}$ to Binary",
+                        "steps": [
+                            "$13 \\div 2 = 6$ (Remainder 1) $\\leftarrow$ LSB",
+                            "$6 \\div 2 = 3$ (Remainder 0)",
+                            "$3 \\div 2 = 1$ (Remainder 1)",
+                            "$1 \\div 2 = 0$ (Remainder 1) $\\leftarrow$ MSB"
+                        ],
+                        "result": "Read from Bottom to Top $\\rightarrow$ $1101_2$"
+                    }
+                },
+                {
+                    "to": "Octal",
+                    "method": "Divide by 8, keep remainder.",
+                    "verification": "Binary Bridge: Convert your Octal result to Binary (1 digit = 3 bits). Then convert that Binary to Decimal. Faster than calculating $8^2$.",
+                    "example": {
+                        "problem": "Convert $100_{10}$ to Octal",
+                        "steps": [
+                            "$100 \\div 8 = 12$ (Remainder 4)",
+                            "$12 \\div 8 = 1$ (Remainder 4)",
+                            "$1 \\div 8 = 0$ (Remainder 1)"
+                        ],
+                        "result": "Read Bottom to Top $\\rightarrow$ $144_8$"
+                    }
+                },
+                {
+                    "to": "Hexadecimal",
+                    "method": "Divide by 16, keep remainder.",
+                    "verification": "Binary Bridge: Convert your Hex result to Binary (1 digit = 4 bits). Then convert that Binary to Decimal.",
+                    "example": {
+                        "problem": "Convert $44_{10}$ to Hex",
+                        "steps": [
+                            "$44 \\div 16 = 2$ (Remainder 12 $\\rightarrow$ C)",
+                            "$2 \\div 16 = 0$ (Remainder 2)"
+                        ],
+                        "result": "Read Bottom to Top $\\rightarrow$ $2C_{16}$"
+                    }
+                }
+            ]
+        },
+        "from_binary": {
+            "general_rule": "Sum of Weights Method (for Decimal) or Grouping (for Octal/Hex).",
+            "targets": [
+                {
+                    "to": "Decimal",
+                    "method": "Multiply each bit by $2^{\\text{position}}$. Positions start at 0 from the right.",
+                    "verification": "Estimating Range: Does the result make sense? (e.g., 8 bits $\\approx$ 0-255). Check LSB: Odd decimal must end in binary 1.",
+                    "example": {
+                        "problem": "Convert $1101_2$",
+                        "steps": [
+                            "$1 \\times 2^3 = 8$",
+                            "$1 \\times 2^2 = 4$",
+                            "$0 \\times 2^1 = 0$",
+                            "$1 \\times 2^0 = 1$"
+                        ],
+                        "result": "$8 + 4 + 0 + 1 = \\mathbf{13}_{10}$"
+                    }
+                },
+                {
+                    "to": "Octal",
+                    "method": "Group bits in 3s from right to left.",
+                    "verification": "Regroup Check: Look at your Octal result. Convert each digit back to 3 bits mentally. Do they match the original Binary string?",
+                    "example": {
+                        "problem": "Convert $110101_2$",
+                        "steps": [
+                            "Group 1 (Right): $101_2 = 5$",
+                            "Group 2 (Left): $110_2 = 6$"
+                        ],
+                        "result": "$65_8$"
+                    }
+                },
+                {
+                    "to": "Hexadecimal",
+                    "method": "Group bits in 4s from right to left.",
+                    "verification": "Regroup Check: Look at your Hex result. Convert each digit back to 4 bits mentally. Do they match the original Binary string?",
+                    "example": {
+                        "problem": "Convert $111011_2$",
+                        "steps": [
+                            "Pad with zeros to fit 4: $0011 \\text{ } 1011$",
+                            "Group 1: $1011_2 = 11 = B$",
+                            "Group 2: $0011_2 = 3$"
+                        ],
+                        "result": "$3B_{16}$"
+                    }
+                }
+            ]
+        },
+        "from_octal": {
+            "targets": [
+                {
+                    "to": "Decimal",
+                    "method": "Multiply digits by $8^{\\text{position}}$.",
+                    "verification": "Modulo Check: Divide your Decimal result by 8. Does the remainder match the last digit of your Octal number?",
+                    "example": {
+                        "problem": "Convert $24_8$",
+                        "steps": [
+                            "$2 \\times 8^1 = 16$",
+                            "$4 \\times 8^0 = 4$"
+                        ],
+                        "result": "$16 + 4 = \\mathbf{20}_{10}$"
+                    }
+                },
+                {
+                    "to": "Binary",
+                    "method": "Expand each octal digit into exactly 3 bits.",
+                    "verification": "Regroup Check: Look at your Binary result. Group them in 3s. Do they equal the Octal digits?",
+                    "example": {
+                        "problem": "Convert $65_8$",
+                        "steps": [
+                            "$6 \\rightarrow 110$",
+                            "$5 \\rightarrow 101$"
+                        ],
+                        "result": "$110101_2$"
+                    }
+                },
+                {
+                    "to": "Hexadecimal",
+                    "method": "The 'Bridge' Method: Octal $\\rightarrow$ Binary $\\rightarrow$ Hex.",
+                    "verification": "The Binary Match: Don't redo the math. Look at your Binary bridge. Regroup it by 3s (Octal) and 4s (Hex) simultaneously.",
+                    "example": {
+                        "problem": "Convert $72_8$",
+                        "steps": [
+                            "Octal to Binary: $7 \\rightarrow 111$, $2 \\rightarrow 010$ (Result: $111010_2$)",
+                            "Binary to Hex: Group into 4s $\\rightarrow$ $0011 \\text{ } 1010$",
+                            "Convert: $3$ and $A$"
+                        ],
+                        "result": "$3A_{16}$"
+                    }
+                }
+            ]
+        },
+        "from_hexadecimal": {
+            "targets": [
+                {
+                    "to": "Decimal",
+                    "method": "Multiply digits by $16^{\\text{position}}$.",
+                    "verification": "Modulo Check: Divide your Decimal result by 16. Does the remainder match the last digit of your Hex number?",
+                    "example": {
+                        "problem": "Convert $2C_{16}$",
+                        "steps": [
+                            "$2 \\times 16^1 = 32$",
+                            "$C (12) \\times 16^0 = 12$"
+                        ],
+                        "result": "$32 + 12 = \\mathbf{44}_{10}$"
+                    }
+                },
+                {
+                    "to": "Binary",
+                    "method": "Expand each hex digit into exactly 4 bits.",
+                    "verification": "Regroup Check: Look at your Binary result. Group them in 4s. Do they equal the Hex digits?",
+                    "example": {
+                        "problem": "Convert $3B_{16}$",
+                        "steps": [
+                            "$3 \\rightarrow 0011$",
+                            "$B \\rightarrow 1011$"
+                        ],
+                        "result": "$00111011_2$"
+                    }
+                },
+                {
+                    "to": "Octal",
+                    "method": "The 'Bridge' Method: Hex $\\rightarrow$ Binary $\\rightarrow$ Octal.",
+                    "verification": "The Binary Match: If the Binary matches both the Octal (in 3s) and the Hex (in 4s), your answer is 100% correct.",
+                    "example": {
+                        "problem": "Convert $1F_{16}$",
+                        "steps": [
+                            "Hex to Binary: $1 \\rightarrow 0001$, $F \\rightarrow 1111$ (Result: $00011111_2$)",
+                            "Binary to Octal: Group into 3s $\\rightarrow$ $000 \\text{ } 011 \\text{ } 111$",
+                            "Convert: $0$, $3$, $7$"
+                        ],
+                        "result": "$37_8$"
+                    }
+                }
+            ]
+        }
+    }
+    
+}
