@@ -164,11 +164,15 @@ export default function NumberSystemsPreview() {
                                                     </div>
                                                     {/* ✅ NEW: Verification Tip */}
                                                     {target.verification && (
-                                                        <div className="mt-2 mb-3 text-xs text-amber-800 bg-amber-50 border-l-4 border-amber-400 p-2 rounded-r">
-                                                            <span className="font-bold uppercase tracking-wider text-[10px] text-amber-600 block mb-1">
+                                                        <div className="mt-2 mb-3 text-xs text-amber-800 bg-amber-50 border-l-4 border-amber-400 p-2 rounded-r print:border-amber-600 print:text-amber-900">
+                                                            <span className="font-bold uppercase tracking-wider text-[10px] text-amber-600 block mb-1 print:text-amber-800">
                                                                 ⚡ Quick Check:
                                                             </span>
-                                                            <ReactMarkdown components={{ p: 'span' }}>
+                                                            <ReactMarkdown
+                                                                remarkPlugins={[remarkMath]}
+                                                                rehypePlugins={[rehypeKatex]}
+                                                                components={{ p: 'span' }}
+                                                            >
                                                                 {target.verification}
                                                             </ReactMarkdown>
                                                         </div>
@@ -219,7 +223,7 @@ export default function NumberSystemsPreview() {
                         </div>
                     </section>
 
-                    
+
 
                     {/* Footer */}
                     <div className="hidden print:block text-center text-slate-400 text-xs mt-10 pt-10 border-t">
