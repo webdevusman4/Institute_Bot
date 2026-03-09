@@ -1,0 +1,370 @@
+{
+    "title": "Matrices & Determinants (MATH-11)",
+    "description": "A comprehensive, university-level guide to matrix algebra, determinant theory, and algorithmic solutions for linear systems.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Matrix Fundamentals & Core Architecture",
+            "subtopics": [
+                {
+                    "id": "1.1.1",
+                    "title": "Introduction and Origins of Matrices",
+                    "content": "Before executing complex matrix operations, it is essential to understand the origin and purpose of this mathematical structure. The term 'Matrix' is derived from a Latin word meaning a place where something develops or originates. The concept was pioneered by J.J. Sylvester (1814-1897), a British mathematician who first formed squares containing rows and columns extracted from a rectangular arrangement of objects, coining the term 'matrix'.  Arthur Cayley (1821-1895) later developed the formal theory of matrices and integrated it into algebra.",
+                    "list_title": "Real-World Applications:",
+                    "list_items": [
+                        "**System Solving:** Matrices are fundamentally used to solve systems of linear equations.",
+                        "**Broad Disciplines:** They have extensive applications across fields such as mathematics, statistics, engineering, physical sciences, and social sciences."
+                    ]
+                },
+                {
+                    "id": "1.1.2",
+                    "title": "Matrix Definition & Formal Notation",
+                    "content": "A matrix is formally defined as a rectangular array of numbers, symbols, or expressions, arranged systematically in horizontal rows and vertical columns, and enclosed within square brackets $[ \\quad ]$ or parenthesis $( \\quad )$. Matrices are typically denoted by capital letters of the English alphabet (e.g., $A, B, C$), whereas small letters or numbers denote their internal elements or entries. ",
+                    "formula": "General Form: $A = [a_{ij}]_{(m \\times n)}$ where $i = 1, 2, 3, ..., m$ and $j = 1, 2, 3, ..., n$",
+                    "list_title": "Understanding the Structural Grid:",
+                    "list_items": [
+                        "**Element Intersections ($a_{ij}$):** An element denoted as $a_{ij}$ lies precisely on the intersection of the $i^{th}$ row and the $j^{th}$ column of matrix A.",
+                        "**Index Identification:** In software engineering terms, this is referred to as the $(i, j)^{th}$ element, acting as an exact memory address for the data point."
+                    ]
+                },
+                {
+                    "id": "1.1.3",
+                    "title": "Order (Dimension) of a Matrix",
+                    "content": "The computational size of a matrix is strictly defined by its 'Order' or 'Dimension'. This dictates the memory allocation required to process the matrix array in computer science.",
+                    "formula": "Order = $m \\times n$ (Read aloud as 'm by n')",
+                    "list_title": "Calculating Dimensions:",
+                    "list_items": [
+                        "**The Standard Rule:** The order of a matrix having $m$ rows and $n$ columns is strictly denoted by $m \\times n$.",
+                        "**Square Example:** A matrix $A = \\begin{bmatrix} a_{11} & a_{12} \\\\ a_{21} & a_{22} \\end{bmatrix}$ contains 2 rows and 2 columns. It is a $2 \\times 2$ matrix, also referred to as a matrix of order 2.",
+                        "**Rectangular Example:** A vertical matrix $\\begin{bmatrix} 1 \\\\ 2 \\\\ 3 \\end{bmatrix}$ has 3 horizontal rows and 1 vertical column. Therefore, it is a matrix of order $3 \\times 1$."
+                    ]
+                },
+                {
+                    "id": "1.1.4",
+                    "title": "Requirements for Matrix Equality",
+                    "content": "In matrix algebra, equality is an absolute and strict condition. Two matrices, $A$ and $B$, are said to be equal (written as $A = B$) only if they perfectly satisfy two mandatory constraints.",
+                    "list_title": "The Two Constraints of Equality:",
+                    "list_items": [
+                        "**Constraint 1 (Dimensional Match):** Both matrices must possess the exact same order or dimension.",
+                        "**Constraint 2 (Element Match):** Every corresponding element across both matrices must be perfectly equal.",
+                        "**Example of Equality:** The matrices $A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}$ and $B = \\begin{bmatrix} 1 & 1+1 \\\\ 3 & 4 \\end{bmatrix}$ are equal matrices because $1+1$ evaluates to $2$.",
+                        "**Example of Inequality:** The matrices $A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}$ and $C = \\begin{bmatrix} 1 & 2 \\\\ 3 & 5 \\end{bmatrix}$ are not equal because the element at $a_{22}$ is $4$, while the element at $c_{22}$ is $5$ ($4 \\neq 5$)."
+                    ]
+                },
+                {
+                    "id": "1.1.5",
+                    "title": "Self-Assessment: Fundamentals",
+                    "content": "Evaluate your understanding of historical context, matrix notation, and structural rules.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "Who was the British mathematician responsible for first forming squares of rows and columns and naming them 'matrices'?",
+                        "If a matrix $B$ has 4 rows and 7 columns, what is the formal mathematical notation for its order?",
+                        "Explain why the matrix $\\begin{bmatrix} 2 & 4 \\end{bmatrix}$ is not equal to the matrix $\\begin{bmatrix} 2 \\\\ 4 \\end{bmatrix}$ despite containing the exact same numbers.",
+                        "In the general form $A = [a_{ij}]$, what exactly do the indices $i$ and $j$ represent in physical matrix space?"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Structural Typology of Matrices",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "Primitive Data Structures: Row, Column, & Rectangular",
+                    "content": "At the most fundamental level, matrices are classified by their basic dimensional shapes, which dictate how they store data arrays.",
+                    "list_title": "Primitive Matrix Types & Examples:",
+                    "list_items": [
+                        "**Row Matrix:** A matrix possessing exactly one horizontal row. **Example:** $A = \\begin{bmatrix} 1 & 4 & 7 \\end{bmatrix}$.",
+                        "**Column Matrix:** A matrix possessing exactly one vertical column. **Example:** $B = \\begin{bmatrix} 2 \\\\ 5 \\\\ 8 \\end{bmatrix}$.",
+                        "**Rectangular Matrix:** Any matrix where the number of rows is not equal to the number of columns ($m \\neq n$). **Example:** $C = \\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\end{bmatrix}$.",
+                        "**Square Matrix:** A matrix where the number of rows perfectly equals the number of columns ($m = n$). **Example:** $D = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}$.",
+                        "**Zero/Null Matrix ($O$):** A matrix of any order where every single entry is $0$. **Example:** $O = \\begin{bmatrix} 0 & 0 \\\\ 0 & 0 \\end{bmatrix}$."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "Diagonal & Scalar Architectures",
+                    "content": "Square matrices can have highly specific internal structures based on their main diagonal. ",
+                    "list_title": "Diagonal Variations & Curriculum Notes:",
+                    "list_items": [
+                        "**Diagonal Matrix:** A square matrix where all elements *outside* the main diagonal are strictly zero. **Example:** $A = \\begin{bmatrix} 2 & 0 \\\\ 0 & 5 \\end{bmatrix}$. **NOTE:** All diagonal matrices are both upper triangular and lower triangular.",
+                        "**Scalar Matrix:** A specialized diagonal matrix where every element on the main diagonal shares the exact same scalar value. **Example:** $B = \\begin{bmatrix} 4 & 0 \\\\ 0 & 4 \\end{bmatrix}$. **NOTE:** Every scalar matrix is also a diagonal matrix.",
+                        "**Unit or Identity Matrix ($I$):** A specialized scalar matrix where every main diagonal element is exactly $1$. **Example:** $I = \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$. **NOTE:** Every identity matrix is also a scalar matrix."
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "Triangular Matrices & Transpose Mechanics",
+                    "content": "Understanding triangular matrices and transpositions is critical for algorithmic operations like Gaussian Elimination.",
+                    "list_title": "Triangular & Transpose Rules:",
+                    "list_items": [
+                        "**Upper Triangular Matrix:** All elements below the main diagonal are zero. **Example:** $U = \\begin{bmatrix} 1 & 2 \\\\ 0 & 3 \\end{bmatrix}$.",
+                        "**Lower Triangular Matrix:** All elements above the main diagonal are zero. **Example:** $L = \\begin{bmatrix} 1 & 0 \\\\ 4 & 5 \\end{bmatrix}$.",
+                        "**NOTE ON TRIANGULAR MATRICES:** If a matrix is upper triangular or lower triangular, it is broadly said to be a triangular matrix.",
+                        "**Transpose ($A^t$):** The operation of converting rows into columns. **NOTE:** The transpose of a row matrix is a column matrix and vice-versa.",
+                        "**NOTE ON TRANSPOSE:** The transpose of an upper triangular matrix is a lower triangular matrix and vice-versa.",
+                        "**NOTE ON DIAGONAL TRANSPOSE:** All diagonal matrices are self-transposed ($A = A^t$)."
+                    ]
+                },
+                {
+                    "id": "2.4",
+                    "title": "Symmetry & Skew-Symmetry Constraints",
+                    "content": "Symmetry in matrices defines how data mirrors itself across the main diagonal. ",
+                    "list_title": "Symmetry Definitions & Notes:",
+                    "list_items": [
+                        "**Symmetric Matrix:** A square matrix that perfectly equals its own transpose ($A = A^t$). **Example:** $A = \\begin{bmatrix} 1 & 7 \\\\ 7 & 4 \\end{bmatrix}$.",
+                        "**Skew-Symmetric Matrix:** A square matrix where its transpose equals its negative ($A^t = -A$). **Example:** $B = \\begin{bmatrix} 0 & 3 \\\\ -3 & 0 \\end{bmatrix}$.",
+                        "**NOTE ON SKEW-SYMMETRIC DIAGONALS:** In a skew-symmetric matrix, all the main diagonal elements are always zero.",
+                        "**NOTE ON MATRIX FORMATION:** If $A$ is any square matrix, then the operations $A + A^t$ and $A - A^t$ are always symmetric and skew-symmetric matrices respectively."
+                    ]
+                },
+                {
+                    "id": "2.5",
+                    "title": "Advanced States: Idempotent, Nilpotent, & Involutory",
+                    "content": "In higher-level computing, certain matrices behave uniquely when multiplied by themselves. They act as state-reset or state-toggle mechanisms.",
+                    "list_title": "Power-Based Types & Notes:",
+                    "list_items": [
+                        "**Idempotent Matrix:** A matrix that remains unchanged when multiplied by itself. **NOTE:** If $A$ is idempotent, then $A^n = A, \\forall n \\in \\mathbb{N}$. **NOTE:** Idempotent matrix is a periodic matrix of period 1.",
+                        "**Nilpotent Matrix:** A matrix that collapses to a Null matrix when raised to an index $p$. **NOTE:** If $A^p$ is a nilpotent matrix of index $p$, then $A^2 \\neq O, A^3 \\neq O, ... A^{p-1} \\neq O$.",
+                        "**NOTE ON NULL MATRICES:** Square null matrices are nilpotent matrices of index 1.",
+                        "**NOTE ON NILPOTENT TRACE:** The trace of a nilpotent matrix is always zero.",
+                        "**Involutory Matrix:** A matrix that is its own inverse ($A^2 = I$). **NOTE ON INVERSE:** If $A^2 = I \\implies A^{-1}(A^2) = A^{-1}(I) \\implies A = A^{-1}$.",
+                        "**NOTE ON INVOLUTORY POWERS:** For any natural number $k$, Even Powers equal Identity ($A^{2k} = I$) and Odd Powers equal the matrix itself ($A^{2k+1} = A$)."
+                    ]
+                },
+                {
+                    "id": "2.6",
+                    "title": "Complex Spaces: Hermitian & Skew-Hermitian",
+                    "content": "When dealing with matrices containing complex numbers, standard transpose rules evolve to incorporate complex conjugates. ",
+                    "list_title": "Complex Symmetry & Notes:",
+                    "list_items": [
+                        "**NOTE ON HERMITIAN TRANSPOSE:** If $A$ is any square matrix over $\\mathbb{C}$, then $(\\overline{A})^t = (A^t)$.",
+                        "**Hermitian Matrix:** A complex matrix equal to its conjugate transpose. **NOTE ON ELEMENTS:** Elements of the main diagonal are always real numbers, and symmetric elements are conjugate of each other. **Example:** $H = \\begin{bmatrix} 5 & 2+i \\\\ 2-i & 3 \\end{bmatrix}$.",
+                        "**Skew-Hermitian Matrix:** A complex matrix equal to the negative of its conjugate transpose. **NOTE ON ELEMENTS:** Elements of the main diagonal are either purely imaginary or zero. Furthermore, symmetric elements are additive inverses if real, or the same if imaginary.",
+                        "**NOTE ON FORMATION:** If $A$ is any square matrix over $\\mathbb{C}$, then matrices $A + (\\overline{A})^t$ and $A - (\\overline{A})^t$ are always Hermitian and Skew-Hermitian respectively."
+                    ]
+                },
+                {
+                    "id": "2.7",
+                    "title": "Self-Assessment: Structural Typology",
+                    "content": "Validate your theoretical understanding of advanced matrix constraints and classifications.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "Using the official curriculum notes, explain why every identity matrix is a scalar matrix, but not every scalar matrix is an identity matrix.",
+                        "If you apply a transpose operation to a Lower Triangular matrix, what specific matrix structure is produced according to the notes?",
+                        "A developer creates an Involutory matrix $A$ to encrypt data. According to the 'Note on Involutory Powers', what is the evaluated result of $A^{17}$?",
+                        "Why does the trace of a nilpotent matrix always evaluate to zero?",
+                        "In a Hermitian matrix, why does the curriculum state that it is impossible for a main diagonal element to hold the value $4 - 2i$?"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Algebraic Operations & Transformations",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Scalar Multiplication",
+                    "content": "Before multiplying two matrices together, we first define how a matrix interacts with a single scalar value (a real or complex number).",
+                    "formula": "If $A = [a_{ij}]$, then $kA = [ka_{ij}]$",
+                    "list_title": "Scalar Mechanics:",
+                    "list_items": [
+                        "**The Operation:** Scalar multiplication involves multiplying every single element inside the matrix by the same scalar value $k$.",
+                        "**Computational Complexity:** In software engineering, this is an $O(m \\times n)$ operation, as the CPU must iterate through every memory address in the 2D array and apply the multiplication.",
+                        "**Example:** If $A = \\begin{bmatrix} 1 & -2 \\\\ 3 & 0 \\end{bmatrix}$ and scalar $k = 3$, then $3A = \\begin{bmatrix} 3 & -6 \\\\ 9 & 0 \\end{bmatrix}$."
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "Matrix Addition & Subtraction",
+                    "content": "Adding or subtracting matrices is a straightforward element-by-element operation, but it is strictly governed by dimensional constraints.",
+                    "formula": "$A \\pm B = [a_{ij} \\pm b_{ij}]$",
+                    "list_title": "Rules & Commutative Properties:",
+                    "list_items": [
+                        "**The Dimensional Constraint:** Addition and subtraction can ONLY be performed if both matrices possess the exact same order (dimension). You cannot add a $2 \\times 2$ matrix to a $3 \\times 3$ matrix.",
+                        "**Commutative Property of Addition:** The curriculum explicitly states that the commutative property holds true under addition. Therefore, $A + B = B + A$.",
+                        "**Subtraction Mechanics:** Subtraction is mathematically processed as the addition of a negative scalar matrix. $A - B$ is computed as $A + (-1)B$."
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "Matrix Multiplication (3x3 and Complex)",
+                    "content": "Multiplying two matrices is not an element-by-element operation. It relies on calculating the dot product of the rows of the first matrix against the columns of the second. The curriculum requires mastery of this up to $3 \\times 3$ matrices containing both real and complex entries. ",
+                    "list_title": "Multiplication Constraints & Properties:",
+                    "list_items": [
+                        "**The Compatibility Constraint:** Two matrices $A$ and $B$ can only be multiplied to form $AB$ if the number of *columns* in $A$ exactly equals the number of *rows* in $B$. If $A$ is $m \\times n$ and $B$ is $n \\times p$, the resulting matrix will have an order of $m \\times p$.",
+                        "**Non-Commutative Nature:** The curriculum strictly notes that the commutative property does NOT hold under multiplication in general. This means that, unlike basic algebra, $AB \\neq BA$ in almost all matrix scenarios.",
+                        "**Complex Entries:** When multiplying matrices with complex numbers (e.g., $2 + 3i$), standard complex arithmetic ($i^2 = -1$) must be applied during the dot product calculation."
+                    ]
+                },
+                {
+                    "id": "3.4",
+                    "title": "The Transpose Reversal Law",
+                    "content": "When algebraic operations are combined with transpositions, the order of execution fundamentally changes. The curriculum requires the verification of this specific property for $3 \\times 3$ matrices.",
+                    "formula": "The Reversal Law: $(AB)^t = B^t A^t$",
+                    "list_title": "Understanding the Reversal:",
+                    "list_items": [
+                        "**The Property:** If you multiply matrix $A$ by matrix $B$, and then take the transpose of the resulting matrix $(AB)^t$, it will yield the exact same result as taking the transpose of $B$, taking the transpose of $A$, and multiplying them in reverse order ($B^t A^t$).",
+                        "**Why it reverses:** This reversal happens because of the dimensional compatibility constraints of matrix multiplication. If you didn't reverse the order, the rows and columns would no longer align computationally."
+                    ]
+                },
+                {
+                    "id": "3.5",
+                    "title": "Self-Assessment: Algebraic Operations",
+                    "content": "Validate your computational logic and understanding of matrix algebra constraints.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "According to the official notes, does the commutative property hold true for matrix addition? Explain why using the formula $A + B$.",
+                        "Why does the curriculum state that $AB \\neq BA$ in general matrix multiplication? Provide a structural explanation.",
+                        "If Matrix $A$ has an order of $3 \\times 2$ and Matrix $B$ has an order of $2 \\times 4$, what will be the exact order of the resulting matrix $AB$?",
+                        "Explain the execution order of the Transpose Reversal Law: $(AB)^t = B^t A^t$."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Determinant Theory & Matrix Inversion",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "Determinant Fundamentals: 2x2, Minors, & Cofactors",
+                    "content": "A determinant is a scalar value uniquely associated with a square matrix, serving as a critical indicator of the matrix's mathematical properties. Before evaluating complex 3x3 matrices using minors and cofactors, we must establish the baseline formulas for smaller matrices. ",
+                    "formula": "2x2 Determinant: If $A = \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$, then $|A| = ad - bc$",
+                    "list_title": "Core Concepts & Examples:",
+                    "list_items": [
+                        "**Determinant of Order 1:** The determinant of a square matrix of order 1 is simply the element itself. **Example:** If $A = [-5]$, then $|A| = -5$.",
+                        "**Determinant of Order 2:** Evaluated by cross-multiplying the main diagonal and subtracting the secondary diagonal. **Example:** If $A = \\begin{bmatrix} 3 & 2 \\\\ 1 & 4 \\end{bmatrix}$, then $|A| = (3)(4) - (2)(1) = 10$.",
+                        "**Determinant of Special Matrices:** The determinant of diagonal, scalar, identity, upper triangular, and lower triangular matrices is highly optimized: it is simply the product of the elements of the main diagonal.",
+                        "**Minors ($M_{ij}$):** The minor of an element $a_{ij}$ is the determinant of the sub-matrix left after completely removing the $i^{th}$ row and $j^{th}$ column.",
+                        "**Cofactors ($C_{ij}$):** A cofactor is the minor multiplied by a positional sign modifier $(-1)^{i+j}$. **Example:** $C_{12} = (-1)^{1+2}M_{12} = -M_{12}$.",
+                        "**3x3 Evaluation:** The curriculum requires evaluating a 3x3 determinant by expanding it using these cofactors. **Example:** $|A| = a_{11}C_{11} + a_{12}C_{12} + a_{13}C_{13}$."
+                    ]
+                },
+                {
+                    "id": "4.2",
+                    "title": "Singularity & The Adjoint Matrix (2x2 and 3x3)",
+                    "content": "Before attempting to compute an inverse, the system must check the determinant to classify the matrix's singularity state. Afterwards, the Adjoint matrix acts as the bridge to inversion.",
+                    "list_title": "Classification, Adjoints, & Examples:",
+                    "list_items": [
+                        "**Singular Matrix:** A matrix whose determinant evaluates to exactly zero ($|A| = 0$). **Example:** If $A = \\begin{bmatrix} 2 & 4 \\\\ 1 & 2 \\end{bmatrix}$, then $|A| = 4 - 4 = 0$. It cannot be inverted.",
+                        "**Non-Singular Matrix:** A matrix with a non-zero determinant ($|A| \\neq 0$). This guarantees the existence of an inverse.",
+                        "**Adjoint of a 2x2 Matrix:** For a 2x2 matrix, the adjoint is a fast algorithmic swap: interchange the elements of the main diagonal, and reverse the signs of the secondary diagonal. $adj \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix} = \\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix}$.",
+                        "**Adjoint of a 3x3 Matrix:** Denoted as $adj(A)$, it is mathematically defined as the transpose of the matrix formed strictly by the cofactors of $A$. **Algorithm:** You must calculate all 9 cofactors ($C_{ij}$), place them in a matrix, and then transpose it: $adj(A) = [C_{ij}]^t$."
+                    ]
+                },
+                {
+                    "id": "4.3",
+                    "title": "Matrix Inversion & Reversal Laws",
+                    "content": "Matrix inversion is the algebraic equivalent of division. The curriculum specifies calculating the inverse using the Adjoint method and verifying its specific relational properties.",
+                    "formula": "Inverse Algorithm: $A^{-1} = \\frac{1}{|A|} adj(A)$",
+                    "list_title": "Inverse Constraints & Examples:",
+                    "list_items": [
+                        "**Double Inversion:** If $B = A^{-1}$, then its inverse $B^{-1} = A$. The inverse of an inverse matrix is the original matrix itself. **Example:** $(A^{-1})^{-1} = A$.",
+                        "**Scalar Multiple of Inverse:** Applying a scalar to an inverse follows a fractional rule. **Example:** $(5A)^{-1} = \\frac{1}{5}A^{-1}$ for any non-zero scalar $k \\in \\mathbb{R} - \\{0\\}$.",
+                        "**Inverse Reversal Law:** Taking the inverse of a multiplied matrix reverses the order. **Example Verification:** $(AB)^{-1} = B^{-1}A^{-1}$."
+                    ]
+                },
+                {
+                    "id": "4.4",
+                    "title": "The 8 Advanced Properties of Determinants",
+                    "content": "To evaluate a determinant without manual expansion, you must utilize these specific algebraic shortcuts to manipulate the rows and columns. ",
+                    "list_title": "The 8 Rules & Application Examples:",
+                    "list_items": [
+                        "**Property 1 (Transpose):** The determinant of a matrix and its transpose are identical. **Example:** $|A| = |A^t|$.",
+                        "**Property 2 (Swapping):** Interchanging two rows/columns changes the sign without altering the numerical value. **Example:** Swapping Row 1 and Row 2 makes the determinant negative: $-|A|$.",
+                        "**Property 3 (Identical Rows/Cols):** If two rows or columns are perfectly identical, the determinant evaluates instantly to zero. **Example:** If Row 1 is $[1, 2, 3]$ and Row 3 is $[1, 2, 3]$, $|A| = 0$.",
+                        "**Property 4 (Zero Rows/Cols):** If all elements of a row or column are zero, the determinant is zero. **Example:** If Column 2 is $[0, 0, 0]^t$, then $|A| = 0$.",
+                        "**Property 5 (Scalar Multiplication):** If a row/column is multiplied by $k$, the overall determinant $|A|$ is multiplied by $k$. **Example:** Multiplying Row 1 by 3 means the new determinant is $3|A|$.",
+                        "**Property 6 (Sum Splitting):** If elements of a row/col are expressed as the sum of two terms, $|A|$ splits into the sum of two matrices.",
+                        "**Property 7 (Proportionality):** If the elements of one row/col are a constant multiple $k$ of another, $|A| = 0$. **Example:** If Row 2 is exactly twice Row 1 ($R_2 = 2R_1$), the determinant is zero.",
+                        "**Property 8 (Row Operations):** Adding a constant multiple of one row/col to another leaves $|A|$ completely unaltered. **Example:** The operation $R_1 + 2R_2$ does not change the determinant."
+                    ]
+                },
+                {
+                    "id": "4.5",
+                    "title": "Self-Assessment: Determinants & Inversion",
+                    "content": "Verify your comprehension of determinant evaluation and inversion algebra.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "Calculate the determinant of the 2x2 matrix: Row 1 = [5, 2], Row 2 = [3, 4].",
+                        "Explain the algorithmic difference between finding the Adjoint of a 2x2 matrix versus a 3x3 matrix.",
+                        "If you are given a 3x3 Identity matrix ($I$), what is its determinant according to the special matrices rule? Explain why.",
+                        "Why is it mathematically impossible to calculate $A^{-1}$ for a Singular matrix based on the inversion formula?",
+                        "According to Property 8, what happens to the overall value of a determinant if you multiply Row 1 by 3 and add the result to Row 2?"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Elementary Operations & Echelon Reductions",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "Elementary Row Operations & Equivalency",
+                    "content": "Row and column operations are fundamental in matrix theory, especially for solving systems of linear equations. If a matrix B is obtained from A by performing elementary row operations, B is called 'row equivalent' to A, symbolically written as $B \\sim^R A$.",
+                    "list_title": "The Three Operations with 3x3 Examples:",
+                    "list_items": [
+                        "**Interchange ($R_i \\leftrightarrow R_j$):** Swapping any two rows. **Example:** $\\begin{bmatrix} 3 & 2 & 1 \\\\ 1 & 4 & -1 \\\\ 2 & 3 & 0 \\end{bmatrix} \\sim^R \\begin{bmatrix} 1 & 4 & -1 \\\\ 3 & 2 & 1 \\\\ 2 & 3 & 0 \\end{bmatrix}$ by $R_1 \\leftrightarrow R_2$.",
+                        "**Scalar Multiplication ($k R_i$):** Multiplying a row by a non-zero scalar $k$. **Example:** $\\begin{bmatrix} 1 & 4 & -3 \\\\ 0 & 2 & 5 \\\\ 1 & 3 & 7 \\end{bmatrix} \\sim^R \\begin{bmatrix} 2 & 8 & -6 \\\\ 0 & 2 & 5 \\\\ 1 & 3 & 7 \\end{bmatrix}$ by $2R_1$.",
+                        "**Addition of a Multiple ($R_i + kR_j$):** Adding a multiple of one row to another. **Example:** $\\begin{bmatrix} 1 & 2 & 1 \\\\ 2 & -1 & 3 \\\\ 4 & 5 & 6 \\end{bmatrix} \\sim^R \\begin{bmatrix} 1 & 2 & 1 \\\\ 4 & 3 & 5 \\\\ 4 & 5 & 6 \\end{bmatrix}$ by $R_2 + 2R_1$."
+                    ]
+                },
+                {
+                    "id": "5.2",
+                    "title": "Echelon vs. Reduced Echelon Forms",
+                    "content": "Applying these operations reduces matrices into strict structural forms required by computer algorithms. ",
+                    "list_title": "Curriculum Definitions & Examples:",
+                    "list_items": [
+                        "**(Row) Echelon Form:** Requires three conditions: (i) The first non-zero entry in any row is 1 (leading entry). (ii) All entries directly below the leading entry must be zeros. (iii) Every non-zero row precedes every zero row.",
+                        "**Echelon Example:** $\\begin{bmatrix} 1 & 5 & -1 & 2 \\\\ 0 & 0 & 1 & 5 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$ is in echelon form.",
+                        "**Reduced Echelon Form:** Meets all echelon conditions, with one strict addition: ALL elements in the column containing a leading 1 must be zero except that leading 1 (both above and below it).",
+                        "**Reduced Echelon Example:** $\\begin{bmatrix} 0 & 1 & 0 & 0 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$ is in reduced echelon form."
+                    ]
+                },
+                {
+                    "id": "5.3",
+                    "title": "Algorithmic Reduction: Step-by-Step Example",
+                    "content": "The curriculum requires manual execution of these reductions. Here is the official textbook algorithmic reduction of a $3 \\times 4$ matrix $A$ to Echelon form.",
+                    "formula": "Initial State: $A = \\begin{bmatrix} 2 & 3 & -1 & 4 \\\\ 1 & -1 & -2 & -3 \\\\ 3 & -1 & 3 & 2 \\end{bmatrix}$",
+                    "list_title": "The Reduction Sequence:",
+                    "list_items": [
+                        "**Step 1:** Establish a leading 1 in $R_1$ by executing $R_1 \\leftrightarrow R_2 \\implies \\begin{bmatrix} 1 & -1 & -2 & -3 \\\\ 2 & 3 & -1 & 4 \\\\ 3 & -1 & 3 & 2 \\end{bmatrix}$.",
+                        "**Step 2:** Zero out elements below the first leading 1 using $R_2 + (-2)R_1$ and $R_3 + (-3)R_1 \\implies \\begin{bmatrix} 1 & -1 & -2 & -3 \\\\ 0 & 5 & 3 & 10 \\\\ 0 & 2 & 9 & 11 \\end{bmatrix}$.",
+                        "**Step 3:** Establish the next leading 1 in $R_2$ via $\\frac{1}{5}R_2 \\implies \\begin{bmatrix} 1 & -1 & -2 & -3 \\\\ 0 & 1 & \\frac{3}{5} & 2 \\\\ 0 & 2 & 9 & 11 \\end{bmatrix}$.",
+                        "**Step 4:** Zero out the element below the second leading 1 using $R_3 + (-2)R_2 \\implies \\begin{bmatrix} 1 & -1 & -2 & -3 \\\\ 0 & 1 & \\frac{3}{5} & 2 \\\\ 0 & 0 & \\frac{39}{5} & 7 \\end{bmatrix}$.",
+                        "**Step 5:** Finalize the last leading 1 in $R_3$ via $\\frac{5}{39}R_3 \\implies \\begin{bmatrix} 1 & -1 & -2 & -3 \\\\ 0 & 1 & \\frac{3}{5} & 2 \\\\ 0 & 0 & 1 & \\frac{35}{39} \\end{bmatrix}$."
+                    ]
+                },
+                {
+                    "id": "5.4",
+                    "title": "Recognizing Rank & Inversion via Operations (3x3)",
+                    "content": "Once reduced, we can identify matrix rank and compute inverses using these exact same operations on an Augmented matrix format.",
+                    "formula": "Inversion via Augmented Setup: $[A | I] \\sim^R [I | A^{-1}]$",
+                    "list_title": "Rank Verification & 3x3 Inversion:",
+                    "list_items": [
+                        "**Calculating Rank:** The rank is the total number of non-zero rows remaining after reaching Echelon form. In the previous Step 5 example, there are 3 non-zero rows, so the Rank = 3.",
+                        "**3x3 Inversion Setup:** To find the inverse of a $3 \\times 3$ matrix $A$, append a $3 \\times 3$ Identity matrix to its right: $[A | I] = \\left[ \\begin{array}{ccc|ccc} 1 & 1 & 1 & 1 & 0 & 0 \\\\ 0 & 1 & 2 & 0 & 1 & 0 \\\\ 0 & 0 & 1 & 0 & 0 & 1 \\end{array} \\right]$.",
+                        "**Algorithmic Execution:** You must apply row operations to turn the left side into Identity. Execute $R_1 - R_2 \\implies \\left[ \\begin{array}{ccc|ccc} 1 & 0 & -1 & 1 & -1 & 0 \\\\ 0 & 1 & 2 & 0 & 1 & 0 \\\\ 0 & 0 & 1 & 0 & 0 & 1 \\end{array} \\right]$.",
+                        "**Final Extraction:** Execute $R_1 + R_3$ and $R_2 - 2R_3$. The left side becomes $I$, and the right side becomes $A^{-1} = \\begin{bmatrix} 1 & -1 & 1 \\\\ 0 & 1 & -2 \\\\ 0 & 0 & 1 \\end{bmatrix}$."
+                    ]
+                },
+                {
+                    "id": "5.5",
+                    "title": "Self-Assessment: Reductions & Operations",
+                    "content": "Evaluate your understanding of algorithmic transformations and constraints.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "Look at the matrix $\\begin{bmatrix} 0 & 1 & 1 & 5 \\\\ 0 & 1 & 6 & -2 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$. According to the notes, why is this strictly NOT in echelon form?",
+                        "In the official reduction example, why did the algorithm execute $R_1 \\leftrightarrow R_2$ as the very first step?",
+                        "If you apply the scalar multiplication operation $\\frac{1}{2}R_2$ to the matrix $\\begin{bmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 0 & 0 & 1 \\end{bmatrix}$, what is the resulting matrix?",
+                        "Explain the structural difference between Echelon form and Reduced Echelon form regarding the elements positioned *above* the leading 1."
+                    ]
+                }
+            ]
+        }
+    ]
+}
