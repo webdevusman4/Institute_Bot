@@ -7,9 +7,9 @@
             "title": "Module 1: Matrix Fundamentals & Core Architecture",
             "subtopics": [
                 {
-                    "id": "1.1.1",
+                    "id": "1.1",
                     "title": "Introduction and Origins of Matrices",
-                    "content": "Before executing complex matrix operations, it is essential to understand the origin and purpose of this mathematical structure. The term 'Matrix' is derived from a Latin word meaning a place where something develops or originates. The concept was pioneered by J.J. Sylvester (1814-1897), a British mathematician who first formed squares containing rows and columns extracted from a rectangular arrangement of objects, coining the term 'matrix'.  Arthur Cayley (1821-1895) later developed the formal theory of matrices and integrated it into algebra.",
+                    "content": "Before executing complex matrix operations, it is essential to understand the origin and purpose of this mathematical structure. The term 'Matrix' is derived from a Latin word meaning a place where something develops or originates. The concept was pioneered by J.J. Sylvester (1814-1897), a British mathematician who first formed squares containing rows and columns extracted from a rectangular arrangement of objects, coining the term 'matrix'. Arthur Cayley (1821-1895) later developed the formal theory of matrices and integrated it into algebra.",
                     "list_title": "Real-World Applications:",
                     "list_items": [
                         "**System Solving:** Matrices are fundamentally used to solve systems of linear equations.",
@@ -17,9 +17,9 @@
                     ]
                 },
                 {
-                    "id": "1.1.2",
+                    "id": "1.2",
                     "title": "Matrix Definition & Formal Notation",
-                    "content": "A matrix is formally defined as a rectangular array of numbers, symbols, or expressions, arranged systematically in horizontal rows and vertical columns, and enclosed within square brackets $[ \\quad ]$ or parenthesis $( \\quad )$. Matrices are typically denoted by capital letters of the English alphabet (e.g., $A, B, C$), whereas small letters or numbers denote their internal elements or entries. ",
+                    "content": "A matrix is formally defined as a rectangular array of numbers, symbols, or expressions, arranged systematically in horizontal rows and vertical columns, and enclosed within square brackets $[ \\quad ]$ or parenthesis $( \\quad )$. Matrices are typically denoted by capital letters of the English alphabet (e.g., $A, B, C$), whereas small letters or numbers denote their internal elements or entries.",
                     "formula": "General Form: $A = [a_{ij}]_{(m \\times n)}$ where $i = 1, 2, 3, ..., m$ and $j = 1, 2, 3, ..., n$",
                     "list_title": "Understanding the Structural Grid:",
                     "list_items": [
@@ -28,7 +28,7 @@
                     ]
                 },
                 {
-                    "id": "1.1.3",
+                    "id": "1.3",
                     "title": "Order (Dimension) of a Matrix",
                     "content": "The computational size of a matrix is strictly defined by its 'Order' or 'Dimension'. This dictates the memory allocation required to process the matrix array in computer science.",
                     "formula": "Order = $m \\times n$ (Read aloud as 'm by n')",
@@ -40,7 +40,7 @@
                     ]
                 },
                 {
-                    "id": "1.1.4",
+                    "id": "1.4",
                     "title": "Requirements for Matrix Equality",
                     "content": "In matrix algebra, equality is an absolute and strict condition. Two matrices, $A$ and $B$, are said to be equal (written as $A = B$) only if they perfectly satisfy two mandatory constraints.",
                     "list_title": "The Two Constraints of Equality:",
@@ -52,7 +52,7 @@
                     ]
                 },
                 {
-                    "id": "1.1.5",
+                    "id": "1.5",
                     "title": "Self-Assessment: Fundamentals",
                     "content": "Evaluate your understanding of historical context, matrix notation, and structural rules.",
                     "list_title": "Review Questions:",
@@ -85,7 +85,7 @@
                 {
                     "id": "2.2",
                     "title": "Diagonal & Scalar Architectures",
-                    "content": "Square matrices can have highly specific internal structures based on their main diagonal. ",
+                    "content": "Square matrices can have highly specific internal structures based on their main diagonal.",
                     "list_title": "Diagonal Variations & Curriculum Notes:",
                     "list_items": [
                         "**Diagonal Matrix:** A square matrix where all elements *outside* the main diagonal are strictly zero. **Example:** $A = \\begin{bmatrix} 2 & 0 \\\\ 0 & 5 \\end{bmatrix}$. **NOTE:** All diagonal matrices are both upper triangular and lower triangular.",
@@ -110,7 +110,7 @@
                 {
                     "id": "2.4",
                     "title": "Symmetry & Skew-Symmetry Constraints",
-                    "content": "Symmetry in matrices defines how data mirrors itself across the main diagonal. ",
+                    "content": "Symmetry in matrices defines how data mirrors itself across the main diagonal.",
                     "list_title": "Symmetry Definitions & Notes:",
                     "list_items": [
                         "**Symmetric Matrix:** A square matrix that perfectly equals its own transpose ($A = A^t$). **Example:** $A = \\begin{bmatrix} 1 & 7 \\\\ 7 & 4 \\end{bmatrix}$.",
@@ -136,7 +136,7 @@
                 {
                     "id": "2.6",
                     "title": "Complex Spaces: Hermitian & Skew-Hermitian",
-                    "content": "When dealing with matrices containing complex numbers, standard transpose rules evolve to incorporate complex conjugates. ",
+                    "content": "When dealing with matrices containing complex numbers, standard transpose rules evolve to incorporate complex conjugates.",
                     "list_title": "Complex Symmetry & Notes:",
                     "list_items": [
                         "**NOTE ON HERMITIAN TRANSPOSE:** If $A$ is any square matrix over $\\mathbb{C}$, then $(\\overline{A})^t = (A^t)$.",
@@ -191,7 +191,7 @@
                 {
                     "id": "3.3",
                     "title": "Matrix Multiplication (3x3 and Complex)",
-                    "content": "Multiplying two matrices is not an element-by-element operation. It relies on calculating the dot product of the rows of the first matrix against the columns of the second. The curriculum requires mastery of this up to $3 \\times 3$ matrices containing both real and complex entries. ",
+                    "content": "Multiplying two matrices is not an element-by-element operation. It relies on calculating the dot product of the rows of the first matrix against the columns of the second. The curriculum requires mastery of this up to $3 \\times 3$ matrices containing both real and complex entries.",
                     "list_title": "Multiplication Constraints & Properties:",
                     "list_items": [
                         "**The Compatibility Constraint:** Two matrices $A$ and $B$ can only be multiplied to form $AB$ if the number of *columns* in $A$ exactly equals the number of *rows* in $B$. If $A$ is $m \\times n$ and $B$ is $n \\times p$, the resulting matrix will have an order of $m \\times p$.",
@@ -231,7 +231,7 @@
                 {
                     "id": "4.1",
                     "title": "Determinant Fundamentals: 2x2, Minors, & Cofactors",
-                    "content": "A determinant is a scalar value uniquely associated with a square matrix, serving as a critical indicator of the matrix's mathematical properties. Before evaluating complex 3x3 matrices using minors and cofactors, we must establish the baseline formulas for smaller matrices. ",
+                    "content": "A determinant is a scalar value uniquely associated with a square matrix, serving as a critical indicator of the matrix's mathematical properties. Before evaluating complex 3x3 matrices using minors and cofactors, we must establish the baseline formulas for smaller matrices.",
                     "formula": "2x2 Determinant: If $A = \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$, then $|A| = ad - bc$",
                     "list_title": "Core Concepts & Examples:",
                     "list_items": [
@@ -270,7 +270,7 @@
                 {
                     "id": "4.4",
                     "title": "The 8 Advanced Properties of Determinants",
-                    "content": "To evaluate a determinant without manual expansion, you must utilize these specific algebraic shortcuts to manipulate the rows and columns. ",
+                    "content": "To evaluate a determinant without manual expansion, you must utilize these specific algebraic shortcuts to manipulate the rows and columns.",
                     "list_title": "The 8 Rules & Application Examples:",
                     "list_items": [
                         "**Property 1 (Transpose):** The determinant of a matrix and its transpose are identical. **Example:** $|A| = |A^t|$.",
@@ -316,7 +316,7 @@
                 {
                     "id": "5.2",
                     "title": "Echelon vs. Reduced Echelon Forms",
-                    "content": "Applying these operations reduces matrices into strict structural forms required by computer algorithms. ",
+                    "content": "Applying these operations reduces matrices into strict structural forms required by computer algorithms.",
                     "list_title": "Curriculum Definitions & Examples:",
                     "list_items": [
                         "**(Row) Echelon Form:** Requires three conditions: (i) The first non-zero entry in any row is 1 (leading entry). (ii) All entries directly below the leading entry must be zeros. (iii) Every non-zero row precedes every zero row.",
@@ -362,6 +362,131 @@
                         "In the official reduction example, why did the algorithm execute $R_1 \\leftrightarrow R_2$ as the very first step?",
                         "If you apply the scalar multiplication operation $\\frac{1}{2}R_2$ to the matrix $\\begin{bmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 0 & 0 & 1 \\end{bmatrix}$, what is the resulting matrix?",
                         "Explain the structural difference between Echelon form and Reduced Echelon form regarding the elements positioned *above* the leading 1."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "title": "Module 6: Linear Systems & Algorithmic Solutions",
+            "subtopics": [
+                {
+                    "id": "6.1",
+                    "title": "System Classifications: Homogeneous vs. Non-Homogeneous",
+                    "content": "A system of linear equations can be represented algebraically in the matrix form $AX = B$, where $A$ is the coefficient matrix, $X$ is the variable column matrix, and $B$ is the constants column matrix.",
+                    "formula": "The Matrix Equation: $AX = B$",
+                    "list_title": "System Types & Examples:",
+                    "list_items": [
+                        "**Homogeneous System:** If the constants matrix is strictly a Null matrix ($B = O$), the system is homogeneous. **Example:** $3x - 2y = 0$ and $7x - 5y = 0$.",
+                        "**Non-Homogeneous System:** If the constants matrix is NOT a Null matrix ($B \\neq O$), the system is non-homogeneous. **Example:** $3x - 2y = 5$ and $7x - 5y = 13$."
+                    ]
+                },
+                {
+                    "id": "6.2",
+                    "title": "Consistency Constraints & The Augmented Matrix",
+                    "content": "A system is 'Consistent' if it has at least one valid solution, and 'Inconsistent' if it has no solution. Software algorithms verify consistency by evaluating the Rank of the Augmented Matrix $A_b$ (which combines $A$ and $B$).",
+                    "list_title": "The Three Rank Criteria:",
+                    "list_items": [
+                        "**Unique Solution (Consistent):** If $Rank(A) = Rank(A_b) = n$ (where $n$ is the number of unknowns), the system is consistent and has exactly one unique solution.",
+                        "**Infinite Solutions (Consistent):** If $Rank(A) = Rank(A_b) < n$, the system is consistent but possesses infinitely many solutions.",
+                        "**No Solution (Inconsistent):** If $Rank(A) \\neq Rank(A_b)$, the system is fundamentally inconsistent and mathematically impossible to solve."
+                    ]
+                },
+                {
+                    "id": "6.3",
+                    "title": "Solving Homogeneous Systems ($AX = O$)",
+                    "content": "Homogeneous systems are unique because they are always guaranteed to have at least one solution: the origin point $(0,0,0)$.",
+                    "list_title": "Trivial vs. Non-Trivial Rules:",
+                    "list_items": [
+                        "**Trivial Solution:** The solution where variables $x=0, y=0, z=0$. It is the *only* solution if the coefficient matrix is Non-Singular ($|A| \\neq 0$, or $Rank(A) = n$).",
+                        "**Non-Trivial Solutions:** If the determinant of the coefficient matrix is exactly zero ($|A| = 0$), or if $Rank(A) < n$, the system collapses and yields infinitely many non-trivial solutions alongside the trivial one."
+                    ]
+                },
+                {
+                    "id": "6.4",
+                    "title": "Algorithmic Solutions 1: Inversion & Cramer's Rule",
+                    "content": "For non-homogeneous systems, these two methods use determinant theory and inverses to isolate variables. Both strictly require a non-singular coefficient matrix ($|A| \\neq 0$).",
+                    "list_title": "Formulas & Applicability:",
+                    "list_items": [
+                        "**Matrix Inversion Method:** Isolates the variable matrix by multiplying both sides by the inverse. **Formula:** $X = A^{-1}B$. **Note:** This only works if the system has a unique solution.",
+                        "**Cramer's Rule:** Evaluates variables using ratios of determinants. You replace a specific column in $A$ with the constants matrix $B$ to form temporary matrices $A_1, A_2, A_3$.",
+                        "**Cramer's Formulas:** $x = \\frac{|A_1|}{|A|}$, $y = \\frac{|A_2|}{|A|}$, and $z = \\frac{|A_3|}{|A|}$."
+                    ]
+                },
+                {
+                    "id": "6.5",
+                    "title": "Algorithmic Solutions 2: Gauss & Gauss-Jordan Methods",
+                    "content": "These methods rely entirely on elementary row operations applied to the Augmented Matrix $[A|B]$. They are computationally superior for larger systems because they do not require finding an inverse or calculating massive determinants.",
+                    "list_title": "The Reduction Strategies:",
+                    "list_items": [
+                        "**Gauss Elimination:** Reduces the augmented matrix strictly into **Echelon Form**. Once reduced, the equations are extracted, and variables are found using a reverse-algebra technique known as 'back-substitution'.",
+                        "**Gauss-Jordan Method:** The modified, advanced version. It reduces the augmented matrix all the way into **Reduced Echelon Form** (Identity Matrix). The constants column $B$ perfectly transforms into the final variable answers without needing back-substitution."
+                    ]
+                },
+                {
+                    "id": "6.6",
+                    "title": "Self-Assessment: Linear Systems",
+                    "content": "Test your ability to classify and solve matrix systems constraints.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "If an Augmented Matrix $A_b$ has a Rank of 3, but the standard coefficient matrix $A$ has a Rank of 2, what is the exact state of the system?",
+                        "Why do Cramer's Rule and the Matrix Inversion Method automatically fail if the determinant of matrix $A$ is exactly 0?",
+                        "Explain the algorithmic difference between the final calculation step of Gauss Elimination versus the Gauss-Jordan Method.",
+                        "According to the official notes, under what two specific conditions will a Homogeneous system yield non-trivial solutions?"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "title": "Module 7: Applications & Advanced Properties",
+            "subtopics": [
+                {
+                    "id": "7.1",
+                    "title": "Geometric Applications of Determinants",
+                    "content": "Determinants are not just algebraic calculation tools; they are frequently used to solve geometric coordinate problems, such as finding the area of a polygon or verifying if points lie on the same trajectory.",
+                    "formula": "Area of Triangle = $\\frac{1}{2} \\begin{vmatrix} x_1 & y_1 & 1 \\\\ x_2 & y_2 & 1 \\\\ x_3 & y_3 & 1 \\end{vmatrix}$",
+                    "list_title": "Geometric Rules & Examples:",
+                    "list_items": [
+                        "**Area Calculation:** Calculated using the determinant of the coordinates. If the evaluated determinant is negative, you must take the absolute value, as physical area cannot be negative.",
+                        "**Condition of Collinearity:** Three points are considered collinear (lying on the exact same straight line) strictly if the area of the triangle formed by them evaluates to exactly zero.",
+                        "**Example Execution:** For a triangle with vertices $A(1, 2)$, $B(4, 2)$, and $C(3, 5)$, the area is calculated as $\\frac{1}{2} [1(2-5) - 2(4-3) + 1(20-6)] = \\frac{1}{2} [-3 - 2 + 14] = \\frac{9}{2} = 4.5$ sq units."
+                    ]
+                },
+                {
+                    "id": "7.2",
+                    "title": "Advanced Matrix Types: Orthogonal & Unitary",
+                    "content": "In advanced engineering and physics, matrices with specific transpose and conjugate properties are utilized to represent spatial rotations and quantum states.",
+                    "list_title": "Advanced Definitions & Constraints:",
+                    "list_items": [
+                        "**Conjugate of a Matrix ($\\bar{A}$):** A matrix obtained by replacing every single element with its complex conjugate (e.g., $3+i$ becomes $3-i$).",
+                        "**Orthogonal Matrix:** A square real matrix $A$ where its product with its transpose equals the Identity matrix ($AA^t = I$). **Rule:** This strictly implies that its transpose is equal to its inverse ($A^t = A^{-1}$).",
+                        "**Unitary Matrix:** A square complex matrix $A$ where the product of its conjugate transpose and itself equals the Identity matrix ($(\\bar{A})^t A = I$). **Rule:** This implies that $(\\bar{A})^t = A^{-1}$."
+                    ]
+                },
+                {
+                    "id": "7.3",
+                    "title": "Real-World Mathematical Modeling",
+                    "content": "Systems of linear equations can be mapped to real-world data constraints, such as financial modeling or resource allocation, and then solved algorithmically using matrix algebra.",
+                    "formula": "Data Mapping: $AX = B$",
+                    "list_title": "Financial Modeling Example:",
+                    "list_items": [
+                        "**The Problem Constraint:** An investor places $\\$10,000$ into two schemes paying $5\\%$ and $7\\%$ interest respectively. The total interest earned is $\\$600$. Find the exact amount invested in each scheme.",
+                        "**Equation 1 (Total Principal):** Let $x$ and $y$ be the investments. Therefore, $x + y = 10000$.",
+                        "**Equation 2 (Total Yield):** The interest equation is $0.05x + 0.07y = 600$.",
+                        "**Matrix Execution:** This translates directly to the system $\\begin{bmatrix} 1 & 1 \\\\ 0.05 & 0.07 \\end{bmatrix} \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} 10000 \\\\ 600 \\end{bmatrix}$, which the computer can now solve instantly using Matrix Inversion or Cramer's Rule."
+                    ]
+                },
+                {
+                    "id": "7.4",
+                    "title": "Self-Assessment: Applications & Advanced States",
+                    "content": "Evaluate your understanding of geometric determinant applications and complex matrix definitions.",
+                    "list_title": "Review Questions:",
+                    "list_items": [
+                        "If the determinant formula for the area of a triangle evaluates to $-14$, what is the actual geometric area of that triangle?",
+                        "Explain the conceptual difference between an Orthogonal matrix and a Unitary matrix in terms of real versus complex numbers.",
+                        "If a $3 \\times 3$ matrix $A$ is known to be an Orthogonal matrix, what is the computationally fastest way to find its inverse $A^{-1}$ without calculating any minors or cofactors?",
+                        "If three coordinates form a matrix that evaluates to an area of exactly $0$, what geometric property do those three points share?"
                     ]
                 }
             ]

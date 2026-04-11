@@ -1,0 +1,419 @@
+{
+    "title": "Java Fundamentals: Strings",
+    "description": "A comprehensive mastery course covering String memory architecture, the 5 creation methods, and essential utility operations.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: String Fundamentals & Creation Methods",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Introduction & Origins of the Java String",
+                    "content": "Unlike simple numbers or booleans, a String in Java is not a primitive data type; it is a full-blown Object. Introduced in the very first version of Java (JDK 1.0) in 1995, the String class was designed to handle text manipulation securely and efficiently. The most critical architectural decision made by Java's creators was making standard Strings **Immutable**—meaning once a String is created in the computer's memory, its text can never be altered.",
+                    "code_block": "// Strings are Objects, usually holding text like passwords, names, or file paths.\nString greeting = \"Welcome to the system.\";\n\n// Immutability rule: This does NOT change the original string.\n// It destroys the old one and creates a brand new one in memory!\ngreeting = greeting + \" User 1\";",
+                    "callout_title": "The Immutability Architecture 🏛️",
+                    "callout_text": "Because Strings are objects, they possess built-in methods. But remember: changing a String creates a new object in memory. This was done intentionally by Java's creators for extreme security and multi-threading safety.",
+                    "list_title": "Core String Concepts:",
+                    "list_items": [
+                        "**Object Nature:** You can call built-in functions (like .length() or .toUpperCase()) directly on the text.",
+                        "**Multiple Creation Avenues:** Because text is so universally common, Java provides 5 distinct ways to build a String, each solving a different computer memory problem."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "Method 1: The Literal (The VIP Pool)",
+                    "content": "The String Literal is the standard, everyday way of making text using double quotes. It is the most memory-efficient method because Java places these strings inside a highly optimized area of RAM called the **String Constant Pool**. If multiple variables use the exact same text, Java reuses the same memory address rather than building duplicates.",
+                    "code_block": "// Example 1: Standard literal creation\nString playerOne = \"Batman\";\n\n// Example 2: Proving the VIP Pool memory reuse\nString playerTwo = \"Batman\";\n// If we compare memory addresses using ==, it returns TRUE!\nSystem.out.println(playerOne == playerTwo); ",
+                    "callout_title": "Pro-Tip 💡",
+                    "callout_text": "This should be your default method for creating text 99% of the time in Java. Never use the 'new' keyword for standard text unless you have a specific, advanced architectural reason.",
+                    "list_title": "Literal Mechanics:",
+                    "list_items": [
+                        "**Syntax:** Enclosed in simple double quotes \" \".",
+                        "**Memory Efficiency:** Automatically reuses memory if the exact same text already exists in the VIP pool."
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "title": "Method 2: The 'new' Object (Memory Bypass)",
+                    "content": "Using Java's standard `new` keyword forces the engine to carve out brand new space in the computer's general RAM (the Heap). This deliberately bypasses the VIP String Pool, ensuring the new String gets a completely unique memory address, even if identical text already exists elsewhere.",
+                    "code_block": "// Example 1: Forcing a new memory allocation\nString secureToken = new String(\"Alpha-77\");\n\n// Example 2: Proving the memory bypass\nString poolToken = \"Alpha-77\";\n// This returns FALSE! Even though the text is the same, they live in different RAM locations.\nSystem.out.println(secureToken == poolToken);",
+                    "callout_title": "The Memory Trap ⚠️",
+                    "callout_text": "Using 'new' forces Java to allocate fresh heap memory. If you use this inside a loop to create identical strings, you will waste massive amounts of RAM and ruin the performance optimizations built into the JVM.",
+                    "list_title": "New Object Constraints:",
+                    "list_items": [
+                        "**Performance Hit:** It is slightly slower and wastes memory compared to literals.",
+                        "**Use Case:** Only used in highly advanced scenarios where you mathematically require two identical words to have entirely separate physical memory addresses."
+                    ]
+                },
+                {
+                    "id": "1.4",
+                    "title": "Method 3: Text Blocks (Modern Multi-Line)",
+                    "content": "Introduced in modern Java (Java 15+), Text Blocks use triple quotes `\"\"\"` to allow strings to span across multiple lines exactly as you type them. Before this, developers had to manually type `\\n` for every new line and use the `+` symbol to glue massive blocks of text together.",
+                    "code_block": "// Example 1: A multi-line UI message\nString welcomeMenu = \"\"\"\n    --- MAIN MENU ---\n    1. Start Game\n    2. Options\n    3. Quit\n    \"\"\";\n\n// Example 2: Formatting a JSON data payload\nString jsonPayload = \"\"\"\n    {\n        \"username\": \"admin\",\n        \"status\": \"active\"\n    }\n    \"\"\";",
+                    "callout_title": "Version Compatibility 📌",
+                    "callout_text": "Text Blocks require Java 15 or higher. If you are taking a university midterm that uses an older syllabus (like Java 8), you still need to know how to use standard concatenation (+) and '\\n' for new lines!",
+                    "list_title": "Text Block Advantages:",
+                    "list_items": [
+                        "**Human Readability:** The compiler reads the 'Enters' and 'Spaces' exactly as you format them on your screen.",
+                        "**Complex Formats:** Incredibly useful for writing long SQL database queries, JSON data, or HTML templates directly inside Java."
+                    ]
+                },
+                {
+                    "id": "1.5",
+                    "title": "Method 4: Mutable Builders (The Whiteboards)",
+                    "content": "Because standard Strings cannot be changed (Immutability), trying to update a String inside a massive loop will ruin computer performance by creating thousands of abandoned objects. `StringBuilder` and `StringBuffer` act as blank whiteboards, allowing you to dynamically erase, append, and rewrite text in the exact same memory space.",
+                    "code_block": "// Example 1: Using StringBuilder (The fast, standard choice)\nStringBuilder fastBoard = new StringBuilder(\"Bat\");\nfastBoard.append(\"-Man\");\nSystem.out.println(fastBoard.toString()); // Prints: Bat-Man\n\n// Example 2: Using StringBuffer (The thread-safe choice)\nStringBuffer secureBoard = new StringBuffer(\"System \");\nsecureBoard.append(\"Online\"); // Safe for multiple background threads to edit at once",
+                    "callout_title": "The Infinite Loop Trap ⚠️",
+                    "callout_text": "If you ever need to build or modify a String piece-by-piece inside a 'while' or 'for' loop, you MUST use a StringBuilder. Using standard string concatenation (+) inside a loop will crash your app's performance.",
+                    "list_title": "Builder Selection:",
+                    "list_items": [
+                        "**StringBuilder (The Wild West):** Extremely fast, but not safe for multi-threading. Use this for almost all dynamic text building.",
+                        "**StringBuffer (The Bouncer):** Slightly slower, but forces multiple background workers to take turns writing to it so data isn't corrupted by collisions."
+                    ]
+                },
+                {
+                    "id": "1.6",
+                    "title": "Method 5: Raw Character Arrays (Under the Hood)",
+                    "content": "Deep inside the Java engine, a String is just a mathematical array of individual characters (`char`). You can manually create an array of raw characters and feed it into a String constructor to assemble it. This is exactly how Java translates raw internet bytes or file data into readable text.",
+                    "code_block": "// Example 1: Assembling a String from raw parts\nchar[] rawLetters = {'G', 'o', 't', 'h', 'a', 'm'};\nString assembledCity = new String(rawLetters);\n\n// Example 2: Extracting the array back out of a String\nString password = \"Secret\";\nchar[] extractedArray = password.toCharArray();\n// Now we can scramble the array for security!\nextractedArray[0] = '*';",
+                    "callout_title": "Security Best Practice 🛡️",
+                    "callout_text": "When handling highly sensitive data like user passwords, store them in a char[] array rather than a String. Strings cannot be erased from memory until the Garbage Collector decides to run, whereas arrays can be manually scrambled with asterisks (*) instantly.",
+                    "list_title": "Array Operations:",
+                    "list_items": [
+                        "**Data Translation:** Used heavily when reading data streams from networks, APIs, or hard drives.",
+                        "**Low-Level Assembly:** Allows you to interact with text on a byte-by-byte level before presenting it to the user."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: String Utility Methods & Parsing",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "Core Operations: Search & Inspection",
+                    "content": "Before you can manipulate text, you need to know how to look inside it. Java provides several highly optimized methods to check the length of a string, find specific characters, or verify if a certain word exists within a larger sentence.",
+                    "code_block": "String email = \"usman@student.uok.edu.pk\";\n\n// 1. .length() - Returns the total number of characters\nint size = email.length(); // 24\n\n// 2. .charAt() - Finds the letter at a specific index\nchar firstLetter = email.charAt(0); // 'u'\n\n// 3. .contains() - Checks if a sequence exists (Returns boolean)\nboolean isStudent = email.contains(\"student\"); // true\n\n// 4. .indexOf() - Finds the exact numerical position of a character\nint atSymbolIndex = email.indexOf('@'); // 5",
+                    "callout_title": "The Zero-Index Rule 🔢",
+                    "callout_text": "Just like Arrays, Java Strings are 'Zero-Indexed'. This means the very first letter is at position 0, not 1. If a String has a length of 5, its last character is at index 4. Trying to access index 5 will crash your program with a 'StringIndexOutOfBoundsException'.",
+                    "list_title": "Inspection Methods:",
+                    "list_items": [
+                        "**.length():** Crucial for setting up the limits of a `for` loop.",
+                        "**.charAt(int index):** The standard way to read a string one letter at a time.",
+                        "**.indexOf(String str):** Returns `-1` if the text is not found, making it a great conditional check."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "Core Operations: Extraction & Slicing",
+                    "content": "Often, you only need a specific piece of a larger String—like extracting just the username from a full email address, or breaking a comma-separated list into individual words. This is called 'slicing' or 'extracting'.",
+                    "code_block": "String data = \"Usman:SoftwareEngineering:Karachi\";\n\n// 1. .substring(start, end) - Extracts a chunk of text\n// Grabs characters from index 0 up to (but NOT including) index 5\nString name = data.substring(0, 5); // \"Usman\"\n\n// 2. .substring(start) - Grabs everything from the start point to the very end\nString location = data.substring(26); // \"Karachi\"\n\n// 3. .split(delimiter) - Chops the string into a String[] array\nString[] parts = data.split(\":\");\nSystem.out.println(parts[1]); // \"SoftwareEngineering\"",
+                    "callout_title": "The Substring Trap ✂️",
+                    "callout_text": "When using .substring(startIndex, endIndex), the start index is INCLUSIVE, but the end index is EXCLUSIVE. If you ask for .substring(0, 5), Java grabs indexes 0, 1, 2, 3, and 4. It stops exactly right before index 5!",
+                    "list_title": "Extraction Methods:",
+                    "list_items": [
+                        "**.substring():** The absolute most common extraction tool. Heavily tested on midterms.",
+                        "**.split():** The ultimate tool for processing CSV (Comma Separated Value) files or structured data formats."
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "Core Operations: Modification & Formatting",
+                    "content": "When accepting input from a user, you can never trust that they formatted it correctly. They might leave accidental spaces, or use lowercase letters when you need uppercase. These methods allow you to standardize and clean the data.",
+                    "code_block": "String rawInput = \"   hello WORLD   \";\n\n// 1. .trim() - Destroys accidental spaces at the start and end\nString clean = rawInput.trim(); // \"hello WORLD\"\n\n// 2. .toUpperCase() & .toLowerCase() - Forces case formatting\nString upper = clean.toUpperCase(); // \"HELLO WORLD\"\n\n// 3. .replace() - Swaps specific characters or words\nString fixed = upper.replace(\"WORLD\", \"USMAN\"); // \"HELLO USMAN\"",
+                    "callout_title": "The Ghost Variable Trap 👻",
+                    "callout_text": "Remember Immutability! Writing `rawInput.trim();` on its own does absolutely nothing to the original variable. You MUST reassign the result to save the changes: `rawInput = rawInput.trim();`",
+                    "list_title": "Formatting Methods:",
+                    "list_items": [
+                        "**.trim():** Always run this on user input (like passwords or usernames) to prevent invisible spacebar errors.",
+                        "**.replace(old, new):** Scans the entire string and replaces every single instance of the target word."
+                    ]
+                },
+                {
+                    "id": "2.4",
+                    "title": "Core Operations: Equality & Comparison",
+                    "content": "Comparing Strings in Java is fundamentally different than comparing simple integers. Because Strings are Objects living in different parts of RAM, using the standard math operator (`==`) will check their memory addresses, not their actual text, leading to massive logic bugs.",
+                    "code_block": "String password = \"admin123\";\nString userInput = new String(\"admin123\");\n\n// WRONG: This checks if they are the exact same object in RAM (Returns FALSE)\nif (password == userInput) { ... }\n\n// RIGHT: This checks if the actual letters match (Returns TRUE)\nif (password.equals(userInput)) { ... }\n\n// BONUS: Ignores capital/lowercase differences (Returns TRUE for \"ADMIN123\")\nif (password.equalsIgnoreCase(\"ADMIN123\")) { ... }",
+                    "callout_title": "The Midterm Boss 💀",
+                    "callout_text": "This is guaranteed to be a trick question on your exam. If a professor asks what the output of `new String(\"A\") == new String(\"A\")` is, the answer is always FALSE. Always use `.equals()` for text comparison.",
+                    "list_title": "Comparison Methods:",
+                    "list_items": [
+                        "**.equals():** The strictly secure, case-sensitive way to compare text.",
+                        "**.equalsIgnoreCase():** The user-friendly way to compare text (perfect for checking 'Yes' or 'YES' or 'yes').",
+                        "**.compareTo():** Used for alphabetical sorting. Returns 0 if equal, a negative number if the first word comes earlier in the dictionary, and positive if it comes later."
+                    ]
+                },
+                {
+                    "id": "2.5",
+                    "title": "Core Operations: Parsing (The Shapeshifter)",
+                    "content": "If a user types their age into a text box, Java receives it as text (e.g., `\"20\"`). If you try to do math on it (`\"20\" + 5`), Java will glue them together to make `\"205\"`. You must 'Parse' the String to rip the mathematical primitive out of the text.",
+                    "code_block": "String ageText = \"20\";\nString priceText = \"99.99\";\n\n// 1. Integer.parseInt() - Converts text to whole numbers\nint realAge = Integer.parseInt(ageText);\nSystem.out.println(realAge + 5); // Correctly outputs 25\n\n// 2. Double.parseDouble() - Converts text to decimals\ndouble realPrice = Double.parseDouble(priceText);\n\n// 3. String.valueOf() - The Reverse! Converts math back into text\nString booleanText = String.valueOf(true); // \"true\"",
+                    "callout_title": "The Number Format Crash 💥",
+                    "callout_text": "If you try to execute `Integer.parseInt(\"Twenty\")` or `Integer.parseInt(\"20 \")` (with an invisible space), the JVM will violently crash with a 'NumberFormatException'. Always use `.trim()` before parsing!",
+                    "list_title": "Parsing Utilities:",
+                    "list_items": [
+                        "**Integer.parseInt():** Rips integers out of text.",
+                        "**Double.parseDouble():** Rips floating-point decimals out of text.",
+                        "**String.valueOf():** The safest way to convert any primitive (int, double, boolean) into a String."
+                    ]
+                },
+                {
+                    "id": "2.6",
+                    "title": "Reference: The Complete Method Dictionary",
+                    "content": "Beyond the core operational groups, the Java String class contains dozens of highly specific utility methods. You do not need to memorize these for your midterm, but keeping them in your mental dictionary is crucial for advanced Software Engineering.",
+                    "code_block": "// Example: Modern Java 11+ Quality of Life Methods\nString list = String.join(\"-\", \"2026\", \"03\", \"14\"); // \"2026-03-14\"\nString echo = \"Echo \".repeat(3); // \"Echo Echo Echo \"\nboolean empty = \"   \".isBlank(); // true (Smarter than .isEmpty())",
+                    "callout_title": "Do Not Memorize 🛑",
+                    "callout_text": "Senior developers do not memorize this list. They simply know that 'Java probably has a built-in tool for this' and use the IDE's autocomplete (or Google) to find the exact method name when they need it.",
+                    "list_title": "The Extended Library:",
+                    "list_items": [
+                        "**.isEmpty() vs .isBlank():** `.isEmpty()` checks if length is 0. `.isBlank()` (Java 11+) is smarter and returns true even if the string is full of invisible spaces.",
+                        "**.startsWith(prefix) / .endsWith(suffix):** Checks if text begins or ends with a specific sequence (Great for checking if a file ends in '.pdf').",
+                        "**.matches(regex):** The ultimate pattern checker. Uses Regular Expressions to validate complex formats like emails or phone numbers.",
+                        "**.toCharArray():** Breaks the entire String down into a primitive `char[]` array for low-level byte manipulation.",
+                        "**.intern():** An advanced memory management tool that forces a Heap String into the VIP String Constant Pool to save RAM.",
+                        "**.format() / String.format():** Allows you to inject variables directly into text templates using `%s` and `%d` placeholders.",
+                        "**.concat(String str):** An alternative to the `+` operator, used to append one string exactly to the end of another.",
+                        "**.replaceAll(regex, replacement):** Like `.replace()`, but allows you to use complex Regular Expression patterns to find the target words."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: The String Method Dictionary",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Size & Blank Checks: .length(), .isEmpty(), .isBlank()",
+                    "content": "These methods are your first line of defense when validating user input to ensure a String actually contains data before you try to process it.",
+                    "code_block": "String username = \"Usman\";\nString emptySpace = \"   \";\n\n// 1. .length() - Returns the int count of characters\nint size = username.length(); // Returns 5\n\n// 2. .isEmpty() - Only true if length is exactly 0\nboolean noData = emptySpace.isEmpty(); // Returns FALSE (Spaces count as characters!)\n\n// 3. .isBlank() (Java 11+) - True if empty OR only contains spaces\nboolean isGhost = emptySpace.isBlank(); // Returns TRUE",
+                    "callout_title": "The Null Trap ⚠️",
+                    "callout_text": "If a String variable is 'null' (meaning it doesn't exist in memory yet), calling .length() or .isEmpty() will instantly crash your program with a NullPointerException. Always check if (text != null) first!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Use `.length()` to set the limit for `for` loops when reading strings.",
+                        "Use `.isBlank()` over `.isEmpty()` to stop users from bypassing password fields using the spacebar."
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "Character Hunting: .charAt() & .indexOf()",
+                    "content": "These methods allow you to pinpoint exact characters inside the text. One finds the letter based on the index number, and the other finds the index number based on the letter.",
+                    "code_block": "String email = \"usman@gmail.com\";\n\n// 1. .charAt(index) - What letter is at position 0?\nchar firstLetter = email.charAt(0); // Returns 'u'\n\n// 2. .indexOf(String) - At what position does '@' start?\nint atSymbol = email.indexOf(\"@\"); // Returns 5\n\n// 3. .lastIndexOf(String) - Finds the LAST occurrence (reads right-to-left)\nint lastDot = email.lastIndexOf(\".\"); // Returns 11\n\n// 4. .contains(String) - Simple true/false check\nboolean isGmail = email.contains(\"gmail\"); // Returns TRUE",
+                    "callout_title": "The -1 Conditional 💡",
+                    "callout_text": "If .indexOf() cannot find the target word, it doesn't crash; it returns -1. Developers use this in 'if' statements: if (email.indexOf(\"@\") != -1) { // proceed }",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Remember the **Zero-Index Rule**: The first character is always at index 0."
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "Text Slicing: .substring()",
+                    "content": "The absolute most heavily tested String method on university midterms. It rips a smaller chunk of text out of a larger String.",
+                    "code_block": "String record = \"ID-9942-ACTIVE\";\n\n// 1. .substring(startIndex) - Grabs from index to the end\nString status = record.substring(8); // Returns \"ACTIVE\"\n\n// 2. .substring(startIndex, endIndex) - Grabs a specific chunk\n// IMPORTANT: Includes index 3, but STOPS at index 7!\nString idNumber = record.substring(3, 7); // Returns \"9942\"",
+                    "callout_title": "The Exclusive End Index ✂️",
+                    "callout_text": "The second number in .substring(start, end) is EXCLUSIVE. It will not include the character at that final index. It stops exactly one index prior.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "`.substring()` does not change the original string, it returns a brand new one.",
+                        "Passing an index larger than the string's length triggers an OutOfBounds crash."
+                    ]
+                },
+                {
+                    "id": "3.4",
+                    "title": "Data Chopping: .split() & String.join()",
+                    "content": "When dealing with databases or CSV (Comma Separated Value) files, you often need to shatter a single String into an array of smaller Strings, or glue an array back together.",
+                    "code_block": "String csvData = \"Usman,Karachi,SoftwareEngineering\";\n\n// 1. .split(delimiter) - Chops text into an array based on a separator\nString[] parts = csvData.split(\",\");\nSystem.out.println(parts[1]); // Prints \"Karachi\"\n\n// 2. String.join() (Java 8+) - Glues pieces together with a separator\nString glued = String.join(\" | \", \"Java\", \"C++\", \"Python\");\n// Returns \"Java | C++ | Python\"",
+                    "callout_title": "Regex Warning ⚠️",
+                    "callout_text": "The .split() method actually uses Regular Expressions (RegEx) under the hood. If you try to split by a period, like .split(\".\"), it will fail because a period is a special RegEx command. You must escape it like this: .split(\"\\\\.\")",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "`.split()` is the ultimate tool for processing structured data files."
+                    ]
+                },
+                {
+                    "id": "3.5",
+                    "title": "The Judges: .equals() & .equalsIgnoreCase()",
+                    "content": "You can never use the `==` operator to compare the text of two Java Strings because it only checks their physical RAM addresses. You must use the built-in judging methods.",
+                    "code_block": "String dbPassword = \"Admin123\";\nString userInput = new String(\"Admin123\");\n\n// WRONG: Checks memory addresses, not text\nboolean isMatch1 = (dbPassword == userInput); // FALSE\n\n// RIGHT: Checks the exact characters safely\nboolean isMatch2 = dbPassword.equals(userInput); // TRUE\n\n// FORGIVING: Ignores capital/lowercase rules\nboolean isMatch3 = dbPassword.equalsIgnoreCase(\"admin123\"); // TRUE",
+                    "callout_title": "The Yoda Condition 💡",
+                    "callout_text": "To avoid a NullPointerException when checking user input against a known string, put the known string first: \"Admin\".equals(userInput). If userInput is null, this safely returns false instead of crashing!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Always use `.equals()` for passwords or exact ID matching.",
+                        "Use `.equalsIgnoreCase()` for general commands (like checking if the user typed 'Yes', 'yes', or 'YES')."
+                    ]
+                },
+                {
+                    "id": "3.6",
+                    "title": "The Cleaners: .trim(), .strip(), .toLowerCase()",
+                    "content": "User input is notoriously messy. These methods allow you to standardize text formats so your database stays clean. While older Java versions relied on `.trim()`, modern Java (11+) introduced `.strip()` for superior, Unicode-aware cleaning.",
+                    "code_block": "String messyInput = \"   usman@UOK.edu.pk   \";\n\n// 1. .trim() (Legacy) - Strips basic ASCII spaces\nString legacyClean = messyInput.trim(); \n\n// 2. .strip() (Modern Java 11+) - Strips ALL Unicode invisible characters\nString modernClean = messyInput.strip(); \n\n// 3. .toLowerCase() - Forces standard casing for databases\nString finalEmail = modernClean.toLowerCase();\n\n// METHOD CHAINING: Do it all in one line!\nString fastClean = messyInput.strip().toLowerCase();",
+                    "callout_title": "Trim vs Strip 🥊",
+                    "callout_text": "Always use `.strip()` if you are on Java 11 or higher. `.trim()` is considered 'dumb' because it only removes standard spacebar spaces (ASCII 32). If a user pastes an invisible global formatting character, `.trim()` will miss it, but `.strip()` will catch it!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Method chaining (`.strip().toLowerCase()`) is a standard industry practice to keep code clean."
+                    ]
+                },
+                {
+                    "id": "3.7",
+                    "title": "The Swappers: .replace() & .replaceAll()",
+                    "content": "These methods scan the entire String and replace specific characters or sequences with new ones.",
+                    "code_block": "String dialogue = \"I hate bugs. Bugs are the worst.\";\n\n// 1. .replace(old, new) - Swaps exact text (Case-Sensitive!)\nString fixed = dialogue.replace(\"hate\", \"love\"); \n// \"I love bugs. Bugs are the worst.\"\n\n// 2. .replaceAll(regex, new) - Uses Regular Expressions\n// This RegEx [Bb]ugs means \"Find 'Bugs' OR 'bugs'\"\nString safe = dialogue.replaceAll(\"[Bb]ugs\", \"features\");\n// \"I hate features. features are the worst.\"",
+                    "callout_title": "Replace vs ReplaceAll 📌",
+                    "callout_text": "Despite its name, standard .replace() actually replaces ALL occurrences of the target word. The ONLY difference is that .replaceAll() allows you to use complex RegEx pattern coding instead of just exact words.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Useful for censoring bad words, formatting file paths, or fixing typos."
+                    ]
+                },
+                {
+                    "id": "3.8",
+                    "title": "The Translators: String.valueOf() & .toCharArray()",
+                    "content": "These methods act as the bridge between Strings and other primitive data types (like integers, booleans, and character arrays).",
+                    "code_block": "int score = 100;\nboolean isActive = true;\n\n// 1. String.valueOf() - The safest way to turn anything into text\nString scoreText = String.valueOf(score); // \"100\"\nString activeText = String.valueOf(isActive); // \"true\"\n\n// 2. .toCharArray() - Shatters the String into primitive bytes/chars\nString secret = \"Code\";\nchar[] letters = secret.toCharArray(); // ['C', 'o', 'd', 'e']",
+                    "callout_title": "The Concatenation Hack 💡",
+                    "callout_text": "While String.valueOf(100) is the official way to convert an integer to text, many developers use a lazy hack by adding an empty string: String text = 100 + \"\"; (This forces Java to convert the number automatically).",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Use `.toCharArray()` if you need to manually scramble memory for security (like passwords).",
+                        "To go in reverse (Text to Math), remember to use `Integer.parseInt()`."
+                    ]
+                },
+                {
+                    "id": "3.9",
+                    "title": "The Advanced Judges: .compareTo(), .startsWith(), .matches()",
+                    "content": "Moving beyond simple equality checks, these methods allow you to sort strings alphabetically, check their exact boundaries, or validate them against complex security patterns.",
+                    "code_block": "String file = \"report.pdf\";\n\n// 1. .startsWith() & .endsWith() - Boundary checks\nboolean isPDF = file.endsWith(\".pdf\"); // TRUE\n\n// 2. .compareTo() - Alphabetical sorting (Dictionary Order)\nString word1 = \"Apple\";\nString word2 = \"Banana\";\n// Returns a NEGATIVE number because 'A' comes before 'B'\nint sortValue = word1.compareTo(word2); \n\n// 3. .matches(regex) - Advanced security validation\nString pinCode = \"1234\";\n// RegEx: \"^[0-9]{4}$\" means \"Exactly 4 numbers from start to finish\"\nboolean isValidPin = pinCode.matches(\"^[0-9]{4}$\"); // TRUE",
+                    "callout_title": "The Sorting Math 🧮",
+                    "callout_text": "When using .compareTo(), it returns exactly 0 if the words are identical. It returns a negative number if the first word comes earlier in the dictionary, and a positive number if it comes later. This is the backbone of all alphabetizing algorithms!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "**`.endsWith()`** is the absolute best way to check file extensions before uploading them to a server.",
+                        "**`.matches()`** is the industry standard for validating user emails, passwords, and phone numbers using Regular Expressions (RegEx)."
+                    ]
+                },
+                {
+                    "id": "3.10",
+                    "title": "Assembly & Raw Data: .format(), .concat(), .repeat(), .getBytes()",
+                    "content": "These final methods give you ultimate control over how strings are glued together, multiplied, formatted into beautiful templates, or broken down into raw computer bytes for network transmission.",
+                    "code_block": "// 1. String.format() - Injecting variables into clean templates\nString hero = \"Batman\";\nint level = 50;\ndouble health = 98.5;\n\n// The %.1f tells Java to round the decimal to exactly 1 place!\nString profile = String.format(\"Player %s is level %d with %.1f HP.\", hero, level, health);\nSystem.out.println(profile);\n\n// 2. .concat() - The strict alternative to the '+' operator\nString base = \"Bat\";\nString full = base.concat(\"man\"); // \"Batman\"\n\n// 3. .repeat() (Java 11+) - Instant multiplication without loops\nString echo = \"Hello \".repeat(3); // \"Hello Hello Hello \"\n\n// 4. .getBytes() - Ripping text into raw network data\nbyte[] payload = \"System Offline\".getBytes();",
+                    "callout_title": "The Format Placeholders 📌",
+                    "callout_text": "When using String.format(), you use secret placeholders inside the text. Use %s to inject a String, %d to inject a digit (integer), and %f to inject a floating-point decimal. Notice the `%.1f`? That tells Java to round the decimal to exactly 1 decimal place! This is much cleaner than using dozens of + signs.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "**`.format()`** is a Grandmaster technique. Use it to keep your code highly readable when mixing text and variables.",
+                        "**`.getBytes()`** is heavily used in advanced Software Engineering when you need to send a String across the internet to another server."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Advanced Architecture & Mechanics",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "The Memory Trap: == vs .equals()",
+                    "content": "Because Strings are Objects, they live in different neighborhoods in your RAM (The VIP String Pool vs. The Standard Heap). The `==` operator checks if two variables point to the exact same physical memory address, while `.equals()` checks if the actual letters inside the variables match. ",
+                    "code_block": "String literal = \"Code\";           // Lives in the VIP Pool\nString object = new String(\"Code\"); // Forced into the Heap\n\n// This prints FALSE because they live in different memory locations!\nSystem.out.println(literal == object); \n\n// This prints TRUE because the letters are exactly the same!\nSystem.out.println(literal.equals(object));",
+                    "callout_title": "The Absolute Rule ⚖️",
+                    "callout_text": "Never use == to compare Strings in Java. Always use .equals() or .equalsIgnoreCase(). Using == is the #1 cause of logic bugs in junior developer code.",
+                    "list_title": "Memory Mechanics:",
+                    "list_items": [
+                        "**Immutability Trap:** If you write `name = name + \"man\";`, Java destroys the original word and builds a brand new object in memory.",
+                        "**Heap vs Pool:** Literals go to the VIP Pool. The `new` keyword forces Strings into the general Heap."
+                    ]
+                },
+                {
+                    "id": "4.2",
+                    "title": "Mechanics: Encoding (UTF-16)",
+                    "content": "Computers only understand 1s and 0s. **Encoding** is the dictionary Java uses to translate those numbers into letters. While older languages used ASCII (which only supported basic English), Java uses **UTF-16**. This means Java natively supports over 140,000 characters, including Arabic, Chinese, and Emojis.",
+                    "code_block": "// You can use Unicode escape codes to print special global characters\nString heart = \"\\u2764\"; \n\n// Prints: I ❤ Java\nSystem.out.println(\"I \" + heart + \" Java\");",
+                    "callout_title": "The Byte Size 💾",
+                    "callout_text": "Because Java uses UTF-16, a standard character typically takes up 2 bytes of RAM, whereas older languages like C used 1 byte (ASCII). Modern Java (Java 9+) uses a 'Compact Strings' engine to automatically shrink English letters to 1 byte to save RAM!",
+                    "list_title": "Encoding Takeaways:",
+                    "list_items": [
+                        "Java is built for global software, seamlessly handling foreign languages.",
+                        "Unicode characters are triggered using `\\u` followed by the 4-digit hex code."
+                    ]
+                },
+                {
+                    "id": "4.3",
+                    "title": "Mechanics: Escape Sequences",
+                    "content": "Sometimes you need to type characters that break Java's syntax rules (like putting a quote inside a quote). You use the backslash `\\` as an 'Escape Character' to tell Java the next symbol is a special command, not a code-breaker.",
+                    "code_block": "// If we didn't use \\\", Java would crash thinking the String ended early!\nString dialogue = \"The boss said, \\\"Get to work!\\\"\\n\\t- Management\";\n\n/* Output:\nThe boss said, \"Get to work!\"\n    - Management\n*/",
+                    "callout_title": "File Path Traps 📁",
+                    "callout_text": "When writing Windows file paths, you must use double backslashes! `\"C:\\\\Users\\\\Desktop\"`. If you just use one, Java will think you are trying to write an Escape Sequence and crash.",
+                    "list_title": "The 4 Core Sequences:",
+                    "list_items": [
+                        "**`\\\"`** : Inserts a literal quotation mark.",
+                        "**`\\n`** : Inserts a hidden 'Enter' (New Line).",
+                        "**`\\t`** : Inserts a 'Tab' space.",
+                        "**`\\\\`** : Inserts a literal backslash."
+                    ]
+                },
+                {
+                    "id": "4.4",
+                    "title": "Grandmaster Tool: Memory Override (.intern)",
+                    "content": "You already know that using `new String(\"Text\")` forces the string into regular RAM (the Heap), completely bypassing the VIP String Pool. But what if you download a million words from a database into the Heap, and you suddenly realize you are running out of RAM? You can use the `.intern()` method to permanently move it into the VIP Pool to save memory. ",
+                    "code_block": "String heapString = new String(\"Gotham\"); // Stuck in regular RAM\nString poolString = \"Gotham\";             // Safe in the VIP Pool\n\nSystem.out.println(heapString == poolString); // false (Different addresses)\n\n// THE OVERRIDE: Force the heap string to point to the VIP pool!\nheapString = heapString.intern(); \n\nSystem.out.println(heapString == poolString); // true!",
+                    "callout_title": "Enterprise Usage Only 🏢",
+                    "callout_text": "You will likely never use .intern() in a university project. It is strictly used in massive enterprise applications to prevent servers from running out of RAM when processing millions of text files.",
+                    "list_title": "Intern Mechanics:",
+                    "list_items": [
+                        "It grabs a string from the regular Heap, checks if the word is already in the VIP Pool, and if not, moves it there.",
+                        "Allows you to safely use `==` for comparison (though `.equals()` is still safer)."
+                    ]
+                },
+                {
+                    "id": "4.5",
+                    "title": "Grandmaster Tool: Regular Expressions (RegEx)",
+                    "content": "This is a universal 'mini-language' hidden inside Java. It is used for ultimate pattern matching. Imagine you ask a user for their email address. How do you check if it's valid? You can't just check if it contains an `@` symbol. You need to ensure it has letters, an `@`, more letters, a dot, and `com`.",
+                    "code_block": "String email = \"usman123@gmail.com\";\n\n// RegEx: \"Start with letters/numbers, then @, then letters, then .com\"\nString emailPattern = \"^[a-zA-Z0-9]+@[a-zA-Z]+\\\\.com$\";\n\nboolean isValid = email.matches(emailPattern);\n\nSystem.out.println(\"Is email valid? \" + isValid); // TRUE",
+                    "callout_title": "The Deep Rabbit Hole 🐇",
+                    "callout_text": "RegEx is so deep that developers literally buy entire books just to master it. You do not need to memorize RegEx syntax for your midterm. Just knowing that the `.matches()` method exists is the key.",
+                    "list_title": "RegEx Integrations:",
+                    "list_items": [
+                        "**`.matches(regex)`:** Returns true if the string perfectly matches the complex pattern.",
+                        "**`.replaceAll(regex, new)`:** Replaces all text that matches the pattern (e.g., hiding all numbers in a string)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: The Bleeding Edge & Engine Secrets",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The Concatenation Illusion (The '+' Operator)",
+                    "content": "In Module 1.5, we established that using the `+` operator in a loop is terrible for memory. But here is the ultimate engine secret: the `+` operator doesn't actually exist for Strings in the Java Virtual Machine. It is 'Syntactic Sugar'—a fake convenience feature provided by the compiler.",
+                    "code_block": "// What you type in your IDE:\nString hero = \"Bat\" + \"man\";\n\n// What the Java Compiler secretly changes it to behind your back:\nString hero = new StringBuilder(\"Bat\").append(\"man\").toString();",
+                    "callout_title": "The Modern Engine Upgrade 🚀",
+                    "callout_text": "In Java 9+, they made the engine even smarter. Instead of hardcoding a StringBuilder, the compiler now uses `StringConcatFactory` via an advanced technique called 'InvokeDynamic'. This allows Java to optimize the gluing process on the fly without you changing your code!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "For simple, one-line combinations, using `+` is perfectly fine because the compiler optimizes it for you.",
+                        "Inside loops, the compiler gets confused and creates a brand new `StringBuilder` on *every single lap*, which is exactly why you must manually use your own Builder in loops."
+                    ]
+                },
+                {
+                    "id": "5.2",
+                    "title": "Java 21+: String Templates (Interpolation)",
+                    "content": "For nearly 30 years, Java developers had to rely on `+` or `String.format()` to combine text and variables. This was clunky compared to modern languages like Python or JavaScript. Finally, in recent Java updates (Java 21+), true String Interpolation was introduced using the `STR` processor.",
+                    "code_block": "String hero = \"Batman\";\nint level = 50;\n\n// The Old Way (String.format):\nString oldWay = String.format(\"Player %s is level %d\", hero, level);\n\n// The Bleeding-Edge Java 21+ Way (String Templates):\n// You literally drop the variables right inside the text using \\{ }\nString modernWay = STR.\"Player \\{hero} is level \\{level}\";",
+                    "callout_title": "Preview Feature Warning 🚧",
+                    "callout_text": "This feature is so new that many enterprise companies haven't upgraded their servers to use it yet. It will absolutely NOT be on your current university midterm, but knowing it exists puts you years ahead of the curve.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "String templates use the `STR` template processor and `\\{variable}` syntax to safely inject data directly into text."
+                    ]
+                }
+            ]
+        }
+    ]
+}

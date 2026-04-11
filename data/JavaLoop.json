@@ -1,0 +1,146 @@
+{
+    "title": "Java Fundamentals: Loops",
+    "description": "A comprehensive mastery course covering iterative execution flow, standard loop architectures, control keywords, and advanced iteration techniques.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Core Loop Architectures",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "1. The while Loop",
+                    "content": "The `while` loop is the fundamental 'wait and see' loop. It acts like an `if` statement that refuses to stop. It checks a condition first, and if that condition evaluates to true, it runs the code block. Once the block finishes, it jumps back to the top and checks the condition again, repeating until the condition becomes false.",
+                    "code_block": "// Syntax Blueprint:\n// 1. Initialization (Start)\nint counter = 0; \n\n// 2. Condition (Stop Rule)\nwhile (counter < 5) { \n    // Code to execute\n    // 3. Iteration (Step)\n    counter++; \n}\n\n// Example 1: The Predictable Countdown\nint batteryLevel = 3;\nwhile (batteryLevel > 0) {\n    System.out.println(\"Battery at \" + batteryLevel + \"%\");\n    batteryLevel--; // Drains the battery by 1 each lap\n}\nSystem.out.println(\"Robot powering down.\");\n\n// Example 2: The Unknown Iteration (Keeps halving until safe)\ndouble radiation = 100.0;\nint days = 0;\nwhile (radiation >= 10.0) {\n    radiation = radiation / 2;\n    days++;\n}\nSystem.out.println(\"Area is safe after \" + days + \" days.\");",
+                    "callout_title": "Pro-Tip 💡",
+                    "callout_text": "The most common bug in a while loop is forgetting the 'Step' (like `counter++`). If the variable never changes, the condition never becomes false, resulting in a program-crashing Infinite Loop.",
+                    "list_title": "Key Use Case:",
+                    "list_items": [
+                        "Used specifically when you don't know exactly how many laps the loop will take to finish."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "2. break and continue (Standard)",
+                    "content": "These two keywords act as your universal loop remote controls. They work inside any loop in Java.",
+                    "code_block": "int hp = 100;\nint lap = 0;\n\nwhile (true) { // Infinite loop!\n    lap++;\n    \n    if (lap == 2) {\n        System.out.println(\"Dodged the attack!\");\n        continue; // Skips the damage code below and goes to lap 3\n    }\n    \n    hp -= 50;\n    System.out.println(\"Took damage! HP: \" + hp);\n    \n    if (hp <= 0) {\n        System.out.println(\"Player died.\");\n        break; // Ejects out of the infinite loop\n    }\n}",
+                    "callout_title": "Universal Controls 🕹️",
+                    "callout_text": "**break; (The Eject Button):** Instantly destroys the loop and escapes the code block entirely, even if the loop condition is still true.\n\n**continue; (The Skip Button):** Immediately stops the current lap, ignores any code below it, and jumps straight back to the top of the loop to start the next iteration.",
+                    "list_title": "Control Mechanics:",
+                    "list_items": [
+                        "These statements give you manual override capabilities over standard loop conditions."
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "title": "3. The do-while Loop",
+                    "content": "The `do-while` loop is the 'shoot first, ask later' loop. Unlike the standard while loop, it runs its code block before it ever checks the condition. This architecture guarantees that the code will execute at least one time, no matter what.",
+                    "code_block": "// Example 1: The Game Menu\nint userChoice;\ndo {\n    System.out.println(\"1. Play | 2. Quit\");\n    // Simulating user picking '2'\n    userChoice = 2; \n} while (userChoice != 2); // Keeps showing menu until they pick 2\n\n// Example 2: The 0-Health Action \n// Proving the loop runs at least once, even if the condition starts false.\nint health = 0;\ndo {\n    // Runs once despite health being 0!\n    System.out.println(\"Player swings sword in final breath!\");\n} while (health > 0);",
+                    "callout_title": "Syntax Warning ⚠️",
+                    "callout_text": "Pay close attention to the syntax! The do-while loop is the only loop in Java that requires a semicolon `;` at the very end of the statement.",
+                    "list_title": "Blueprint:",
+                    "list_items": [
+                        "`do { ... } while (condition);`"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Precision Counters & Advanced Mechanics",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "4. The for Loop",
+                    "content": "The `for` loop is the 'precision counter.' It is used when you know exactly how many times you want a block of code to run. It packs the Start, the Condition, and the Step into one highly organized line.",
+                    "code_block": "// Standard Example 1: Counting Up\nfor (int i = 1; i <= 3; i++) {\n    System.out.println(\"Counting: \" + i);\n}\n\n// Standard Example 2: Counting Down\nfor (int timer = 5; timer > 0; timer--) {\n    System.out.println(\"T-Minus: \" + timer);\n}\n\n// Advanced Usage: Multi-Variable Initialization\n// 'i' counts up while 'j' counts down\nfor (int i = 0, j = 5; i <= j; i++, j--) {\n    System.out.println(\"Pointer A: \" + i + \" | Pointer B: \" + j);\n}\n\n// Advanced Usage: The \"Ghost\" Loop\n// Leaves Start, Condition, and Step blank for an infinite loop\nfor (;;) {\n    System.out.println(\"This will run forever until a break; is triggered.\");\n    break; // Added to prevent actual infinite crashing\n}",
+                    "callout_title": "The Ghost Loop 👻",
+                    "callout_text": "Because the Start, Condition, and Step are technically optional in Java, you can leave them completely blank `for(;;)` to create a highly efficient infinite loop. You must use a `break;` inside to stop it!",
+                    "list_title": "Syntax Blueprint:",
+                    "list_items": [
+                        "`for (Initialization; Condition; Step) { ... }`"
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "5. The for-each Loop",
+                    "content": "Also known as the 'enhanced for loop,' this is the ultimate list reader. It removes the need for counters (`i++`) entirely. You use it when you have an array or collection and want to perform an action on every single item inside it, from start to finish.",
+                    "code_block": "// Example 1: Iterating over Strings\nString[] inventory = {\"Sword\", \"Shield\", \"Potion\"};\nfor (String item : inventory) {\n    System.out.println(\"Equipped: \" + item);\n}\n\n// Example 2: Calculating a Total from Integers\nint[] grades = {95, 80, 100};\nint total = 0;\nfor (int grade : grades) {\n    total += grade; // Adds each grade to the total\n}\nSystem.out.println(\"Total points: \" + total);",
+                    "callout_title": "The Deletion Crash 💥",
+                    "callout_text": "Note: You cannot use a for-each loop to safely delete items from the list while you are reading it. Doing so will trigger a `ConcurrentModificationException` crash.",
+                    "list_title": "Syntax Blueprint:",
+                    "list_items": [
+                        "`for (DataType singularItem : pluralCollection) { ... }`"
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "6. Labeled Loops with break and continue",
+                    "content": "When you place a loop inside another loop (a 'nested loop'), the standard `break` and `continue` keywords only affect the inner-most loop. By assigning a Label (a word followed by a colon `:`) to your outer loops, you can precisely control the entire engine from the inside.",
+                    "code_block": "// Example 1: Labeled break (Total Shutdown)\nRadarSystem: for (int sector = 1; sector <= 3; sector++) {\n    for (int blip = 1; blip <= 3; blip++) {\n        if (sector == 2 && blip == 2) {\n            System.out.println(\"Critical error! Shutting down entire RadarSystem.\");\n            break RadarSystem; // Kills the OUTER loop, stopping everything.\n        }\n        System.out.println(\"Sector \" + sector + \" - Blip \" + blip);\n    }\n}\n\n// Example 2: Labeled continue (Hard Skip)\nSearchGrid: for (int row = 1; row <= 3; row++) {\n    for (int col = 1; col <= 3; col++) {\n        if (row == 2 && col == 1) {\n            System.out.println(\"Row 2 is blocked. Skipping to Row 3.\");\n            continue SearchGrid; // Aborts inner loop AND forces outer loop to lap 3.\n        }\n        System.out.println(\"Searching Row \" + row + \", Col \" + col);\n    }\n}",
+                    "callout_title": "Ultimate Precision 🎯",
+                    "callout_text": "Labels allow you to pull the emergency brake on massive 2D grids and multidimensional arrays without having to write messy boolean tracking variables.",
+                    "list_title": "Label Syntax:",
+                    "list_items": [
+                        "Always place the Label name and colon directly before the `for` or `while` keyword."
+                    ]
+                },
+                {
+                    "id": "2.4",
+                    "title": "7. Beyond the Basics: Advanced Iteration",
+                    "content": "While the loops above cover 100% of standard execution flow, Java has three advanced ways to repeat code that you will encounter later in your Software Engineering journey.",
+                    "code_block": "// Example: Java Streams & .forEach() (Functional Iteration)\n// Condenses massive for loops into a single line of code using Lambdas (->)\nmyList.forEach(item -> System.out.println(item));",
+                    "callout_title": "Future Study 🗺️",
+                    "callout_text": "You will learn these in your 2nd or 3rd semester during your Object-Oriented Programming (OOP) or Advanced Java courses.",
+                    "list_title": "The 3 Advanced Methods:",
+                    "list_items": [
+                        "**A. The Iterator Object:** A specialized object with a `.remove()` method that safely pauses the loop, deletes an item, and resumes without breaking the engine.",
+                        "**B. Recursion:** A technique where a Function calls itself over and over. The ultimate tool for navigating complex data (like file systems or AI decision trees).",
+                        "**C. Java Streams:** Allows Java to automatically split the loop across multiple CPU cores for massive performance boosts."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Modern Iteration & Engine Secrets",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Java 21+: Reverse for-each Loops 🔄",
+                    "content": "For 19 years, the biggest limitation of the `for-each` loop was that it could only read lists from start to finish. You could never go backward. However, in modern Java (Java 21+), Oracle introduced 'Sequenced Collections', finally giving developers a native way to instantly reverse the flow of iteration.",
+                    "code_block": "List<String> inventory = List.of(\"Sword\", \"Shield\", \"Potion\");\n\n// The Legacy Limitation (Forward Only):\nfor (String item : inventory) {\n    System.out.println(item);\n}\n\n// The Bleeding Edge Java 21+ Way (Backward!):\nfor (String item : inventory.reversed()) {\n    System.out.println(\"Equipping last item first: \" + item);\n}",
+                    "callout_title": "Midterm Warning ⚠️",
+                    "callout_text": "If your university professor asks 'Can a for-each loop iterate backwards?' on your exam, answer NO (based on the older Java 8 syllabus they likely teach). But in the real world, you absolutely can using `.reversed()`!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "`.reversed()` provides a clean, readable alternative to writing a clunky standard `for` loop (`for (int i = arr.length - 1; i >= 0; i--)`)."
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "Java 10+: Local Variable Type Inference (var)",
+                    "content": "When looping through complex data structures (like Maps or nested lists), typing out the full data type becomes incredibly long and messy. Java 10 introduced the `var` keyword, which commands the Java compiler to automatically figure out the data type for you.",
+                    "code_block": "String[] heroes = {\"Batman\", \"Superman\", \"Wonder Woman\"};\n\n// The Old Way (Explicit typing):\nfor (String hero : heroes) {\n    System.out.println(hero);\n}\n\n// The Modern Way (Type Inference):\n// The compiler looks at the array and automatically knows 'var' means 'String'\nfor (var hero : heroes) {\n    System.out.println(hero);\n}\n\n// It works in standard for loops too!\nfor (var i = 0; i < 10; i++) {\n    System.out.println(\"Lap: \" + i);\n}",
+                    "callout_title": "The Readability Rule 📖",
+                    "callout_text": "Senior developers love `var` because it makes code visually cleaner. However, only use it if the data type is obvious to whoever is reading the code! If using `var` makes the code confusing, stick to explicitly writing `int` or `String`.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "`var` is strictly handled by the compiler at compile-time. It does NOT slow down your program's performance while it is running."
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "The Compiler Illusion: Syntactic Sugar",
+                    "content": "Just like the `+` operator for Strings, the `for-each` loop does not actually exist inside the Java Virtual Machine. It is an illusion—a feature called 'Syntactic Sugar' designed purely to make writing code easier for humans.",
+                    "code_block": "// 1. What you type in your IDE:\nfor (String item : inventory) {\n    System.out.println(item);\n}\n\n// 2. What the Java Compiler secretly changes it to behind your back:\nIterator<String> iterator = inventory.iterator();\nwhile (iterator.hasNext()) {\n    String item = iterator.next();\n    System.out.println(item);\n}",
+                    "callout_title": "The Matrix Revealed 💊",
+                    "callout_text": "Every time you write a `for-each` loop, the compiler deletes it and replaces it with a `while` loop and an `Iterator` object. This is exactly why you cannot delete items during a for-each loop: the hidden Iterator locks the list to prevent data corruption!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Understanding what the compiler does behind the scenes is what separates junior programmers from system architects."
+                    ]
+                }
+            ]
+        }
+    ]
+}

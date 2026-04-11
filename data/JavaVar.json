@@ -1,0 +1,150 @@
+{
+    "title": "Java Fundamentals: Origins, Architecture & Data Types",
+    "description": "A comprehensive masterclass covering the history of Java, the JVM, decoding the boilerplate engine, and mastering variables and primitive data types.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Origins, Architecture & Structure",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "The History & Evolution of Java",
+                    "content": "Developed by Sun Microsystems in 1991, Java was originally named 'Oak' by its creator, James Gosling. It was designed as a purely object-oriented language. When the internet exploded, Java became the ultimate web and enterprise language due to its core philosophy: Write Once, Run Anywhere.\n\n[Diagram of Java Compilation: Source Code to Bytecode to Machine Code]\n\nHow Java Works: Java's hardware independence is achieved via a two-step process. First, the source code is compiled into an intermediate format called 'Bytecode'. Then, that bytecode is interpreted into machine code for a given machine.",
+                    "code_block": "// 1991: Project 'Oak' begins.\n// 1995: Officially released as Java 1.0.\n// Today: Billions of devices run Java globally.",
+                    "callout_title": "Pure Object-Oriented ☕",
+                    "callout_text": "From day one, Java was designed to be purely Object-Oriented. Everything in Java (except basic primitive data types) is treated as an Object, making it highly organized for massive enterprise applications.",
+                    "list_title": "Key Historical Pillars:",
+                    "list_items": [
+                        "**1991:** Launched by Sun Microsystems (James Gosling).",
+                        "**Pure OOP:** Designed to be purely Object-Oriented.",
+                        "**WORA:** Write Once, Run Anywhere via Bytecode interpretation."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "The 'J' Trinity: JDK, JRE & JVM",
+                    "content": "Before you can write a single line of code, you must understand the three core software environments that make Java work. Freshmen often confuse these three acronyms, making them a favorite midterm question.",
+                    "code_block": "// 1. JDK (Java Development Kit)\n// A collection of tools used for developing and running Java programs.\n\n// 2. JRE (Java Runtime Environment)\n// Helps in executing programs developed in Java.\n\n// 3. JVM (Java Virtual Machine)\n// The engine inside the JRE that actually interprets the Bytecode into Machine Code.",
+                    "callout_title": "The Russian Doll Concept 🪆",
+                    "callout_text": "Think of them like nesting dolls. The JVM lives inside the JRE. The JRE lives inside the JDK. If you just want to PLAY a Java game, you only need to install the JRE. If you want to BUILD a Java game, you must install the full JDK.",
+                    "list_title": "Installation Takeaways:",
+                    "list_items": [
+                        "**JDK:** Install this to get the compiler tools.",
+                        "**JRE:** Install this just to run existing applications."
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "title": "Core OOP: Classes vs. Objects",
+                    "content": "Because Java is 'Object-Oriented', you cannot just write random lines of code. You have to build 'Objects'. But what are they?\n\nThink of a **Class** as a paper Blueprint for a house. The blueprint itself is not a physical house; you can't open its doors or sleep inside it. It just defines how the house *should* look. \n\nAn **Object** is the actual, physical house built out of wood and bricks using that Blueprint. You can use one Blueprint (Class) to build 100 identical physical houses (Objects) in the computer's memory.",
+                    "code_block": "// THE CLASS (The Paper Blueprint)\nclass Car { \n    int doors = 4;\n    void honkHorn() { }\n}\n\n// THE OBJECT (The Physical Engine in Memory)\n// We use the 'new' keyword to build a physical object from the Blueprint!\nCar myToyota = new Car(); \nCar myHonda = new Car();",
+                    "callout_title": "Why do we use this? 🏗️",
+                    "callout_text": "This prevents spaghetti code. Instead of having thousands of random variables floating around, we neatly group data (like `doors`) and actions (like `honkHorn`) into specific blueprints. It makes fixing bugs incredibly easy because everything is isolated.",
+                    "list_title": "The Golden Rule:",
+                    "list_items": [
+                        "**Class:** The template or blueprint. It takes up no actual memory.",
+                        "**Object:** The physical instance built from the Class. It lives inside the RAM."
+                    ]
+                },
+                {
+                    "id": "1.4",
+                    "title": "The Boilerplate Shell",
+                    "content": "Now that you know what a Class is, you can understand the Java Boilerplate. Every single Java program requires a strict foundational structure to run. The highest level of this structure is the `Class`. You cannot write floating variables or logic in the open file; absolutely everything must be contained inside the curly braces `{ }` of a Class.",
+                    "code_block": "package com.company; // Organizes files into folders\n\npublic class Main { \n    // ALL of your code, variables, and methods MUST go inside here.\n    // If you write code outside these curly braces, the compiler crashes.\n}",
+                    "callout_title": "The File Name Rule 📁",
+                    "callout_text": "In Java, the name of your public Class must exactly match the name of the physical file on your hard drive. If your file is named `Main.java`, the class must be named `public class Main`. If they do not match, the program will refuse to compile.",
+                    "list_title": "Structural Rules:",
+                    "list_items": [
+                        "Classes are the absolute outermost shell that group your code together.",
+                        "Curly braces `{ }` define the boundaries of the Class."
+                    ]
+                },
+                {
+                    "id": "1.5",
+                    "title": "Decoding the Engine: The Main Method",
+                    "content": "Inside your Class, the JVM blindly looks for a very specific method to use as the absolute entry point into the application. Without this ignition switch, your program mathematically cannot start. It is a long sentence, but every single word has a distinct architectural purpose.",
+                    "code_block": "public static void main(String[] args) {\n    System.out.println(\"Hello World\");\n}",
+                    "callout_title": "Word-by-Word Breakdown 🔍",
+                    "callout_text": "Here is exactly what the engine is doing:\n\n**`public`**: An access modifier. It tells the security system to allow the JVM (an outside program) to access and run this method.\n\n**`static`**: Tells the JVM that it can run this method instantly, without needing to waste memory creating a physical Object of the Class first.\n\n**`void`**: Tells the engine that when this method finishes running, it will return nothing (no data) back to the operating system.\n\n**`String[] args`**: Allows the user to pass command-line arguments (text) into the program right when they launch it.",
+                    "list_title": "The Ignition Switch:",
+                    "list_items": [
+                        "If you misspell `main` as `Main`, or forget the word `static`, the JVM will throw a 'Main Method Not Found' crash."
+                    ]
+                },
+                {
+                    "id": "1.6",
+                    "title": "Professional Naming Conventions",
+                    "content": "Java has strict industry naming conventions. Breaking these won't crash your code, but it is considered highly unprofessional. Casing conventions provide 'instant visual recognition'—allowing a developer to look at a single word and immediately know if it is a Blueprint Class, an action Method, or a locked Constant.",
+                    "code_block": "// 1. PascalCase (Strictly for Blueprints)\n// Rule: The first letter of EVERY word is Capitalized.\n// Applies to: Classes and Interfaces\nclass CodeWithHarry { }\nclass PlayerInventory { }\n\n// 2. camelCase (Strictly for Actions & Storage)\n// Rule: First letter is lowercase, subsequent words are Capitalized.\n// Applies to: Variables and Methods (Functions)\nint myMarks = 100;\nvoid calculateFinalScore() { }\n\n// 3. UPPER_SNAKE_CASE (Strictly for Locked Data)\n// Rule: ALL CAPS, with words separated by underscores.\n// Applies to: Named Constants (using the 'final' keyword)\nfinal double PI_VALUE = 3.14159;\nfinal int MAX_CAPACITY = 5000;",
+                    "callout_title": "Why Casing Matters 👔",
+                    "callout_text": "Imagine a senior developer sees the code `playerInventory.addItem()`. Because `playerInventory` starts with a lowercase 'p' (camelCase), they instantly know it is a physical Object box they can manipulate. If they see `PlayerInventory.addItem()`, the uppercase 'P' (PascalCase) tells them they are looking at the abstract Blueprint Class.",
+                    "list_title": "The Code Smell:",
+                    "list_items": [
+                        "**Unprofessional:** `class myGame`, `int Max_Score` (Confusing, forces guessing).",
+                        "**Professional:** `class MyGame`, `int maxScore` (Clean, standardized, immediately recognizable)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Variables, Data Types & Literals",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "The Concept of Variables",
+                    "content": "To write useful software, a computer must be able to remember data. A variable is simply a named memory location in the computer's RAM capable of storing that data.\n\n[Diagram of Java Variables separated into Simple Primitives vs Object References]\n\nJava heavily distinguishes between two types of variables:\n\n**1. Simple Variables (Primitives):** These represent raw data only (like a standard number or letter). They do not have any hidden background methods or sub-routines attached to them. They are purely for storage.\n\n**2. Object Variables:** These refer to complex Objects, which are created by instantiating Classes using the `new` operator. Because they are Objects, they come with built-in methods and behaviors.",
+                    "code_block": "// Simple Variable (Raw Data Only)\nint age = 21;\n\n// Object Variable (Comes with built-in methods!)\nScanner input = new Scanner(System.in);\n\n// We can call methods on Objects, but NOT on simple variables!\n// age.doSomething(); -> ERROR! Primitives don't have methods.",
+                    "callout_title": "Strict Typing 📏",
+                    "callout_text": "Java is a 'Statically Typed' language. This means you must explicitly tell the compiler exactly what type of data the memory box will hold before you can use it. Once defined, that box can never hold a different type of data.",
+                    "list_title": "Core Takeaways:",
+                    "list_items": [
+                        "Variables are named locations in RAM.",
+                        "Simple variables just hold raw data; Object variables hold complex behaviors."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "The Integer Family",
+                    "content": "Java provides four different sizes of memory boxes specifically for whole numbers. Choosing the correct size optimizes your program's memory usage, which is crucial for mobile apps or massive enterprise databases.",
+                    "code_block": "// 1. byte (8 bits): The smallest box.\nbyte tinyNum = 127; \n\n// 2. short (16 bits): For small counters.\nshort smallNum = 32767; \n\n// 3. int (32 bits): The industry standard.\nint score = 2147483647; \n\n// 4. long (64 bits): For massive numbers.\nlong debt = 9223372036854775807L; // Requires an 'L' at the end!",
+                    "callout_title": "The Integer Default 📦",
+                    "callout_text": "If you type a whole number in Java, the compiler automatically assumes it is an `int`. If you need to store a massive number in a `long` box, you MUST append a capital `L` to the end of the number. Otherwise, the compiler will try to stuff it into an `int` box and crash!",
+                    "list_title": "Exact Memory Limits:",
+                    "list_items": [
+                        "**`byte`**: -128 to 127",
+                        "**`short`**: -32,768 to 32,767",
+                        "**`int`**: ~ -2.1 Billion to 2.1 Billion",
+                        "**`long`**: ~ -9 Quintillion to 9 Quintillion"
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "The Floating-Point Family",
+                    "content": "To store real numbers (decimals) or massive scientific numbers, Java uses the floating-point family.",
+                    "code_block": "// 1. float (32 bits): Standard precision.\nfloat temperature = 98.6f; // Requires an 'f' at the end!\n\n// 2. double (64 bits): High precision (Industry standard).\ndouble atomSize = 0.00000000532;\n\n// 3. Scientific Notation (E-notation)\n// Supported natively by the double data type!\ndouble lightSpeed = 3.0e10; // Evaluates to 3.0 x 10^10 (30,000,000,000.0)",
+                    "callout_title": "The Double Default 🔬",
+                    "callout_text": "Just like the integer family, Java has a default for decimals. Any decimal number typed in Java automatically defaults to a `double`. If you try to place a decimal inside a `float` box without adding the `f`, the compiler will crash to protect you from losing precision.",
+                    "list_title": "Precision Limits:",
+                    "list_items": [
+                        "**`float`**: Max value of 3.4 x 10^38.",
+                        "**`double`**: Max value of 1.7 x 10^308."
+                    ]
+                },
+                {
+                    "id": "2.4",
+                    "title": "Declare, Initialize & Update",
+                    "content": "Managing a variable's lifecycle requires specific syntax. First, you **Declare** it (building the empty box). Second, you **Initialize** it (putting the first piece of data inside). Finally, you can **Update** it later using the Assignment Statement (`=`).\n\nThe assignment operator (`=`) evaluates whatever math or data is on the right side, and stores it in the variable on the left side.",
+                    "code_block": "// Method 1: Two-Step (Declaration, then Initialization)\nint age;\nage = 21;\n\n// Method 2: Single-Line (The Industry Standard)\ndouble cashAmount = 150.75;\n\n// Method 3: Multiple Declarations\n// Creates three empty integer boxes at once to save space\nint x, y, z;\n\n// UPDATING (Assignment Statement)\n// Later in the program, you can overwrite the data:\ncashAmount = 200.00; // The 150.75 is permanently deleted and replaced.",
+                    "callout_title": "The Reassignment Rule 🔄",
+                    "callout_text": "You only declare the data type ONCE. When updating a variable later, you just use its name (`age = 22;`). If you write `int age = 22;` a second time, the compiler will crash because it thinks you are trying to construct a second memory box with the exact same identifier!",
+                    "list_title": "Syntax Blueprint:",
+                    "list_items": [
+                        "**Declaration:** `DataType identifier;`",
+                        "**Assignment:** `variable = expression;`"
+                    ]
+                }
+            ]
+        }
+    ]
+}

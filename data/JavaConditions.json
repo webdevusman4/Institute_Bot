@@ -1,0 +1,451 @@
+{
+    "title": "Java Fundamentals: Conditional Statements",
+    "description": "A comprehensive mastery course covering execution branching, boolean logic, legacy switch mechanics, and modern pattern matching.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Survival (The Exam Essentials)",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Introduction to Branching Logic",
+                    "content": "In early programming, code runs strictly from top to bottom. Conditional statements give your program a brain. They evaluate a mathematical or logical condition, and based on whether that condition is `true` or `false`, the engine decides which path of code to execute and which to ignore.",
+                    "code_block": "boolean hasPower = true;\n\n// The engine evaluates the variable inside the parentheses\nif (hasPower) {\n    // If true, it enters this block.\n    System.out.println(\"Booting up system...\");\n}",
+                    "callout_title": "The Boolean Rule ⚖️",
+                    "callout_text": "The condition inside the parentheses `( )` MUST evaluate to a strict `boolean` (true or false). Unlike languages like C++, Java is strictly typed. You cannot write `if (1)` or `if (\"yes\")`.",
+                    "list_title": "Core Components:",
+                    "list_items": [
+                        "**The Condition:** The question the engine asks.",
+                        "**The Block:** The code that runs if the answer is yes."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "The Standard Block (if { })",
+                    "content": "The Standard Block uses curly braces `{ }` to define exactly where the conditional code starts and ends. This is the safest and most common way to write an `if` statement.",
+                    "code_block": "int playerHealth = 0;\n\nif (playerHealth <= 0) {\n    System.out.println(\"Game Over!\");\n    System.out.println(\"Restarting level...\");\n    playerHealth = 100;\n}",
+                    "callout_title": "Scope Isolation 🔒",
+                    "callout_text": "Any variables you create inside the curly braces `{ }` will die the exact moment the block ends. If you write `int bonus = 50;` inside the `if` block, you cannot print `bonus` outside of it!",
+                    "list_title": "Best Practices:",
+                    "list_items": [
+                        "Always use the Standard Block when your logic requires multiple actions to occur simultaneously."
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "title": "The Single-Line if (No braces)",
+                    "content": "If you only have exactly one action to perform, Java allows you to drop the curly braces entirely. The `if` statement will automatically assume that the very next line of code belongs to it.",
+                    "code_block": "int ammo = 0;\n\n// The Single-Line 'if'\nif (ammo == 0)\n    System.out.println(\"Click! Out of ammo.\");\n\n// This line runs normally, it is NOT controlled by the 'if'\nSystem.out.println(\"Running away...\");",
+                    "callout_title": "The Bracket Trap ⚠️",
+                    "callout_text": "This is the #1 cause of bugs for junior developers. If you use a single-line `if`, and then later press Enter and type a second line of code underneath it, that second line will run every single time, regardless of the condition. When in doubt, use braces!",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Used by professionals to keep code visually clean when doing quick, one-off checks."
+                    ]
+                },
+                {
+                    "id": "1.4",
+                    "title": "Boolean Reduction (The Clean Way)",
+                    "content": "When evaluating a boolean variable, rookie programmers often explicitly check if it is equal to true. Because the variable is already a boolean, this is mathematically redundant.",
+                    "code_block": "boolean isReady = true;\n\n// THE ROOKIE WAY (Redundant):\nif (isReady == true) {\n    System.out.println(\"Starting match.\");\n}\n\n// THE ARCHITECT WAY (Boolean Reduction):\nif (isReady) {\n    System.out.println(\"Starting match.\");\n}",
+                    "callout_title": "The Mark of a Senior 🏅",
+                    "callout_text": "Writing `== true` or `== false` immediately signals to technical interviewers that you are a beginner. A boolean variable is already true or false by itself! You don't need to ask if true equals true.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Always pass the boolean variable directly into the `( )`."
+                    ]
+                },
+                {
+                    "id": "1.5",
+                    "title": "The Binary Fork (if-else)",
+                    "content": "When a single `if` isn't enough, you use `else` to create a binary fork. This guarantees that your program will take one of two distinct paths. If the `if` fails, the `else` acts as the guaranteed fallback.",
+                    "code_block": "int userAge = 16;\n\nif (userAge >= 18) {\n    System.out.println(\"Access Granted. Welcome.\");\n} else {\n    System.out.println(\"Access Denied. Too young.\");\n}",
+                    "callout_title": "The Solo Else Crash 💥",
+                    "callout_text": "An `else` block MUST be attached directly to the end of an `if` block. If you try to write an `else` entirely by itself, or put standard code between the `if` and the `else`, the Java compiler will crash.",
+                    "list_title": "Key Mechanics:",
+                    "list_items": [
+                        "An `if` can exist without an `else`.",
+                        "An `else` cannot exist without an `if`."
+                    ]
+                },
+                {
+                    "id": "1.6",
+                    "title": "The Logic Ladder (else if)",
+                    "content": "If you have multiple distinct, competing paths, you chain them together using an `else if` ladder. The engine will evaluate each step from top to bottom.",
+                    "code_block": "int score = 85;\n\nif (score >= 90) {\n    System.out.println(\"Grade: A\");\n} else if (score >= 80) {\n    System.out.println(\"Grade: B\"); // The engine stops here!\n} else if (score >= 70) {\n    System.out.println(\"Grade: C\");\n} else {\n    System.out.println(\"Grade: F\"); // The Guaranteed Fallback\n}",
+                    "callout_title": "The Execution Lock 🔒",
+                    "callout_text": "In an `else if` ladder, the engine locks onto the VERY FIRST true condition it finds. In the example above, 85 is also greater than 70, but 'Grade: C' never prints because the engine found 'Grade: B' first and immediately exited the ladder.",
+                    "list_title": "Architecture Rules:",
+                    "list_items": [
+                        "You can have infinite `else if` blocks.",
+                        "You can only have one final `else` at the very bottom."
+                    ]
+                },
+                {
+                    "id": "1.7",
+                    "title": "The Nested if (Pyramid of Doom)",
+                    "content": "You can place an `if` statement completely inside another `if` statement. This allows you to check secondary conditions only if the primary condition passes.",
+                    "code_block": "boolean hasAccount = true;\nboolean correctPassword = true;\n\nif (hasAccount) {\n    if (correctPassword) {\n        System.out.println(\"Login Success!\");\n    } else {\n        System.out.println(\"Incorrect Password.\");\n    }\n} else {\n    System.out.println(\"Account Not Found.\");\n}",
+                    "callout_title": "The Dangling Else Trap 💀",
+                    "callout_text": "On university midterms, professors love to remove the curly braces from nested `if` statements and ask you which `if` an `else` belongs to. The golden rule: An `else` ALWAYS belongs to the closest unclosed `if` directly above it!",
+                    "list_title": "Design Standards:",
+                    "list_items": [
+                        "Nesting 2 levels deep is standard.",
+                        "Nesting 4+ levels means your software architecture needs a complete rewrite (often referred to as 'Spaghetti Code')."
+                    ]
+                },
+                {
+                    "id": "1.8",
+                    "title": "Short-Circuit AND/OR (&&, ||)",
+                    "content": "Logical operators allow you to combine multiple conditions into a single line, preventing the need for messy nested pyramids.",
+                    "code_block": "boolean hasKey = true;\nboolean doorUnlocked = false;\n\n// 1. AND (&&) - BOTH sides must be true\nif (hasKey && doorUnlocked) { /* Fails */ }\n\n// 2. OR (||) - ONLY ONE side needs to be true\nif (hasKey || doorUnlocked) { /* Succeeds! */ }",
+                    "callout_title": "The Short-Circuit Shield 🛡️",
+                    "callout_text": "Java is heavily optimized. If it sees `(true || X)`, it won't even read the right side, because an OR statement only needs one true! This 'Short-Circuiting' protects your program from crashing. Example: `if (player != null && player.getHealth() > 0)`. If player is null, Java stops instantly and doesn't try to get their health, saving you from a NullPointerException!",
+                    "list_title": "Operator Rules:",
+                    "list_items": [
+                        "**`&&` (AND)** is stricter than **`||` (OR)**.",
+                        "Use parentheses to group complex logic: `if ((a || b) && c)`."
+                    ]
+                },
+                {
+                    "id": "1.9",
+                    "title": "The NOT Inversion (!)",
+                    "content": "The logical NOT operator (`!`) acts as an instant mirror. It reverses the value of a boolean condition, turning `true` into `false`, and `false` into `true`.",
+                    "code_block": "boolean isBanned = false;\n\n// Reads as: \"If NOT banned\"\nif (!isBanned) {\n    System.out.println(\"Welcome to the server!\");\n}\n\n// You can also invert complex statements\nint power = 50;\nif (!(power > 100)) {\n    System.out.println(\"Power is 100 or less.\");\n}",
+                    "callout_title": "Readability 📖",
+                    "callout_text": "Using `!` is heavily preferred over checking `if (isBanned == false)`. It allows the code to read like an English sentence.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Always place the exclamation point immediately before the variable or the parentheses."
+                    ]
+                },
+                {
+                    "id": "1.10",
+                    "title": "The Legacy Switch & Default (Pre-Java 14)",
+                    "content": "When checking a single variable against exact values, an `else if` ladder becomes incredibly messy. The legacy `switch` statement handles this cleanly, but it has a dangerous architectural flaw.",
+                    "code_block": "int day = 2;\n\nswitch (day) {\n    case 1:\n        System.out.println(\"Monday\");\n        break;\n    case 2:\n        System.out.println(\"Tuesday\");\n        break; // Crucial! Stops the engine.\n    case 3:\n        System.out.println(\"Wednesday\");\n        break;\n    default:\n        System.out.println(\"Invalid Day\");\n}",
+                    "callout_title": "The Fall-Through Trap 🕳️",
+                    "callout_text": "If you forget to type `break;` inside a case, Java does not stop. It 'falls through' and blindly executes the code in every single case below it until it hits a break or reaches the end of the switch. This was a massive source of bugs in early software.",
+                    "list_title": "Legacy Constraints:",
+                    "list_items": [
+                        "You can only `switch` on exact, singular values (no `case > 5`).",
+                        "The `default:` block acts exactly like a final `else` statement (the fallback)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: The Professional (Clean Code & Flow)",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "The Guard Clause (Early Return)",
+                    "content": "Junior developers nest `if` statements deeply to ensure conditions are met before running their code. Senior developers do the exact opposite: they write 'Guard Clauses' at the very top of their methods. If the data is bad, they instantly kick it out using the `return;` keyword. This completely flattens the 'Pyramid of Doom'.",
+                    "code_block": "public void processPayment(String user, double amount) {\n    // THE GUARDS: Kick out bad data instantly\n    if (user == null) return; \n    if (amount <= 0) return;\n    \n    // THE ACTUAL LOGIC: No nesting required!\n    System.out.println(\"Processing $\" + amount + \" for \" + user);\n    database.saveTransaction();\n}",
+                    "callout_title": "The Golden Rule of Nesting 📐",
+                    "callout_text": "If you ever find yourself pressing 'Tab' three times to indent your code inside an `if` statement, stop immediately. Write a Guard Clause instead to invert the logic and `return` early.",
+                    "list_title": "Key Advantages:",
+                    "list_items": [
+                        "Dramatically improves readability by keeping the 'happy path' un-nested at the bottom of the method.",
+                        "Reduces the cognitive load for other engineers reading your code."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "The Bouncer Pattern (Throwing Exceptions)",
+                    "content": "Similar to the Guard Clause, the Bouncer Pattern checks for invalid states at the top of a method. However, instead of silently failing with a `return;`, it actively crashes the operation by throwing an Exception. This forces the programmer using your code to fix their inputs.",
+                    "code_block": "public void setAge(int age) {\n    // THE BOUNCER: Actively reject impossible logic\n    if (age < 0 || age > 150) {\n        throw new IllegalArgumentException(\"Age must be between 0 and 150.\");\n    }\n    \n    this.age = age;\n    System.out.println(\"Age successfully updated.\");\n}",
+                    "callout_title": "Fail Fast, Fail Loud 💥",
+                    "callout_text": "In enterprise software, silently ignoring bad data is highly dangerous. It is much better to 'Fail Fast' and crash the program the exact millisecond bad data enters the system, rather than letting it corrupt your database.",
+                    "list_title": "When to use it:",
+                    "list_items": [
+                        "Use the Bouncer Pattern in constructors and setter methods to guarantee your Objects always have valid data."
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "Flag Variables (State Tracking)",
+                    "content": "Sometimes a decision requires multiple complex checks across different parts of your code before a final verdict can be reached. Instead of writing a massive, unreadable `if` condition, you use a boolean 'Flag' variable to track the state.",
+                    "code_block": "boolean isAccountValid = true;\n\n// Check 1: Username\nif (username.length() < 5) {\n    isAccountValid = false;\n    System.out.println(\"Username too short.\");\n}\n\n// Check 2: Password\nif (!password.contains(\"@\")) {\n    isAccountValid = false;\n    System.out.println(\"Password needs special character.\");\n}\n\n// The Final Decision uses the Flag!\nif (isAccountValid) {\n    System.out.println(\"Account Created!\");\n}",
+                    "callout_title": "The Decoupling Trick 🧩",
+                    "callout_text": "Flags decouple the 'checking' phase from the 'execution' phase. This makes it incredibly easy to add a new security check later without breaking your main execution logic.",
+                    "list_title": "Key Mechanics:",
+                    "list_items": [
+                        "Always initialize the flag to an assumed state (`true` or `false`).",
+                        "Modify the flag only if a specific condition is triggered."
+                    ]
+                },
+                {
+                    "id": "2.4",
+                    "title": "The Ternary Operator (? :)",
+                    "content": "The Ternary Operator is a professional shorthand technique. It allows you to completely compress an entire `if-else` assignment into a single line of code. It asks a boolean question `?`, provides the answer if true `:`, and provides the answer if false.",
+                    "code_block": "int hp = 50;\nString status;\n\n// The Rookie Way (4 lines):\nif (hp > 0) {\n    status = \"Alive\";\n} else {\n    status = \"Dead\";\n}\n\n// The Professional Way (1 line):\n// Syntax: (Condition) ? TrueResult : FalseResult;\nstatus = (hp > 0) ? \"Alive\" : \"Dead\";",
+                    "callout_title": "Readability Warning 🛑",
+                    "callout_text": "Ternary operators are brilliant for simple assignments. However, DO NOT chain ternary operators together like this: `(a ? b : (c ? d : e))`. It makes the code completely unreadable for other engineers. If it gets complex, just use a standard `if-else`.",
+                    "list_title": "Syntax Blueprint:",
+                    "list_items": [
+                        "It requires exactly three parts: A boolean condition, a true output, and a false output."
+                    ]
+                },
+                {
+                    "id": "2.5",
+                    "title": "Switch Expressions (Java 14+)",
+                    "content": "To fix the dangerous Fall-Through trap of the legacy switch statement, Oracle completely upgraded the engine in Java 14. They introduced 'Arrow Syntax' (`->`), which safely routes logic, guarantees only one block runs, and completely eliminates the need for the `break;` keyword.",
+                    "code_block": "String role = \"ADMIN\";\n\n// The Bleeding-Edge Java 14+ Way:\nswitch (role) {\n    case \"USER\" -> System.out.println(\"Limited Access\");\n    case \"MODERATOR\", \"EDITOR\" -> System.out.println(\"Write Access\");\n    case \"ADMIN\" -> {\n        System.out.println(\"Full Access\");\n        System.out.println(\"Welcome Boss.\");\n    }\n    default -> System.out.println(\"No Access\");\n}\n\n// BONUS: Switch Expressions can actually return data instantly!\nint securityLevel = switch (role) {\n    case \"ADMIN\" -> 5;\n    case \"USER\" -> 1;\n    default -> 0;\n};",
+                    "callout_title": "The Double Arrow 🎯",
+                    "callout_text": "Notice how `case \"MODERATOR\", \"EDITOR\"` lets you check multiple values on one line? The modern switch is faster, safer, and cleaner. If you are using Java 14 or higher, you should almost never use the legacy switch syntax again.",
+                    "list_title": "Modern Improvements:",
+                    "list_items": [
+                        "No `break;` keywords needed. Fall-through bugs are mathematically impossible.",
+                        "Can return values directly into a variable (Switch Expressions)."
+                    ]
+                },
+                {
+                    "id": "2.6",
+                    "title": "Utility Class Booleans (The Cleaners)",
+                    "content": "Instead of writing raw math or manual null checks (`if (user == null)`), Senior Developers use built-in Java helper classes. This abstracts the ugly math away and makes the `if` statement read like plain English.",
+                    "code_block": "String password = \"\";\nObject currentUser = null;\n\n// THE ROOKIE WAY (Raw checks):\nif (currentUser == null) { ... }\nif (password == null || password.length() == 0) { ... }\n\n// THE PROFESSIONAL WAY (Utility Classes):\nif (Objects.isNull(currentUser)) {\n    System.out.println(\"No user found.\");\n}\n\nif (password.isEmpty()) {\n    System.out.println(\"Password cannot be empty.\");\n}",
+                    "callout_title": "The Readability Standard 📖",
+                    "callout_text": "Utility classes like `java.util.Objects` exist purely to make your code safer and easier to read. By using `.isNull()` or `.nonNull()`, you instantly communicate your exact intention to the next developer who reads your file.",
+                    "list_title": "Common Utilities:",
+                    "list_items": [
+                        "`Objects.isNull(obj)`: Safely checks for nulls.",
+                        "`Objects.equals(a, b)`: Safely compares two objects without throwing a NullPointerException if the first object is null."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: The Bleeding Edge (Modern Java 16–21+)",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Pattern Matching for instanceof (Java 16+)",
+                    "content": "Prior to Java 16, checking an object's type was a tedious two-step process: you had to check if it was a specific type, and then immediately write an ugly 'cast' to convert it. Java 16 introduced Pattern Matching, allowing you to check the type and declare a ready-to-use variable in a single, elegant step.",
+                    "code_block": "Object mysteriousData = \"Hello Java 16\";\n\n// THE LEGACY WAY (Pre-Java 16):\nif (mysteriousData instanceof String) {\n    String s = (String) mysteriousData; // Manual Casting (Ugly!)\n    System.out.println(s.toUpperCase());\n}\n\n// THE BLEEDING-EDGE WAY:\n// If it's a String, instantly rip it out and name it 's'!\nif (mysteriousData instanceof String s) {\n    System.out.println(s.toUpperCase());\n}",
+                    "callout_title": "Scope Magic ✨",
+                    "callout_text": "The variable `s` created inside the condition only exists within the curly braces of that specific `if` block. The moment the block ends, `s` safely vanishes from memory, keeping your namespace clean.",
+                    "list_title": "Key Advantages:",
+                    "list_items": [
+                        "Dramatically reduces boilerplate code.",
+                        "Mathematically prevents accidental `ClassCastException` crashes, as the cast is handled safely by the JVM."
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "Switch Pattern Matching & Guards (Java 21+)",
+                    "content": "Java 21 completely revolutionized the `switch` statement. You can now switch based on the entirely different *Data Types* of an object, not just exact values. Furthermore, you can attach an `if` statement directly inside the switch case using the brand new `when` keyword.",
+                    "code_block": "Object data = 42;\n\n// The Java 21+ Pattern Matching Switch:\nString result = switch (data) {\n    // 1. Is it an Integer greater than 50? (Using a Guard Clause)\n    case Integer i when i > 50 -> \"High Number: \" + i;\n    \n    // 2. Is it just a standard Integer?\n    case Integer i -> \"Low Number: \" + i;\n    \n    // 3. Is it a String?\n    case String s -> \"Text detected: \" + s;\n    \n    // 4. Guaranteed fallback\n    default -> \"Unknown Data Type\";\n};\n\nSystem.out.println(result); // Prints \"Low Number: 42\"",
+                    "callout_title": "The 'when' Keyword 🚀",
+                    "callout_text": "The `when` keyword acts as a secondary filter (a Guard Clause) attached directly to the case. This makes Java as powerful as languages like Python or Rust for complex data routing.",
+                    "list_title": "Why it matters:",
+                    "list_items": [
+                        "Completely eliminates the need to write endless `instanceof` checks chained together in a massive `else if` ladder."
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "Record Pattern Destructuring (Java 21+)",
+                    "content": "Java 14 introduced `Records` (immutable data carriers). Java 21+ takes this a step further: if you have an object made of multiple variables (like a Location with an X and Y coordinate), you can use an `if` statement to check its type AND rip the internal variables out of it at the exact same time!",
+                    "code_block": "// Assume we have a blueprint: record Location(int x, int y) {}\nObject target = new Location(15, 30);\n\n// The Ultimate Java 21+ Extraction:\n// Checks if it's a Location, and if so, instantly extracts x and y!\nif (target instanceof Location(int x, int y)) {\n    System.out.println(\"Target locked at X: \" + x + \" and Y: \" + y);\n}",
+                    "callout_title": "The Apex Evolution 🧬",
+                    "callout_text": "This is the absolute cutting edge of Java logic. Very few developers actively use this yet, but it represents the future of how Java code will be written over the next decade.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Destructuring allows you to bypass writing `.getX()` or `.getY()` getter methods. The data is handed directly to you as primitive variables."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Advanced Engine Mechanics (The Deep Math)",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "Exclusive OR (^): The XOR Check",
+                    "content": "Beyond standard AND (`&&`) and OR (`||`), Java has the Exclusive OR (`^`). It demands that EXACTLY ONE side of the condition is true. If both sides are true, or if both sides are false, the condition fails. Think of a physical door: it can be open, or it can be locked, but it mathematically cannot be both.",
+                    "code_block": "boolean hasTicket = true;\nboolean isVIP = true;\n\n// 1. Standard OR (||) - Succeeds if at least one is true\nif (hasTicket || isVIP) { /* Runs! */ }\n\n// 2. Exclusive OR (^) - Succeeds ONLY if they are different\n// Fails here because BOTH are true. XOR demands only 1.\nif (hasTicket ^ isVIP) { /* Does NOT run! */ }",
+                    "callout_title": "State Toggling 🎚️",
+                    "callout_text": "XOR is famously used in graphics programming and cryptography to toggle states mathematically, or to check if two boolean variables are currently in opposite states.",
+                    "list_title": "XOR Truth Table:",
+                    "list_items": [
+                        "True ^ False = True",
+                        "False ^ True = True",
+                        "True ^ True = False",
+                        "False ^ False = False"
+                    ]
+                },
+                {
+                    "id": "4.2",
+                    "title": "Strict AND/OR (&, |): Bypassing Short-Circuit",
+                    "content": "Standard `&&` and `||` operators are 'lazy'—they short-circuit and stop reading if they already know the answer. By using a single `&` or `|`, you force the Java engine to evaluate BOTH sides of the condition, no matter what.",
+                    "code_block": "boolean isHacker = true;\n\n// This is a method that writes a warning to a database\npublic boolean logSecurityAttempt() {\n    System.out.println(\"WARNING: System breach attempted.\");\n    return false;\n}\n\n// 1. Short-Circuit (&&): Left is false, so it NEVER runs the log method!\nif (!isHacker && logSecurityAttempt()) { ... }\n\n// 2. Strict AND (&): Forces the engine to run the log method anyway!\nif (!isHacker & logSecurityAttempt()) { ... }",
+                    "callout_title": "The Security Bypass 🛡️",
+                    "callout_text": "Using a single `&` or `|` is rare, but absolutely crucial when the right side of your condition is a method that MUST be executed (like logging a user attempt) regardless of whether the left side passed or failed.",
+                    "list_title": "Operator Breakdown:",
+                    "list_items": [
+                        "**`&&` / `||`**: Use 99% of the time for speed and safety.",
+                        "**`&` / `|`**: Use only when the right side has a necessary 'side effect' (an action that must happen)."
+                    ]
+                },
+                {
+                    "id": "4.3",
+                    "title": "De Morgan’s Laws (Logic Reversal)",
+                    "content": "When dealing with complex `if` statements filled with NOT (`!`) operators, the code becomes a nightmare to read. De Morgan's Laws are mathematical rules that allow you to simplify and reverse complex boolean logic.",
+                    "code_block": "boolean isWeekend = false;\nboolean isHoliday = false;\n\n// THE MESSY WAY: \"If it is NOT true that it is the weekend AND a holiday\"\nif (!(isWeekend && isHoliday)) {\n    System.out.println(\"It's a regular workday.\");\n}\n\n// THE DE MORGAN WAY: Distribute the NOT, and flip the AND to an OR!\nif (!isWeekend || !isHoliday) {\n    System.out.println(\"It's a regular workday.\");\n}",
+                    "callout_title": "The Mathematical Flip 🧠",
+                    "callout_text": "De Morgan's rules are simple: To distribute a NOT (`!`) inside parentheses, you must flip the operator. An AND (`&&`) becomes an OR (`||`), and an OR (`||`) becomes an AND (`&&`).",
+                    "list_title": "The 2 Laws:",
+                    "list_items": [
+                        "`!(A && B)` is exactly the same as `!A || !B`",
+                        "`!(A || B)` is exactly the same as `!A && !B`"
+                    ]
+                },
+                {
+                    "id": "4.4",
+                    "title": "Bitwise Masking (Binary Flags)",
+                    "content": "In hardware programming, game engines, or high-performance servers, storing 10 different boolean variables takes up too much memory. Instead, engineers use 'Bitwise Masking' to store multiple true/false flags inside a single integer using binary math.",
+                    "code_block": "// 1. Define flags as powers of 2 (Binary: 001, 010, 100)\nint READ = 1;  \nint WRITE = 2; \nint EXECUTE = 4;\n\n// 2. Combine permissions using Bitwise OR (|)\n// Binary 011 (User has READ and WRITE)\nint userPermission = READ | WRITE; \n\n// 3. Check permissions using Bitwise AND (&)\nif ((userPermission & WRITE) == WRITE) {\n    System.out.println(\"User is allowed to save files.\");\n}",
+                    "callout_title": "Ultimate Memory Efficiency 💾",
+                    "callout_text": "By using bitwise operators, you can store 32 completely different boolean true/false states inside a single standard 32-bit `int` variable. This is how massive systems manage millions of user permissions instantly.",
+                    "list_title": "Key Mechanics:",
+                    "list_items": [
+                        "Use `|` to combine flags together.",
+                        "Use `&` to check if a specific flag is active."
+                    ]
+                },
+                {
+                    "id": "4.5",
+                    "title": "Functional Predicates (Predicate<T>)",
+                    "content": "Introduced in Java 8, a `Predicate` allows you to take an `if` condition, wrap it up like a variable, and pass it around your entire program. It is the foundation of functional programming in Java.",
+                    "code_block": "import java.util.function.Predicate;\n\n// 1. Store the condition logic inside a variable\nPredicate<Integer> isAdult = age -> age >= 18;\nPredicate<Integer> isSenior = age -> age >= 65;\n\nint userAge = 21;\n\n// 2. Use the variable's .test() method to trigger the condition\nif (isAdult.test(userAge)) {\n    System.out.println(\"User is over 18.\");\n}\n\n// 3. You can even combine them dynamically!\nif (isAdult.and(isSenior.negate()).test(userAge)) {\n    System.out.println(\"Adult, but not yet a senior.\");\n}",
+                    "callout_title": "The Stream Engine 🌊",
+                    "callout_text": "You will use Predicates constantly when working with Java Streams. For example: `userList.stream().filter(isAdult).toList();` instantly filters a database of millions of users using the logic variable you created!",
+                    "list_title": "Built-in Combiners:",
+                    "list_items": [
+                        "`.and()`: Combines two predicates (like `&&`).",
+                        "`.or()`: Combines two predicates (like `||`).",
+                        "`.negate()`: Reverses the predicate (like `!`)."
+                    ]
+                },
+                {
+                    "id": "4.6",
+                    "title": "Assignment Inside Condition (The C-Style Hack)",
+                    "content": "Java allows you to assign a value to a variable and check its condition at the exact same time inside the `if` or `while` parentheses. This is a legacy trick inherited from the C programming language to condense code.",
+                    "code_block": "String input;\n\n// THE ROOKIE WAY:\ninput = getNetworkData();\nif (input != null) {\n    System.out.println(\"Received: \" + input);\n}\n\n// THE HACKER WAY (Assign and check simultaneously!):\n// Notice the extra parentheses around (input = getNetworkData())\nif ((input = getNetworkData()) != null) {\n    System.out.println(\"Received: \" + input);\n}",
+                    "callout_title": "The I/O Loop Standard 📁",
+                    "callout_text": "While frowned upon in standard logic, this exact trick is the global industry standard for reading files or network streams in a `while` loop: `while ((line = reader.readLine()) != null) { ... }`",
+                    "list_title": "Order of Operations:",
+                    "list_items": [
+                        "The inner parentheses run first, assigning the data to the variable.",
+                        "The outer check then verifies if that assigned data is `null` or valid."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: The Architect (The Anti-If Patterns)",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The Dictionary Router (Map Dispatch)",
+                    "content": "Imagine a game server that receives 50 different text commands from players. Writing an `else if` ladder 50 blocks long will cripple the server's performance because the engine has to check every single condition from the top down. Architects use a `HashMap` (a dictionary) to instantly route the command directly to the correct code in exactly one step.",
+                    "code_block": "// THE ARCHITECT'S SOLUTION (Zero 'if' statements!)\n\n// 1. Setup the routing dictionary (Done once at startup)\nMap<String, Runnable> commandRouter = new HashMap<>();\ncommandRouter.put(\"JUMP\", () -> player.jump());\ncommandRouter.put(\"RUN\", () -> player.run());\ncommandRouter.put(\"ATTACK\", () -> player.attack());\n\n// 2. Execute incoming commands instantly (O(1) time complexity)\nString incomingCommand = \"JUMP\";\n\n// This single line replaces 50+ else-if blocks!\ncommandRouter.get(incomingCommand).run();",
+                    "callout_title": "The Big O Advantage ⚡",
+                    "callout_text": "An `else if` ladder runs in O(N) time—meaning if the command is at the bottom of the list, it takes longer to execute. A HashMap Router runs in O(1) time—meaning it takes the exact same microscopic amount of time to find the 1st command as it does the 10,000th command.",
+                    "list_title": "Key Mechanics:",
+                    "list_items": [
+                        "Uses Java Lambda functions `() ->` to store actual code inside the dictionary.",
+                        "If a command doesn't exist, you handle it safely using `.getOrDefault()`."
+                    ]
+                },
+                {
+                    "id": "5.2",
+                    "title": "Polymorphism (Let the Objects Decide)",
+                    "content": "This is the holy grail of Object-Oriented Programming (OOP).\n\n[Diagram of Polymorphism in Object Oriented Programming]\n\nInstead of writing a massive central `switch` statement to check what type of data you are holding and calculating the math yourself, you command the data to calculate its own math.",
+                    "code_block": "// THE ROOKIE WAY (Centralized Logic):\npublic void calculatePay(Employee emp) {\n    if (emp.type.equals(\"Manager\")) payManager(emp);\n    else if (emp.type.equals(\"Intern\")) payIntern(emp);\n}\n\n// THE ARCHITECT WAY (Polymorphism):\n// We don't care who the employee is. We just tell them to pay themselves!\n// Java automatically routes to the correct math based on the object's class.\npublic void calculatePay(Employee emp) {\n    emp.issuePaycheck();\n}",
+                    "callout_title": "The Open-Closed Principle 🏛️",
+                    "callout_text": "Polymorphism satisfies the 'O' in the famous SOLID design principles. Your code is Open for extension (you can add a 'CEO' class later) but Closed for modification (you never have to edit the `calculatePay` method ever again!).",
+                    "list_title": "Why it kills 'if' statements:",
+                    "list_items": [
+                        "The decision logic is pushed down into the Objects themselves, completely clearing out your main execution files."
+                    ]
+                },
+                {
+                    "id": "5.3",
+                    "title": "The Strategy Pattern",
+                    "content": "Sometimes you have a single Object that needs to change its behavior dynamically. Instead of using a `switch` statement to swap behaviors, the Strategy Pattern encapsulates each specific algorithm into its own separate Class.\n\n[Diagram of Strategy Design Pattern UML]\n\nYou then just plug the algorithm into the Object like a game cartridge.",
+                    "code_block": "// 1. Define the Strategies (The Cartridges)\nPaymentStrategy creditCard = new CreditCardPayment();\nPaymentStrategy payPal = new PayPalPayment();\n\n// 2. The Shopping Cart (The Console)\nShoppingCart cart = new ShoppingCart();\n\n// THE ARCHITECT WAY:\n// No 'if (user.chosePayPal)' statements required!\n// We just plug in the correct strategy and execute it.\ncart.setPaymentStrategy(payPal);\ncart.checkout(150.00);",
+                    "callout_title": "Extreme Decoupling 🔌",
+                    "callout_text": "If your boss asks you to add 'Bitcoin' as a payment method, you don't have to touch the `ShoppingCart` code at all. You just write a new Bitcoin Strategy class and plug it in. This prevents you from accidentally breaking existing code.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Algorithms are separated from the data that uses them.",
+                        "Changes behavior at runtime without a single `if` branch."
+                    ]
+                },
+                {
+                    "id": "5.4",
+                    "title": "The Optional<T> Wrapper (Java 8+)",
+                    "content": "The absolute most common `if` statement in history is checking if data is missing (`null`) before you try to use it, just to prevent a `NullPointerException` crash. Java 8 introduced `Optional`, a protective wrapper box that completely eliminates the need to write manual null checks.",
+                    "code_block": "// THE ROOKIE WAY:\nString username = database.getUser();\nif (username != null) {\n    System.out.println(\"Welcome, \" + username.toUpperCase());\n}\n\n// THE ARCHITECT WAY (Java 8+):\nOptional<String> safeUser = database.getUserOptional();\n\n// No 'if' statement! It reads like plain English.\n// It only runs the print command if the box actually contains data.\nsafeUser.ifPresent(name -> System.out.println(\"Welcome, \" + name.toUpperCase()));",
+                    "callout_title": "The Billion Dollar Mistake 💸",
+                    "callout_text": "The inventor of the `null` reference (Tony Hoare) famously called it his 'Billion Dollar Mistake' because it has caused more software crashes and lost revenue than any other bug in history. `Optional` is Java's modern cure for this disease.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Forces developers to acknowledge that a variable might be empty.",
+                        "Provides beautiful functional methods like `.ifPresent()` and `.orElse()` to handle missing data without branching logic."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "title": "Module 6: The Exiled (Anti-Patterns to Avoid)",
+            "subtopics": [
+                {
+                    "id": "6.1",
+                    "title": "Nested Ternary Operators",
+                    "content": "The standard Ternary Operator `(condition) ? true : false` is a beautiful, clean way to assign a variable. However, if you place another Ternary Operator inside of it, you create a microscopic, unreadable nightmare. Code is read 10x more often than it is written; never sacrifice readability to save a few lines of code.",
+                    "code_block": "int score = 85;\n\n// THE TOXIC WAY (Nested Ternary):\n// This takes the brain several seconds to decode.\nString grade = (score >= 90) ? \"A\" : (score >= 80) ? \"B\" : (score >= 70) ? \"C\" : \"F\";\n\n// THE PROFESSIONAL WAY (Standard if-else):\n// Instantly readable by any developer.\nString cleanGrade;\nif (score >= 90) cleanGrade = \"A\";\nelse if (score >= 80) cleanGrade = \"B\";\nelse if (score >= 70) cleanGrade = \"C\";\nelse cleanGrade = \"F\";",
+                    "callout_title": "The Code Smell 🤢",
+                    "callout_text": "If you submit a nested ternary operator in a technical interview, the interviewer will immediately assume you prioritize showing off over writing maintainable, team-friendly code.",
+                    "list_title": "The Golden Rule:",
+                    "list_items": [
+                        "Never chain `? :` operators. If you need more than one condition, use an `else if` ladder or a `switch` statement."
+                    ]
+                },
+                {
+                    "id": "6.2",
+                    "title": "Exceptions as Control Flow",
+                    "content": "Exceptions (`try/catch` blocks) are designed for exceptional, unpredictable catastrophes (like a database crashing or a hard drive disconnecting). Some developers lazily use them as a replacement for standard `if` checks. This is a massive architectural sin that will destroy your app's performance.",
+                    "code_block": "String userInput = \"abc\";\n\n// THE TOXIC WAY (Exceptions for Flow):\n// Blindly running the code and using the crash as an 'else' block.\ntry {\n    int number = Integer.parseInt(userInput);\n    System.out.println(\"Valid number: \" + number);\n} catch (NumberFormatException e) {\n    System.out.println(\"Invalid input!\");\n}\n\n// THE PROFESSIONAL WAY (Regex Pattern Match):\n// Use an 'if' statement to check the data safely BEFORE executing!\nif (userInput.matches(\"^[0-9]+$\")) {\n    int number = Integer.parseInt(userInput);\n    System.out.println(\"Valid number: \" + number);\n} else {\n    System.out.println(\"Invalid input!\");\n}",
+                    "callout_title": "The Performance Killer 🐌",
+                    "callout_text": "Generating an Exception in Java is incredibly slow. The JVM has to pause your program, capture a 'Stack Trace' of the entire system memory, and build an error object. Using a simple `if` statement is mathematically thousands of times faster.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Use `if` to check for predictable user mistakes (like typing letters instead of numbers).",
+                        "Save `try/catch` for things outside your control (like the Wi-Fi dropping)."
+                    ]
+                },
+                {
+                    "id": "6.3",
+                    "title": "Assertions (assert)",
+                    "content": "Java has a built-in keyword called `assert`. It looks and acts exactly like an `if` statement, throwing an error if the condition is false. However, it is strictly designed for internal testing and debugging. It must NEVER be used to validate real user data or replace standard `if` statements.",
+                    "code_block": "int playerAge = 16;\n\n// THE TOXIC WAY (Using assert for business logic):\nassert (playerAge >= 18) : \"Player is too young!\";\n\n// THE PROFESSIONAL WAY (The Bouncer Pattern):\nif (playerAge < 18) {\n    throw new IllegalArgumentException(\"Player is too young!\");\n}",
+                    "callout_title": "The Disappearing Code 👻",
+                    "callout_text": "By default, the Java Virtual Machine actually IGNORES all `assert` keywords to make the program run faster! You have to manually pass a special flag (`-ea`) into the server console to turn them on. If you use `assert` instead of an `if` statement, your security checks will literally be erased when you publish your app.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "`assert` is for testing code on your own laptop to verify your math is correct.",
+                        "Standard `if` statements and `Exceptions` are for production code deployed to real users."
+                    ]
+                }
+            ]
+        }
+    ]
+}
