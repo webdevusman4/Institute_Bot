@@ -1,6 +1,6 @@
 {
     "title": "Java Fundamentals: Loops",
-    "description": "A comprehensive mastery course covering iterative execution flow, standard loop architectures, control keywords, and advanced iteration techniques.",
+    "description": "A comprehensive mastery course covering iterative execution flow, standard loop architectures, control keywords, advanced iteration techniques, and critical compiler execution traps.",
     "sections": [
         {
             "id": "1",
@@ -138,6 +138,84 @@
                     "list_title": "Key Takeaways:",
                     "list_items": [
                         "Understanding what the compiler does behind the scenes is what separates junior programmers from system architects."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Exam Traps & Compiler Anomalies",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "8. The for Loop Scope Crash",
+                    "content": "Professors love to test Block Scope specifically on the `for` loop header. Variables declared inside the initialization block of a `for` loop die the exact millisecond the loop terminates.",
+                    "code_block": "for (int i = 0; i < 5; i++) {\n    System.out.print(i + \" \");\n}\n// COMPILATION ERROR: i cannot be resolved to a variable\nSystem.out.println(\"Final lap was: \" + i);\n\n// THE FIX: Declare the variable outside the loop first\nint j;\nfor (j = 0; j < 5; j++) {\n    System.out.print(j + \" \");\n}\nSystem.out.println(\"Final lap was: \" + j); // Safely prints 5",
+                    "callout_title": "Scope Law ⚖️",
+                    "callout_text": "If you need a variable's final value after the loop ends, you MUST declare it above the loop.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "Initialization variables in a `for` loop are strictly block-scoped to the loop itself."
+                    ]
+                },
+                {
+                    "id": "4.2",
+                    "title": "9. The Floating-Point Infinite Loop",
+                    "content": "Never use `double` or `float` for a loop counter. Because binary computers cannot calculate decimals perfectly, exact equality checks will fail, leading to infinite loops.",
+                    "code_block": "// DANGER: Infinite Loop!\nfor (double d = 0.0; d != 1.0; d += 0.1) {\n    System.out.println(\"Running...\");\n    // 'd' jumps from 0.9 to 1.0000000000000002, skipping 1.0 exactly!\n}",
+                    "callout_title": "Hardware Limitations 💻",
+                    "callout_text": "Floating-point math in Java (and all languages) is an approximation. Always use `int` or `long` for precise loop counters.",
+                    "list_title": "Exam Identification:",
+                    "list_items": [
+                        "If you see a `double` being used with a `!=` condition in a loop, it is almost certainly a trick question."
+                    ]
+                },
+                {
+                    "id": "4.3",
+                    "title": "10. The Execution Order Proof",
+                    "content": "Professors use print statements inside the loop header to test if you know the exact millisecond the 'Step' happens.",
+                    "code_block": "int x = 0;\n// Print statements inside the header to prove order!\nfor (System.out.println(\"Start\"); x < 2; System.out.println(\"Step\")) {\n    System.out.println(\"Body\");\n    x++;\n}\n\n/* OUTPUT TRACE:\nStart\nBody\nStep\nBody\nStep\n*/",
+                    "callout_title": "The Golden Order 🔄",
+                    "callout_text": "Initialization runs exactly ONCE. Condition is checked BEFORE the body. The Step runs AFTER the body, right before looping back.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "You can place any valid statement (like a method call or print) inside the `for` loop header, not just variable math."
+                    ]
+                },
+                {
+                    "id": "4.4",
+                    "title": "11. The Multi-Type for Loop Ban",
+                    "content": "You can declare multiple variables in a `for` loop header, but professors will test if you know the strict data-type limit.",
+                    "code_block": "// VALID: Both are ints\nfor (int i = 0, j = 5; i < 5; i++) {\n    System.out.println(i + j);\n}\n\n// COMPILATION ERROR: Mixing int and double\nfor (int i = 0, double d = 5.0; i < 5; i++) {\n    System.out.println(\"Running\");\n}",
+                    "callout_title": "Type Strictness 🚫",
+                    "callout_text": "You are allowed to initialize as many variables as you want in a `for` loop, but they MUST all be the exact same data type.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "You cannot mix `int`, `double`, or `String` declarations in a single initialization block."
+                    ]
+                },
+                {
+                    "id": "4.5",
+                    "title": "12. Variable Shadowing in the for Block",
+                    "content": "The loop variable initialized in the header 'owns' the entire block of code inside the curly braces `{}`. You cannot declare a new variable with the same name inside the loop block.",
+                    "code_block": "for (int i = 0; i < 3; i++) {\n    // COMPILATION ERROR: Variable 'i' is already defined in the scope\n    int i = 10; \n    System.out.println(i);\n}",
+                    "callout_title": "Memory Conflict 🧠",
+                    "callout_text": "Because `i` is already active in memory for that specific block, attempting to re-declare it causes a collision.",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "You can modify `i` (e.g., `i = 10`), but you cannot re-declare it (e.g., `int i = 10`)."
+                    ]
+                },
+                {
+                    "id": "4.6",
+                    "title": "13. The Bytecode Performance Myth",
+                    "content": "A common exam question tests whether you understand how loops are processed by the JVM at the machine level.",
+                    "code_block": "// True or False: A for loop executes faster than a while loop.\n// Answer: FALSE.",
+                    "callout_title": "Hardware Equality ⚙️",
+                    "callout_text": "The Java Virtual Machine (JVM) is incredibly smart. When you click 'Compile', the Java compiler breaks both `for` loops and `while` loops down into the exact same machine bytecode (using underlying `goto` and `jump` instructions).",
+                    "list_title": "Key Takeaways:",
+                    "list_items": [
+                        "At the hardware level, there is 0.00% difference in execution speed or memory performance between a `for` loop and a `while` loop."
                     ]
                 }
             ]
