@@ -1,4 +1,5 @@
 import { BookOpen, ArrowRight } from "lucide-react";
+import BrandLogo from "./BrandLogo";
 
 export default function AuthHero({ isLogin, setIsLogin, setError, setSuccess }) {
     return (
@@ -10,10 +11,7 @@ export default function AuthHero({ isLogin, setIsLogin, setError, setSuccess }) 
     `}>
             <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-8">
-                    <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-lg">
-                        <BookOpen size={24} className="text-white" />
-                    </div>
-                    <h1 className="text-3xl font-bold tracking-tight">StudyMate</h1>
+                    <BrandLogo />
                 </div>
 
                 <div className="space-y-6">

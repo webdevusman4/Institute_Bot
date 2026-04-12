@@ -1,6 +1,7 @@
 "use client";
 
 import { BookOpen, Plus, MessageSquare, Settings, Trash2, LogOut, X } from "lucide-react";
+import BrandLogo from "./BrandLogo";
 
 export default function Sidebar({
     open,
@@ -32,13 +33,7 @@ export default function Sidebar({
                     {/* Header */}
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20">
-                                <BookOpen size={22} className="text-primary" />
-                            </div>
-                            <div>
-                                <h1 className="font-bold text-xl tracking-tight">StudyMate</h1>
-                                <p className="text-xs text-muted-foreground font-medium tracking-wide">AI TUTOR</p>
-                            </div>
+                            <BrandLogo />
                         </div>
                         <button onClick={() => setOpen(false)} className="lg:hidden text-muted-foreground hover:text-foreground transition-colors">
                             <X size={20} />

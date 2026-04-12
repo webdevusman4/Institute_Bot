@@ -9,6 +9,7 @@ import "katex/dist/katex.min.css";
 import {
   Send, Menu, LogOut, Moon, Sun, BookOpen, Trash2, Plus, MessageSquare, Sparkles
 } from "lucide-react";
+import BrandLogo from "./BrandLogo";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -116,8 +117,7 @@ export default function Dashboard() {
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-72 flex flex-col bg-surface border-r border-white/5 transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8 text-primary">
-            <BookOpen size={24} />
-            <span className="font-bold text-xl tracking-tight text-text">StudyMate</span>
+            <BrandLogo />
           </div>
           <button onClick={createNewChat} className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-medium transition-all shadow-lg shadow-primary/25 active:scale-95">
             <Plus size={18} /> New Chat
@@ -207,7 +207,10 @@ export default function Dashboard() {
               <Send size={20} />
             </button>
           </div>
-          <p className="text-[10px] text-center text-text-muted mt-6 opacity-30 font-medium uppercase tracking-[0.2em]">StudyMate AI • Powered by Google</p>
+          <div className="flex flex-col items-center mt-6">
+            <div className="scale-75 opacity-70"><BrandLogo /></div>
+            <p className="text-[10px] text-center text-text-muted mt-2 opacity-30 font-medium uppercase tracking-[0.2em]">Powered by Google</p>
+          </div>
         </div>
       </main>
 
