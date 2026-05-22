@@ -5,7 +5,7 @@ import BrandLogo from "./components/BrandLogo";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "StudyMate - AI Tutor",
+  title: "ParhoMate - AI Tutor",
   description: "Your personalized AI learning assistant.",
 };
 

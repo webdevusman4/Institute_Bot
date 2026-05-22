@@ -1,0 +1,98 @@
+{
+    "title": "Java Fundamentals: Algorithmic Verification",
+    "description": "A deep-dive mastery course into manual state tracking, logic verification, trace table mechanics, and Boundary Value Analysis for testcase engineering.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Theory of Algorithmic Verification",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "The Dry Run (Mental Execution)",
+                    "content": "Before writing complex code in an IDE, software engineers must verify their logic. A 'dry run' is the process of selecting appropriate test data and manually executing an algorithm step-by-step by hand until the program terminates.\n\nThis process bridges the gap between human logic and machine execution, ensuring you catch logical errors before they reach the compiler. [Diagram of Java Compilation]\n\nBy running through the code manually, you act as the Java Virtual Machine, strictly following the mathematical rules without making human assumptions.",
+                    "callout_title": "The Human Virtual Machine 🧠",
+                    "callout_text": "During a dry run, YOU act as the JVM. You must execute the code exactly as a computer would—line by line, strictly following the mathematical rules, without skipping steps or making human assumptions about 'what the code is supposed to do'.",
+                    "list_title": "Core Objectives of a Dry Run:",
+                    "list_items": [
+                        "**State Tracking:** Monitoring the exact value held in memory for every variable at any given millisecond.",
+                        "**Logic Validation:** Verifying that the algorithm actually produces the desired results for specific inputs.",
+                        "**Failure Isolation:** Identifying the exact line of code where the logic breaks down if the program fails."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "Trace Table Architecture",
+                    "content": "To perform a dry run without losing track of your memory state, engineers use a Trace Table. A trace table is a rectangular array (grid) where the column headings record the names of all the variables used in the algorithm, and the rows record the changing state of those variables after every single instruction executes.",
+                    "formula": "Trace Table = Line Numbers + Variables + Output",
+                    "list_title": "Trace Table Anatomy:",
+                    "list_items": [
+                        "**Line Number Column:** A column used to track exactly which line of code triggered the state change.",
+                        "**Variable Columns:** One dedicated column for every single variable declared in the program.",
+                        "**Output Column:** A dedicated column to record exactly what is printed to the console.",
+                        "**The Golden Rule:** You never erase an old value in a trace table. When a variable updates, you write the new value on a new row. This creates a complete historical 'audit log' of your memory."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Execution Scenarios",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "Scenario 1: Tracing a Standard Iteration",
+                    "content": "Let's begin by tracing a standard accumulation loop to observe how variables update over time in memory.\n\nObserve how the loop condition continuously forces the execution flow to jump backwards, updating the state of our variables. [Diagram of Trace Table Execution]\n\nAs soon as the condition evaluates to false, the execution strictly breaks out of the loop block.",
+                    "code_block": "1  int sum = 0;\n2  int n = 10;\n3  while (n < 25) {\n4      sum = sum + n;\n5      System.out.println(sum);\n6      n = n + 5;\n7  }",
+                    "list_title": "The Trace Table Execution:",
+                    "list_items": [
+                        "**Row 1 (Line 1 & 2):** Memory initializes. `sum` = 0, `n` = 10.",
+                        "**Row 2 (Line 4 & 5):** Condition passes. `sum` becomes 10. Output prints \"10\".",
+                        "**Row 3 (Line 6):** `n` updates to 15. The loop jumps back to Line 3.",
+                        "**Row 4 (Line 4 & 5):** Condition passes. `sum` becomes 25. Output prints \"25\".",
+                        "**Row 5 (Line 6):** `n` updates to 20.",
+                        "**Row 6 (Line 4 & 5):** Condition passes. `sum` becomes 45. Output prints \"45\".",
+                        "**Row 7 (Line 6):** `n` updates to 25. The loop jumps to Line 3. The condition `(25 < 25)` evaluates to FALSE. The algorithm terminates."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "Scenario 2: Catching the 'Off-By-One' Error",
+                    "content": "The most common logical trap in computer science is the Off-By-One Error (OBOE). Trace tables are the ultimate defense against this bug, exposing exactly where the loop terminates prematurely.",
+                    "code_block": "// BUGGY CODE: We want to print numbers 1, 2, 3.\nint count = 1;\nwhile (count < 3) { \n    System.out.println(count);\n    count++;\n}",
+                    "callout_title": "The OBOE Trap 🛑",
+                    "callout_text": "If you trace this table, you will see `count` print 1, then print 2. When `count` becomes 3, the condition `(3 < 3)` evaluates to FALSE and stops. It never prints 3! The trace table proves the logic is broken. The fix is changing it to `< 4` or `<= 3`."
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Test Data Engineering",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Designing Defensive Testcases",
+                    "content": "A dry run is entirely useless if you feed it bad test data. If you only test 'easy' numbers, your program will crash when real users interact with it. Engineers must explicitly engineer specific 'Testcases' to try and break their own code.",
+                    "list_title": "The Three Archetypes of Test Data:",
+                    "list_items": [
+                        "**Normal (Valid) Data:** Standard, expected inputs. Proves the 'happy path' of the algorithm functions properly.",
+                        "**Boundary (Extreme) Data:** Values at the exact absolute limits of your logic constraints. This proves your `>=` and `<=` relational operators are flawless. This is the most critical phase of testing.",
+                        "**Abnormal (Invalid) Data:** Completely unexpected or erroneous inputs (e.g., negative numbers for an age requirement). Proves your program handles errors gracefully instead of crashing."
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "Applying Boundary Value Analysis",
+                    "content": "Let's engineer testcases for an algorithm designed to approve user accounts if they are between the ages of 13 and 19 (inclusive).",
+                    "code_block": "if (age >= 13 && age <= 19) {\n    System.out.println(\"Teen Account Approved\");\n} else {\n    System.out.println(\"Denied\");\n}",
+                    "list_title": "Engineered Testcases:",
+                    "list_items": [
+                        "**Testcase 1 (Normal Data):** Age = 15. Evaluates `(15 >= 13 && 15 <= 19)`. Output: Approved.",
+                        "**Testcase 2 (Boundary Data - Lower):** Age = 13. Verifies the `>=` operator works. Output: Approved.",
+                        "**Testcase 3 (Boundary Data - Upper):** Age = 19. Verifies the `<=` operator works. Output: Approved.",
+                        "**Testcase 4 (Boundary Failure):** Age = 12 and Age = 20. Verifies the constraints strictly reject data just outside the limit. Output: Denied."
+                    ]
+                }
+            ]
+        }
+    ]
+}

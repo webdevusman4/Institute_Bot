@@ -1,0 +1,154 @@
+{
+    "title": "Java Systems Architecture: File I/O & Data Persistence",
+    "description": "An enterprise-grade masterclass on data persistence. Covers the hardware physics of file execution, legacy java.io streams, the modern NIO.2 engine, and robust try-with-resources exception handling.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Architecture & Data Persistence",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "The Memory-to-Disk Bridge",
+                    "content": "Variables and Arrays live in RAM, which is volatile (erased when the power goes out). To make data survive a system crash, it must be written to a physical disk. However, interacting with a hard drive introduces a massive performance bottleneck. Reading from RAM takes about 100 nanoseconds, while reading from a disk takes up to 10 milliseconds. File I/O is the architectural bridge between fast memory and slow permanent storage.",
+                    "code_block": "// The Architectural Flow of File Handling:\n// 1. Application (Your Java Logic)\n// 2. Stream (The data flow channel)\n// 3. Buffer (Temporary RAM storage to speed things up)\n// 4. Disk (The physical hard drive)",
+                    "callout_title": "Real-World Context 🌍",
+                    "callout_text": "Without File I/O, software cannot exist. Banking systems use it for audit logs, Spring Boot servers use it to read configuration files (.yaml), and Data Pipelines (like Apache Spark) use it to process massive CSV files.",
+                    "list_title": "The Big Picture:",
+                    "list_items": [
+                        "**Input Streams:** Used to READ data from a file into your program.",
+                        "**Output Streams:** Used to WRITE data from your program into a file."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: The Legacy Engine (java.io)",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "The File Object Blueprint",
+                    "content": "The `java.io.File` class is the oldest way to represent a file in Java. However, creating a `File` object does NOT actually create a file on your hard drive. It simply creates a 'Blueprint' or a 'Path Wrapper' in memory that points to where a file *might* exist.",
+                    "code_block": "import java.io.File;\n\npublic class FileDemo {\n    public static void main(String[] args) {\n        // This ONLY creates a string path in RAM. It does not touch the disk!\n        File file = new File(\"student_records.txt\");\n        \n        // Metadata Methods:\n        System.out.println(\"Exists   : \" + file.exists());\n        System.out.println(\"Name     : \" + file.getName());\n        System.out.println(\"Is File  : \" + file.isFile());\n        System.out.println(\"Can Read : \" + file.canRead());\n    }\n}",
+                    "callout_title": "The Absolute Path Trap 🛑",
+                    "callout_text": "Never hardcode an absolute path (e.g., `C:\\Users\\Alice\\report.txt`). The second you deploy this code to an AWS Linux server or your professor's computer, it will instantly crash because that exact folder structure does not exist. Always use relative paths.",
+                    "list_title": "Key Properties:",
+                    "list_items": [
+                        "The `File` object only holds metadata.",
+                        "It cannot write or read text inside the file. It only interacts with the outside of the file."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "Creating & Deleting Files",
+                    "content": "To actually manipulate the hard drive, you must call specific methods on your File object. Because these methods interact with the operating system, they require strict verification to ensure you don't accidentally overwrite or delete critical data.",
+                    "code_block": "import java.io.File;\nimport java.io.IOException;\n\npublic class DiskOps {\n    public static void main(String[] args) {\n        File file = new File(\"temp_cache.txt\");\n        \n        try {\n            // 1. SAFE CREATION\n            if (file.createNewFile()) {\n                System.out.println(\"File physically created on disk.\");\n            } else {\n                System.out.println(\"Ignored: File already exists.\");\n            }\n            \n            // 2. SAFE DELETION\n            if (file.exists()) {\n                file.delete();\n            }\n        } catch (IOException e) {\n            System.out.println(\"Disk Error: \" + e.getMessage());\n        }\n    }\n}",
+                    "callout_title": "The Phantom Delete 👻",
+                    "callout_text": "The `.delete()` method returns a boolean (`false`) if the file doesn't exist or is currently locked by another program. It does NOT throw an exception. Always check `.exists()` before deleting to prevent silent, invisible failures in production.",
+                    "list_title": "Atomic Operations:",
+                    "list_items": [
+                        "`createNewFile()` is atomic. It guarantees that the file is safely created without being duplicated by another process."
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "Writing Data (Overwrite vs Append)",
+                    "content": "To push text into a file, we use a `FileWriter`. By default, a `FileWriter` is incredibly destructive—it will instantly erase everything inside the file the millisecond it opens. To prevent this, we must activate 'Append Mode'.",
+                    "code_block": "import java.io.FileWriter;\nimport java.io.IOException;\n\npublic class WriteDemo {\n    public static void main(String[] args) {\n        // The 'true' flag turns on APPEND MODE. \n        // Without it, the file is totally erased (OVERWRITE MODE).\n        try (FileWriter writer = new FileWriter(\"logs.txt\", true)) {\n            writer.write(\"System Booted at 09:00 AM\\n\");\n            writer.write(\"User login: Usama\\n\");\n            \n            // CRITICAL: Flushes data from RAM to Disk\n            writer.close(); \n        } catch (IOException e) {\n            System.out.println(\"Write failed.\");\n        }\n    }\n}",
+                    "callout_title": "The close() Catastrophe 💥",
+                    "callout_text": "A `FileWriter` writes data into a temporary 8KB RAM buffer, NOT directly to the disk. If your program finishes without calling `.close()`, the buffer is never flushed to the hard drive, and you will lose 100% of the data you just wrote.",
+                    "list_title": "Mode Selection:",
+                    "list_items": [
+                        "`new FileWriter(\"file.txt\")` : Overwrite Mode (Destructive).",
+                        "`new FileWriter(\"file.txt\", true)` : Append Mode (Safe)."
+                    ]
+                },
+                {
+                    "id": "2.4",
+                    "title": "Parsing Files (The Scanner Class)",
+                    "content": "Before jumping to high-performance buffers, the standard way to read a text file in university labs is using the `Scanner` class. Unlike a buffer that just grabs raw text, a Scanner acts as a 'Tokenizer'. It can read file data line-by-line, or it can intelligently parse the data into specific types (like pulling integers out of a text file).",
+                    "code_block": "import java.io.File;\nimport java.io.FileNotFoundException;\nimport java.util.Scanner;\n\npublic class ReadWithScanner {\n    public static void main(String[] args) {\n        try {\n            File file = new File(\"student_records.txt\");\n            Scanner scanner = new Scanner(file);\n            \n            // CRITICAL: Always check if a next line exists BEFORE reading it.\n            while (scanner.hasNextLine()) {\n                String line = scanner.nextLine(); \n                System.out.println(line);\n            }\n            \n            scanner.close();\n        } catch (FileNotFoundException e) {\n            System.out.println(\"File not found: \" + e.getMessage());\n        }\n    }\n}",
+                    "callout_title": "The NoSuchElement Crash 💥",
+                    "callout_text": "If you call `scanner.nextLine()` without first checking `scanner.hasNextLine()`, and the file is empty or you reached the end, your program will instantly crash with a `NoSuchElementException`.",
+                    "list_title": "Scanner vs. BufferedReader:",
+                    "list_items": [
+                        "**Scanner:** Slower, but easy to parse tokens (e.g., `nextInt()`, `nextDouble()`).",
+                        "**BufferedReader:** Blazing fast, but only reads raw `String` text."
+                    ]
+                },
+                {
+                    "id": "2.5",
+                    "title": "High-Performance Reading (BufferedReader)",
+                    "content": "While you can use a `Scanner` to read small files, enterprise systems use `BufferedReader`. A Scanner reads the file disk one piece at a time (very slow). A `BufferedReader` sucks 8 Kilobytes of the file from the disk into RAM all at once, making it up to 100x faster for massive logs or CSVs.",
+                    "code_block": "import java.io.BufferedReader;\nimport java.io.FileReader;\nimport java.io.IOException;\n\npublic class FastReader {\n    public static void main(String[] args) {\n        // Wrap a standard FileReader inside a high-speed BufferedReader\n        try (BufferedReader br = new BufferedReader(new FileReader(\"huge_data.csv\"))) {\n            String line;\n            \n            // readLine() reads a full row. It returns 'null' when the file is empty.\n            while ((line = br.readLine()) != null) {\n                System.out.println(line);\n            }\n        } catch (IOException e) {\n            System.out.println(\"Read error.\");\n        }\n    }\n}",
+                    "callout_title": "The OutOfMemory Crisis 🧠",
+                    "callout_text": "Never try to load a massive 5GB log file entirely into a standard String or Array at the exact same time. The `BufferedReader` `while` loop architecture forces the system to only hold one line in memory at a time, preventing a fatal `OutOfMemoryError`.",
+                    "list_title": "Performance Profile:",
+                    "list_items": [
+                        "`Scanner`: Best for parsing specific tokens (e.g., `nextInt()`).",
+                        "`BufferedReader`: Best for high-speed, line-by-line streaming."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: The Modern Engine (NIO.2)",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "The NIO.2 Revolution (java.nio.file)",
+                    "content": "In Java 7, Oracle realized `java.io` was too verbose and clunky. They introduced NIO.2 (New I/O). Instead of the legacy `File` class, modern Java developers use the `Path` interface and the massive `Files` utility toolkit. It completely automates the painful process of opening and closing streams.",
+                    "code_block": "import java.nio.file.*;\nimport java.io.IOException;\nimport java.util.List;\n\npublic class ModernFileOps {\n    public static void main(String[] args) {\n        // 1. Use Paths.get() instead of new File()\n        Path myFile = Paths.get(\"config.yaml\");\n\n        try {\n            // 2. Write an entire list of strings in ONE line!\n            Files.write(myFile, List.of(\"port: 8080\", \"debug: true\"));\n\n            // 3. Read the entire file into a List in ONE line!\n            List<String> data = Files.readAllLines(myFile);\n            data.forEach(System.out::println);\n\n            // 4. Copy the file safely (replaces existing backup if found)\n            Files.copy(myFile, Paths.get(\"backup.yaml\"), StandardCopyOption.REPLACE_EXISTING);\n            \n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}",
+                    "callout_title": "The Rule of Consistency ⚖️",
+                    "callout_text": "Never mix APIs! Do not wrap a modern NIO `Path` object inside a legacy `FileWriter`. Pick one standard (`java.io` or `java.nio.file`) and stick to it for the entire software module.",
+                    "list_title": "Why NIO.2 is the Industry Standard:",
+                    "list_items": [
+                        "`Files.write()` replaces 5 lines of `FileWriter` code.",
+                        "`Files.readAllLines()` returns a highly usable `List<String>` instantly.",
+                        "It handles OS-level path separators (Windows `\\` vs Mac/Linux `/`) automatically."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Enterprise Safety Systems",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "The try-with-resources Guarantee",
+                    "content": "As we learned, forgetting to call `.close()` on a file creates memory leaks and locked files. Modern Java solves this natively using the `try-with-resources` block. If you declare your streams inside the parenthesis `()` of a try block, Java mathematically guarantees it will automatically close the file when the block finishes—even if the program crashes mid-execution!",
+                    "code_block": "// Notice the parenthesis ( ) after the 'try' keyword.\n// Any class that implements 'AutoCloseable' can go inside here.\ntry (BufferedReader reader = new BufferedReader(new FileReader(\"data.txt\"));\n     BufferedWriter writer = new BufferedWriter(new FileWriter(\"output.txt\"))) {\n    \n    String line;\n    while ((line = reader.readLine()) != null) {\n        writer.write(line.toUpperCase());\n        writer.newLine();\n    }\n    \n// No finally { writer.close(); } block is needed! Java handles it invisibly.\n} catch (IOException e) {\n    System.err.println(\"System Failure: \" + e.getMessage());\n}",
+                    "callout_title": "The Exception Hierarchy 🌲",
+                    "callout_text": "Because `FileNotFoundException` is a child of `IOException`, you MUST catch `FileNotFoundException` first. If you place `catch(IOException)` at the top, it will absorb all file errors, and you will lose the specific 'File Not Found' detail.",
+                    "list_title": "The Big Three Exceptions:",
+                    "list_items": [
+                        "`FileNotFoundException`: Thrown before reading if the path is bad.",
+                        "`IOException`: The master catch-all for locked files or full hard drives.",
+                        "`SecurityException`: Thrown if the OS denies your program admin read/write rights."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Architect Anti-Patterns (What NEVER To Do)",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The Memory Nuke (OutOfMemoryError)",
+                    "content": "Modern APIs like NIO.2 are incredibly convenient. Calling `Files.readAllLines()` loads an entire file into a `List<String>` in one line of code. However, doing this on a 2GB server log file will attempt to load 2GB of text directly into your RAM all at once, instantly crashing the JVM with an `OutOfMemoryError`.",
+                    "code_block": "// ❌ THE ANTI-PATTERN (Dangerous for large files)\nList<String> lines = Files.readAllLines(Paths.get(\"massive_log.txt\"));\n\n// ✅ THE ARCHITECT SOLUTION (Streams one line at a time)\ntry (BufferedReader br = new BufferedReader(new FileReader(\"massive_log.txt\"))) {\n    String line;\n    while ((line = br.readLine()) != null) {\n        // Process line and discard it from RAM\n    }\n}",
+                    "callout_title": "The Absolute Path Trap 🗺️",
+                    "callout_text": "Never hardcode absolute paths like `C:\\\\Users\\Usman\\\\file.txt`. The second you deploy your code to an AWS Linux server or send it to your professor, the code will break. Always use relative paths (e.g., `\"data/file.txt\"`).",
+                    "list_title": "Production Rules:",
+                    "list_items": [
+                        "Never swallow exceptions: `catch(IOException e) {}` with an empty body hides system failures. Always log the error.",
+                        "Never mix APIs: Do not wrap a modern NIO `Path` object inside a legacy `FileWriter`."
+                    ]
+                }
+            ]
+        }
+    ]
+}

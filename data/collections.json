@@ -1,0 +1,103 @@
+{
+    "title": "Java Enterprise Architecture: The Collections Framework",
+    "description": "The final frontier of the BSSE curriculum. A comprehensive masterclass on the Java Collections Framework, covering Lists, Sets, Maps, underlying memory data structures, and advanced iteration.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: The Collections Architecture",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "The Unified Framework & Generics",
+                    "content": "Before the Collections Framework, Java developers had to rely on rigid arrays or build custom data structures from scratch. The Java Collections Framework (JCF) is a standard library of dynamic data structures. To ensure data safety, these collections use 'Generics' (<T>), which forces the collection to only accept one specific type of Object.",
+                    "code_block": "// ❌ PRE-GENERICS (Dangerous)\nArrayList oldList = new ArrayList();\noldList.add(\"Usman\");\noldList.add(100); // Compiles fine, but crashes the program later!\n\n// ✅ MODERN GENERICS (Type-Safe)\n// The <String> diamond operator enforces strict data types at compile time.\nList<String> secureList = new ArrayList<>();\nsecureList.add(\"Usman\");\n// secureList.add(100); // Compiler ERROR! Safe architecture.",
+                    "callout_title": "The Primitive Ban 🚫",
+                    "callout_text": "Collections can ONLY store Objects, never primitives. You cannot create a `List<int>`. You must use their Object Wrapper classes, like `List<Integer>`, `List<Double>`, or `List<Boolean>`.",
+                    "list_title": "The Big Three Interfaces:",
+                    "list_items": [
+                        "**List:** Ordered, index-based, allows duplicates.",
+                        "**Set:** Unordered, mathematically unique, NO duplicates.",
+                        "**Map:** Key-Value dictionary pairs (Does not inherit from Collection)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Lists (Linear Sequences)",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "ArrayList vs. LinkedList",
+                    "content": "Both classes implement the `List` interface, meaning they have the exact same methods (`.add()`, `.remove()`, `.get()`). However, their underlying memory architecture is completely different. Choosing the wrong one will destroy your application's performance.",
+                    "code_block": "import java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.List;\n\npublic class ListArchitecture {\n    public static void main(String[] args) {\n        // ARRAYLIST: Backed by a contiguous array.\n        // Great for reading data quickly. Bad for inserting in the middle.\n        List<String> arrayList = new ArrayList<>();\n        arrayList.add(\"Data 1\");\n\n        // LINKEDLIST: Backed by scattered nodes pointing to each other.\n        // Great for inserting/deleting in the middle. Bad for searching.\n        List<String> linkedList = new LinkedList<>();\n        linkedList.add(\"Node 1\");\n    }\n}",
+                    "callout_title": "The Resizing Bottleneck ⏱️",
+                    "callout_text": "An `ArrayList` defaults to 10 slots. When you add the 11th item, it doesn't just grow. The JVM pauses, creates a brand new 15-slot array, copies all 10 old items over, and deletes the old array. This is an O(N) operation.",
+                    "list_title": "When to use which:",
+                    "list_items": [
+                        "**Use ArrayList:** When you read data 90% of the time and write 10% of the time (Search engines).",
+                        "**Use LinkedList:** When you are constantly adding and deleting data from the middle of the list (Music playlist queues)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Sets (The Uniqueness Enforcer)",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "HashSet vs. TreeSet",
+                    "content": "Sets are designed to prevent duplicate data. If you attempt to add an item that already exists, the Set simply ignores the operation. The two main enterprise Sets are `HashSet` (built for pure speed) and `TreeSet` (built for alphabetical/numerical sorting).",
+                    "code_block": "import java.util.HashSet;\nimport java.util.TreeSet;\nimport java.util.Set;\n\npublic class SetDemo {\n    public static void main(String[] args) {\n        // HASHSET: Lightning fast O(1) lookups. Random order.\n        Set<String> hashSet = new HashSet<>();\n        hashSet.add(\"Zebra\");\n        hashSet.add(\"Apple\");\n        System.out.println(hashSet); // Output might be: [Zebra, Apple]\n\n        // TREESET: Slower O(log N) lookups. Automatically sorted!\n        Set<String> treeSet = new TreeSet<>();\n        treeSet.add(\"Zebra\");\n        treeSet.add(\"Apple\");\n        System.out.println(treeSet); // Output ALWAYS: [Apple, Zebra]\n    }\n}",
+                    "callout_title": "The Hashing Engine ⚙️",
+                    "callout_text": "A `HashSet` achieves instantaneous O(1) lookups by converting your data into a math equation (a Hash Code). It uses this number as a direct memory address, allowing the CPU to instantly verify if an item exists without scanning the whole list.",
+                    "list_title": "Set Rules:",
+                    "list_items": [
+                        "Cannot access items by an index number (`set.get(0)` does not exist).",
+                        "If you need speed: Use `HashSet`.",
+                        "If you need sorted data: Use `TreeSet`."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Maps (Key-Value Dictionaries)",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "HashMap Architecture",
+                    "content": "A Map stores data in pairs. The 'Key' acts like a unique ID, and the 'Value' is the data attached to it. Just like Sets, you have `HashMap` (fast, random order) and `TreeMap` (slower, sorted by Key).",
+                    "code_block": "import java.util.HashMap;\nimport java.util.Map;\n\npublic class MapDemo {\n    public static void main(String[] args) {\n        // Map<KeyType, ValueType>\n        Map<Integer, String> students = new HashMap<>();\n\n        // 1. ADDING DATA (.put)\n        students.put(101, \"Usman\");\n        students.put(102, \"Ali\");\n\n        // Overwriting data: Re-using a Key replaces the old Value\n        students.put(102, \"Ahmed\"); \n\n        // 2. INSTANT RETRIEVAL (.get)\n        String target = students.get(101); // Instantly returns \"Usman\"\n\n        // 3. CHECKING EXISTENCE\n        boolean hasKey = students.containsKey(999); // false\n    }\n}",
+                    "callout_title": "The Collision Defense 🛡️",
+                    "callout_text": "What happens if two different Keys generate the exact same Hash Code? Java handles this 'Collision' by storing both Key-Value pairs in the same memory bucket using a mini-LinkedList. It then uses the `.equals()` method to find the exact one you want.",
+                    "list_title": "Map Characteristics:",
+                    "list_items": [
+                        "Keys MUST be unique. Values can be duplicates.",
+                        "Allows exactly one `null` Key, and multiple `null` Values."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Advanced Iteration & Sorting",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The Iterator & Fail-Fast Mechanics",
+                    "content": "While you can use an Enhanced For-Loop (`for (String item : list)`) to read collections, you CANNOT use it to delete items. If you try to remove an item from a list while looping through it, Java throws a `ConcurrentModificationException`. To safely remove items during a loop, you must use an `Iterator`.",
+                    "code_block": "import java.util.ArrayList;\nimport java.util.Iterator;\nimport java.util.List;\n\npublic class IteratorDemo {\n    public static void main(String[] args) {\n        List<String> names = new ArrayList<>();\n        names.add(\"Usman\");\n        names.add(\"Bug\");\n\n        // THE SECURE WAY TO LOOP AND DELETE\n        Iterator<String> cursor = names.iterator();\n        \n        while (cursor.hasNext()) {\n            String current = cursor.next();\n            if (current.equals(\"Bug\")) {\n                cursor.remove(); // Safely deletes the item from the list\n            }\n        }\n    }\n}",
+                    "callout_title": "Looping Through Maps 🔄",
+                    "callout_text": "Because Maps have two elements (Keys and Values), you can't loop them normally. The most efficient way is to extract both simultaneously using `.entrySet()`: `for (Map.Entry<Integer, String> row : students.entrySet())`",
+                    "list_title": "Sorting Objects (Comparable vs Comparator):",
+                    "list_items": [
+                        "**Comparable:** Modifies the class itself to give it a default sorting rule (e.g., sort Students by ID).",
+                        "**Comparator:** An external tool used to create custom sorting rules on the fly (e.g., sort Students by Grade, then by Name)."
+                    ]
+                }
+            ]
+        }
+    ]
+}

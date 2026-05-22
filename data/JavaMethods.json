@@ -1,0 +1,233 @@
+{
+    "title": "Java Fundamentals: Methods, Memory Scope & The Stack",
+    "description": "An elite masterclass bridging foundational code into modular programming. Covers method signatures, the CPU Call Stack, pass-by-value mechanics, polymorphism, and the OOP enterprise bridge.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Method Architecture & The Signature",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Anatomy of a Method",
+                    "content": "A method (known as a function in other languages) is a modular block of code that only runs when it is called. It allows you to break massive, complex problems into small, reusable pieces. Every method is defined by its 'Signature', which dictates exactly how it can be accessed and what data it requires.",
+                    "code_block": "// THE ANATOMY OF A METHOD\n// [Modifiers] [Return Type] [Name] ( [Parameters] ) {\n\npublic static int findMax(int num1, int num2) {\n    if (num1 > num2) {\n        return num1;\n    } else {\n        return num2;\n    }\n}",
+                    "callout_title": "The Signature Rule 🧬",
+                    "callout_text": "The compiler identifies a method entirely by its Name and its Parameter List. Together, these are called the 'Method Signature'. The return type and access modifiers are NOT part of the official signature.",
+                    "list_title": "Core Components:",
+                    "list_items": [
+                        "**Modifiers:** Who can access it (`public`) and how it behaves in memory (`static`).",
+                        "**Return Type:** What kind of data it sends back (e.g., `int`, `String`, or `void`).",
+                        "**Name:** A lowerCamelCase verb describing the action (e.g., `calculateSum`)."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "The Void vs. Return Protocol",
+                    "content": "When a method finishes executing, it must communicate back to the exact line of code that called it. It can either send data back (Return), or it can simply finish its job quietly without sending anything back (Void).",
+                    "code_block": "// 1. The VOID Method (Does a job, returns nothing)\npublic static void printWarning() {\n    System.out.println(\"System overheating!\");\n    // No 'return' keyword needed.\n}\n\n// 2. The RETURN Method (Sends a value back to the caller)\npublic static double calculateTax(double price) {\n    double tax = price * 0.08;\n    return tax; // MUST return a double!\n}",
+                    "callout_title": "The Dead Code Trap 💀",
+                    "callout_text": "The `return` keyword acts as an absolute Kill Switch. The microsecond a `return` statement is executed, the method instantly terminates. Any code written beneath a `return` statement is unreachable and will cause a compiler error.",
+                    "list_title": "Return Rules:",
+                    "list_items": [
+                        "If a method promises to return an `int`, you CANNOT return a `double`.",
+                        "A `void` method can still use the keyword `return;` (with nothing after it) simply to force the method to stop early."
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "title": "Arguments vs. Parameters (The Vocabulary Trap)",
+                    "content": "A massive exam trap is confusing the terms 'Parameter' and 'Argument'. While developers use them interchangeably in casual conversation, university exams strictly separate them.",
+                    "code_block": "// 1. PARAMETERS (The empty boxes in the blueprint)\n// 'x' and 'y' are parameters.\npublic static void multiply(int x, int y) {\n    System.out.println(x * y);\n}\n\npublic static void main(String[] args) {\n    // 2. ARGUMENTS (The actual physical data being passed in)\n    // '5' and '10' are arguments.\n    multiply(5, 10);\n}",
+                    "callout_title": "Exam Trick 🎓",
+                    "callout_text": "Parameters are the variables defined inside the method declaration. Arguments are the actual values supplied when the method is invoked/called.",
+                    "list_title": "The Matching Protocol:",
+                    "list_items": [
+                        "The arguments passed must perfectly match the parameters in **Number** (how many), **Type** (e.g., int vs String), and **Order**."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Memory Execution & Scope",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "The Call Stack",
+                    "content": "When a Java program runs, the CPU uses a special section of RAM called the 'Call Stack' to keep track of methods. When `main` calls `methodA`, the CPU pauses `main` and stacks `methodA` on top of it. It operates on a LIFO (Last-In, First-Out) basis.",
+                    "code_block": "public static void main(String[] args) {\n    System.out.println(\"1. Main starts\");\n    doTask();\n    System.out.println(\"4. Main finishes\");\n}\n\npublic static void doTask() {\n    System.out.println(\"2. Task running\");\n    printStatus();\n}\n\npublic static void printStatus() {\n    System.out.println(\"3. Status: OK\");\n}",
+                    "callout_title": "The Stack Trace 🥞",
+                    "callout_text": "If your program crashes, Java prints a massive error message called a 'Stack Trace'. Now you know why! It is literally printing the Call Stack from top to bottom, showing exactly which method crashed, and which method called it.",
+                    "list_title": "Stack Execution Flow:",
+                    "list_items": [
+                        "**Push:** When a method is called, a new 'Stack Frame' is pushed onto the stack.",
+                        "**Pop:** When a method finishes or hits a `return`, its frame is destroyed (popped) and memory is freed."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "Java's Strict 'Pass-by-Value' Rule",
+                    "content": "This is the most misunderstood rule in Java. When you pass a primitive variable (like an `int`) into a method, Java NEVER passes the original variable. It makes a physical photocopy of the data and passes the copy. Changing the data inside the method does NOT change the original variable.",
+                    "code_block": "public static void main(String[] args) {\n    int myScore = 50;\n    tryToCheat(myScore);\n    \n    // myScore is STILL 50!\n    System.out.println(\"Final Score: \" + myScore); \n}\n\npublic static void tryToCheat(int scoreCopy) {\n    // We are only modifying the photocopy!\n    scoreCopy = 999; \n}",
+                    "callout_title": "The Array Exception (Pass-by-Reference) 🔗",
+                    "callout_text": "As covered in the Arrays Masterclass, if you pass an Array or Object into a method, Java passes a copy of the *Memory Address* (the remote control). Therefore, modifying an array inside a method WILL permanently alter the original data!",
+                    "list_title": "Memory Mechanics:",
+                    "list_items": [
+                        "**Primitives:** Pass-by-Value (Safe. Makes a clone of the data).",
+                        "**Objects/Arrays:** Pass-by-Reference (Dangerous. Passes a clone of the memory pointer)."
+                    ]
+                },
+                {
+                    "id": "2.3",
+                    "title": "Local Variable Scope",
+                    "content": "Variables created inside a method are strictly 'Local'. They are trapped inside the curly braces `{}` of that method. The moment the method finishes and is popped off the Call Stack, those variables are permanently erased from RAM.",
+                    "code_block": "public static void main(String[] args) {\n    calculateSum(10, 5);\n    // ERROR: 'total' does not exist here!\n    // System.out.println(total); \n}\n\npublic static void calculateSum(int a, int b) {\n    // 'total' is born here.\n    int total = a + b;\n    System.out.println(total);\n    // 'total' dies immediately after this closing brace.\n}",
+                    "callout_title": "The Isolation Protocol 🛡️",
+                    "callout_text": "Because of Local Scope, you can safely have a variable named `x` in ten different methods. They will never collide or overwrite each other because they live in isolated Stack Frames.",
+                    "list_title": "Scope Rules:",
+                    "list_items": [
+                        "Variables declared inside a method cannot be seen by other methods.",
+                        "Method parameters are treated as local variables inside that method."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Advanced Method Mechanics",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Method Overloading (Compile-Time Polymorphism)",
+                    "content": "As a system grows, you often need methods that perform the exact same logical action but take different types of data. Instead of creating awkwardly named methods (e.g., `findUserById`, `findUserByEmail`), Java allows 'Method Overloading'. You can create multiple methods with the exact same name, as long as their Parameter Signatures are different.",
+                    "code_block": "// PARHOMATE USER LOOKUP OVERLOADING\n\n// 1. Lookup by Student ID (int)\npublic static String findStudent(int studentId) {\n    return \"Student found via ID\";\n}\n\n// 2. Lookup by Email (String)\n// Same method name, different parameter type. Perfectly legal!\npublic static String findStudent(String email) {\n    return \"Student found via Email\";\n}\n\n// 3. Lookup by Name and Grade (String, int)\npublic static String findStudent(String name, int gradeLevel) {\n    return \"Student found via Name & Grade\";\n}",
+                    "callout_title": "The Return Type Trap 🪤",
+                    "callout_text": "You CANNOT overload a method by only changing its return type. The compiler ignores the return type when identifying methods. If you have `public static int calculate()` and `public static double calculate()`, the compiler will crash with a 'Method already defined' error.",
+                    "list_title": "Rules for Overloading:",
+                    "list_items": [
+                        "Must have the exact same method name.",
+                        "Must have different parameter lists (different number of parameters, different data types, or a different sequence)."
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "Recursion (The Method Loop)",
+                    "content": "Recursion occurs when a method calls itself from inside its own body. While loops iterate using counters, recursion iterates using the Call Stack. It is heavily used in advanced Data Structures (like sorting trees or navigating file systems).",
+                    "code_block": "public static int calculateFactorial(int n) {\n    // 1. THE BASE CASE (The Stop Switch)\n    if (n == 1) {\n        return 1;\n    }\n    // 2. THE RECURSIVE CASE (Calling itself)\n    else {\n        return n * calculateFactorial(n - 1);\n    }\n}",
+                    "callout_title": "StackOverflowError 💥",
+                    "callout_text": "If you forget to write a 'Base Case', the method will call itself forever. The CPU will push thousands of stack frames into memory until the RAM is completely full, triggering a fatal `StackOverflowError` and crashing the program.",
+                    "list_title": "Recursive Architecture:",
+                    "list_items": [
+                        "**Base Case:** The condition that stops the recursion.",
+                        "**Recursive Case:** The code that breaks the problem down and calls the method again."
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "Overloading Ambiguity & Type Promotion",
+                    "content": "When you pass arguments into an overloaded method, the Java compiler tries to find an exact match. If it cannot find an exact match, it will attempt to 'promote' the data type to a larger size (e.g., promoting an `int` to a `double`). However, if this promotion causes confusion between two methods, the compiler throws an 'Ambiguous Method Call' error.",
+                    "code_block": "public static void printData(double a, int b) { }\npublic static void printData(int a, double b) { }\n\npublic static void main(String[] args) {\n    // 1. Exact Match: Works perfectly\n    printData(5.0, 10); \n\n    // 2. AMBIGUOUS CRASH!\n    // We passed two integers. Java tries to promote one to a double.\n    // But it doesn't know WHICH method to choose! Both are valid promotions.\n    // printData(5, 10); // ERROR: Reference to printData is ambiguous\n}",
+                    "callout_title": "The Promotion Rule 📈",
+                    "callout_text": "Data types can only be promoted upwards to prevent data loss (e.g., `byte` -> `short` -> `int` -> `long` -> `float` -> `double`). Java will NEVER automatically demote a `double` to an `int` to find a method match.",
+                    "list_title": "Exam Trap Check:",
+                    "list_items": [
+                        "Always verify that your overloaded parameters don't create mathematical 'ties' that the compiler cannot resolve."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: The OOP Bridge & Libraries",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "The Static Divide (Instance vs. Class Methods)",
+                    "content": "Until now, all methods have used the `static` keyword. A `static` method belongs to the Class itself (like a global tool). A non-static 'Instance' method belongs to a specific object created from that class.",
+                    "code_block": "public class Student {\n    public String name; // Instance Variable\n\n    // INSTANCE METHOD (Requires a specific student object)\n    public void login() {\n        System.out.println(this.name + \" has logged in.\");\n    }\n\n    // STATIC METHOD (Global utility, does not know about specific students)\n    public static void printUniversityName() {\n        System.out.println(\"Umaer Basha Institute\");\n    }\n}",
+                    "callout_title": "The Context Trap 🛑",
+                    "callout_text": "A static method cannot directly access instance variables or instance methods. Because `static` exists independently in memory, it has no idea which specific object's data you are trying to talk to.",
+                    "list_title": "Memory Execution:",
+                    "list_items": [
+                        "**Static:** Loads into memory once. Called via the class (e.g., `Math.max()`).",
+                        "**Instance:** Loads into memory for every object. Called via the object (e.g., `myStudent.login()`)."
+                    ]
+                },
+                {
+                    "id": "4.2",
+                    "title": "Modules, Libraries, and the API",
+                    "content": "A crucial part of software engineering is reusing code. Java provides a massive standard library (the Java API) containing thousands of pre-written classes and methods organized into 'Packages' (modules).",
+                    "code_block": "// Importing a specific class from the 'java.util' package\nimport java.util.Scanner;\n// Importing ALL classes from the 'java.io' package\nimport java.io.*;\n\npublic class SystemTool {\n    public static void main(String[] args) {\n        // We don't have to write the math logic ourselves,\n        // we just call the method from Java's built-in Math library.\n        double root = Math.sqrt(64.0); \n    }\n}",
+                    "callout_title": "The java.lang Exception 📦",
+                    "callout_text": "You never have to import `String`, `Math`, or `System`. These belong to the `java.lang` package, which the JVM automatically imports into every single Java file by default.",
+                    "list_title": "Syllabus Connection:",
+                    "list_items": [
+                        "A 'Package' in Java is the equivalent of a module or library in other languages.",
+                        "You access them using the `import` keyword at the very top of your file."
+                    ]
+                },
+                {
+                    "id": "4.3",
+                    "title": "Access Modifiers (Encapsulation)",
+                    "content": "Access modifiers are security protocols applied to methods and variables. They dictate exactly which other files in your project are allowed to see or execute your code.",
+                    "code_block": "public class DatabaseConnection {\n    // PUBLIC: Anyone in the entire project can access this.\n    public void connect() { }\n\n    // PRIVATE: ONLY this specific class can access this.\n    private void verifyCredentials() { }\n\n    // PROTECTED: Only this package and subclasses can access.\n    protected void updateCache() { }\n}",
+                    "callout_title": "The Default Modifier 🛡️",
+                    "callout_text": "If you don't write an access modifier at all (e.g., `void doTask()`), Java applies 'Package-Private' (Default) access. It means only files sitting in the exact same folder (package) can use that method.",
+                    "list_title": "Security Hierarchy:",
+                    "list_items": [
+                        "1. `public` (Zero restrictions)",
+                        "2. `protected` (Package + Inherited children)",
+                        "3. `default` (Package only)",
+                        "4. `private` (Strictly class only)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: The Enterprise Edge",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "Variable Arguments (Varargs)",
+                    "content": "Sometimes you don't know exactly how many arguments a user will pass into a method. Instead of forcing them to build an array first, Java provides 'Varargs' (`...`). The JVM intercepts the loose arguments, packages them into an array automatically, and passes them to the method.",
+                    "code_block": "// Notice the three dots (...). This means 'zero or more integers'\npublic static void calculateTotal(int... prices) {\n    int sum = 0;\n    // Inside the method, 'prices' is treated exactly like an int[] array\n    for (int price : prices) {\n        sum += price;\n    }\n    System.out.println(\"Total: \" + sum);\n}\n\npublic static void main(String[] args) {\n    calculateTotal(10, 20);         // Passes 2 arguments\n    calculateTotal(5, 15, 25, 30);  // Passes 4 arguments\n    calculateTotal();               // Passes 0 arguments (Empty array!)\n}",
+                    "callout_title": "The Caboose Rule 🚂",
+                    "callout_text": "There are two strict rules for Varargs: First, you can only have ONE vararg parameter per method. Second, it MUST be the absolute last parameter in the signature (e.g., `public void doTask(String name, int... scores)`).",
+                    "list_title": "Why it matters:",
+                    "list_items": [
+                        "It makes APIs and libraries vastly cleaner and more user-friendly to call."
+                    ]
+                },
+                {
+                    "id": "5.2",
+                    "title": "Demystifying the Main Method",
+                    "content": "You have written `public static void main(String[] args)` countless times. But what does it actually mean? It is simply a method! The only difference is that YOU do not call it. The Java Virtual Machine (JVM) calls it to boot up your program.",
+                    "code_block": "public static void main(String[] args) {\n    // 'args' stands for 'arguments'.\n    // It is a String array holding data passed from the Operating System terminal!\n    \n    if (args.length > 0) {\n        System.out.println(\"Booting program in: \" + args[0] + \" mode.\");\n    }\n}\n\n// If you run this code from a server terminal like this:\n// > java MainApp DebugMode\n\n// The JVM catches \"DebugMode\", puts it in a String array, and passes it to main!",
+                    "callout_title": "The Missing Main 🚪",
+                    "callout_text": "If you misspell `main` as `Main`, or forget the `String[] args` parameter, the code will compile perfectly! But when you try to run it, the JVM will throw a `NoSuchMethodError` because it cannot find the exact door it needs to enter your system.",
+                    "list_title": "Signature Breakdown:",
+                    "list_items": [
+                        "`public`: The JVM (an external program) needs access to it.",
+                        "`static`: The JVM doesn't want to create an object just to start the program.",
+                        "`void`: The program doesn't return data to the OS when it finishes."
+                    ]
+                },
+                {
+                    "id": "5.3",
+                    "title": "Professional Javadoc Architecture",
+                    "content": "Real software engineers do not write comments just for themselves. They write `Javadoc` using `/** */`. When you run the Javadoc compiler, Java scans all these special comments and automatically generates a beautiful HTML website of your code's documentation (exactly like the official Java API website).",
+                    "code_block": "/**\n * Calculates the final grade of a student based on standard curves.\n * This method ensures no grade drops below 0 or exceeds 100.\n * \n * @param rawScore   The original integer score the student received.\n * @param curveValue The amount of bonus points to apply.\n * @return           The finalized double-precision grade.\n */\npublic static double calculateFinalGrade(int rawScore, int curveValue) {\n    int finalScore = rawScore + curveValue;\n    return (double) finalScore;\n}",
+                    "callout_title": "The Hover Effect 🖱️",
+                    "callout_text": "If you write proper Javadoc above your methods, whenever you or your teammates hover over that method call in modern IDEs (like IntelliJ or VS Code), a pop-up window will display your exact explanation and parameter tags!",
+                    "list_title": "Essential Javadoc Tags:",
+                    "list_items": [
+                        "`@param`: Explains exactly what data the user needs to provide.",
+                        "`@return`: Explains exactly what data the method will give back.",
+                        "`@author`: Documents who engineered the module."
+                    ]
+                }
+            ]
+        }
+    ]
+}
