@@ -1,138 +1,166 @@
 "use client";
 
-import React from 'react';
-import {
-    Type,
-    Split,
-    Repeat,
-    CaseSensitive,
-    LayoutGrid,
-    FunctionSquare,
-    ChevronRight
-} from 'lucide-react';
+import Link from "next/link";
 
-const ParhoMateDashboard = () => {
-    const paths = [
+export default function JavaDashboard() {
+
+    const modules = [
         {
-            title: "Variables & Data Types",
-            description: "Master primitives, declarations, and memory allocation in Java.",
-            icon: Type,
-            progress: 0,
-            topics: 5
+            title: "Foundations & Memory",
+            description: "JVM Architecture, Primitive Types, and the Stack/Heap Divide.",
+            icon: "☕",
+            link: "/JAVA/foundations",
+            headerColor: "bg-orange-500",
+            status: "Ready"
         },
         {
-            title: "Conditional Statements (If/Switch)",
-            description: "Learn logical flow control and decision-making structures.",
-            icon: Split,
-            progress: 0,
-            topics: 4
+            title: "Operators & Logic",
+            description: "Arithmetic truncation, relational routing, and bitwise hardware logic.",
+            icon: "⚙️",
+            link: "/JAVA/operators",
+            headerColor: "bg-blue-600",
+            status: "Ready"
         },
         {
-            title: "Looping Structures (For, While)",
-            description: "Iterate through data and master controlled repetitive execution.",
-            icon: Repeat,
-            progress: 0,
-            topics: 6
+            title: "Conditionals",
+            description: "Branching logic, guard clauses, and Java 21+ pattern matching.",
+            icon: "🔀",
+            link: "/JAVA/conditionals",
+            headerColor: "bg-emerald-600",
+            status: "Ready"
         },
         {
-            title: "String Manipulation",
-            description: "Explore the String class, immutability, and common methods.",
-            icon: CaseSensitive,
-            progress: 0,
-            topics: 4
+            title: "Loops & Iteration",
+            description: "While, For, For-Each, and advanced loop compiler mechanics.",
+            icon: "🔁",
+            link: "/JAVA/loops",
+            headerColor: "bg-purple-600",
+            status: "Ready"
         },
         {
-            title: "Arrays (1D & 2D)",
-            description: "Work with collections of data and multi-dimensional matrices.",
-            icon: LayoutGrid,
-            progress: 0,
-            topics: 7
+            title: "Methods & Stack",
+            description: "Call stack physics, pass-by-value, and method overloading.",
+            icon: "📦",
+            link: "/JAVA/methods",
+            headerColor: "bg-indigo-600",
+            status: "Ready"
         },
         {
-            title: "Methods & Recursion",
-            description: "Modularize code with functions and recursive logic patterns.",
-            icon: FunctionSquare,
-            progress: 0,
-            topics: 5
+            title: "Arrays & Memory",
+            description: "Contiguous RAM, multi-dimensional matrices, and sorting.",
+            icon: "📚",
+            link: "/JAVA/arrays",
+            headerColor: "bg-rose-600",
+            status: "Ready"
+        },
+        {
+            title: "Strings",
+            description: "The String Pool, Immutability, and RegEx parsing.",
+            icon: "🔤",
+            link: "/JAVA/strings",
+            headerColor: "bg-teal-600",
+            status: "Ready"
+        },
+        {
+            title: "String Methods",
+            description: "Advanced string manipulation and common utility methods.",
+            icon: "🛠️",
+            link: "/JAVA/string-methods",
+            headerColor: "bg-cyan-600",
+            status: "Ready"
+        },
+        {
+            title: "Trace Tables",
+            description: "Variable state tracking, debugging logic, and algorithmic execution.",
+            icon: "📋",
+            link: "/JAVA/trace-table",
+            headerColor: "bg-amber-600",
+            status: "Ready"
+        },
+        {
+            title: "File I/O",
+            description: "Reading and writing files, streams, and data persistence.",
+            icon: "📁",
+            link: "/JAVA/io",
+            headerColor: "bg-lime-600",
+            status: "Ready"
+        },
+        {
+            title: "Collections",
+            description: "Lists, Sets, Maps, and the Java Collections Framework.",
+            icon: "🗃️",
+            link: "/JAVA/collections",
+            headerColor: "bg-fuchsia-600",
+            status: "Ready"
         }
     ];
 
     return (
-        <div className="flex min-h-screen bg-gray-50 font-sans text-slate-900">
-            {/* Main Content Area - Now takes up the full width */}
-            <main className="flex-1 overflow-y-auto">
-                {/* Top Header */}
-                <header className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
-                    <div className="flex items-center gap-2">
-                        <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
-                            Parho<span className="text-purple-600">Mate</span> | Java PF Exam Paths
+        <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+
+            {/* ✨ Glassmorphism Sticky Header */}
+            <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+                <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <span className="bg-slate-900 text-white p-2 rounded-lg text-xl leading-none">☕</span>
+                        <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
+                            Java<span className="text-indigo-600">Mastery</span>
                         </h1>
                     </div>
-                    <div className="flex items-center gap-4">
-                        <div className="text-right hidden sm:block">
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">BSSE @ UoK</p>
-                            <p className="text-sm font-bold text-slate-800">Usman Mughal</p>
-                        </div>
-                        <div className="w-10 h-10 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center text-purple-700 font-bold">
-                            UM
-                        </div>
+                    <div className="text-sm font-medium text-slate-500 hidden md:flex items-center gap-3">
+                        <span className="bg-slate-100 px-3 py-1 rounded-full text-slate-700">BSSE Engine</span>
+                        <span className="text-slate-900 font-bold">Usman Mughal</span>
                     </div>
-                </header>
+                </div>
+            </header>
 
-                {/* Grid Content */}
-                <div className="p-8 max-w-7xl mx-auto">
-                    <div className="mb-8">
-                        <h2 className="text-lg font-semibold text-slate-800">Select a Module</h2>
-                        <p className="text-slate-600">Prepare systematically for your Programming Fundamentals exam.</p>
-                    </div>
+            {/* Hero Section */}
+            <div className="bg-slate-900 text-white py-16 px-6 shadow-inner">
+                <div className="max-w-4xl mx-auto text-center">
+                    <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+                        Master Java Architecture, <br /> One Module at a Time.
+                    </h2>
+                    <p className="text-indigo-200 text-lg mb-8 max-w-2xl mx-auto">
+                        Hardware-level insights, memory management, and enterprise coding patterns.
+                    </p>
+                </div>
+            </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {paths.map((path, index) => (
-                            <div
-                                key={index}
-                                className="group relative bg-white border border-gray-200 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-purple-600 cursor-pointer"
-                            >
-                                {/* Card Icon */}
-                                <div className="w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center mb-4 transition-colors group-hover:bg-purple-100">
-                                    <path.icon className="text-purple-600 w-6 h-6" />
+            {/* Dashboard Grid */}
+            <main className="max-w-6xl mx-auto px-6 -mt-10 mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {modules.map((module, idx) => (
+                        <Link
+                            key={idx}
+                            href={module.link}
+                            className="group relative flex flex-col bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-indigo-200"
+                        >
+                            {/* Header */}
+                            <div className={`h-24 ${module.headerColor} relative flex items-center px-6`}>
+                                <div className="text-4xl text-white/90 drop-shadow-md group-hover:scale-110 transition-transform duration-300">
+                                    {module.icon}
                                 </div>
+                            </div>
 
-                                {/* Card Content */}
-                                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition-colors">
-                                    {path.title}
+                            {/* Body */}
+                            <div className="p-6 flex flex-col flex-grow">
+                                <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors">
+                                    {module.title}
                                 </h3>
-                                <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                                    {path.description}
+                                <p className="text-slate-500 text-sm leading-relaxed flex-grow">
+                                    {module.description}
                                 </p>
 
-                                {/* Progress Indicator */}
-                                <div className="mt-auto">
-                                    <div className="flex justify-between items-end mb-2">
-                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Progress</span>
-                                        <span className="text-xs font-bold text-purple-600">{path.progress}%</span>
-                                    </div>
-                                    <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                        <div
-                                            className="bg-purple-600 h-full rounded-full transition-all duration-500"
-                                            style={{ width: `${path.progress}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-
-                                {/* Topics Footer */}
-                                <div className="mt-6 pt-4 border-t border-gray-50 flex justify-between items-center">
-                                    <span className="text-xs font-medium text-slate-500">{path.topics} Lessons</span>
-                                    <div className="flex items-center gap-1 text-xs font-bold text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        Start Learning <ChevronRight size={14} />
+                                <div className="mt-6">
+                                    <div className="w-full text-center py-2.5 rounded-xl font-bold text-sm bg-indigo-50 text-indigo-700 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                                        Initialize Module
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        </Link>
+                    ))}
                 </div>
             </main>
         </div>
     );
-};
-
-export default ParhoMateDashboard;
+}

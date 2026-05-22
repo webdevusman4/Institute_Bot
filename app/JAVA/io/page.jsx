@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 // Assuming you save the new JSON as java.json
-import javaData from "../../../data/TraceTable.json";
+import javaData from "../../../data/JavaIO.json";
 
 export default function JavaPreview() {
     // State Management

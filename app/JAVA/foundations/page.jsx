@@ -1,29 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// Assumes you saved the Master Blueprint as JavaBase.json
-import javaData from "../../../data/JavaBase.json";
+// Assuming you save the new JSON as java.json
+import javaData from "../../../data/JavaFoundations.json";
 
 export default function JavaPreview() {
-    // 🛡️ Safety check: Supports both raw Array JSON and Object-wrapped JSON
-    const domains = Array.isArray(javaData) ? javaData : javaData.domains || javaData;
-
-    // 🗄️ State Management (3-Level Hierarchy)
-    const [activeDomainId, setActiveDomainId] = useState(domains[0]?.domain_id);
-    const [activeModuleId, setActiveModuleId] = useState(domains[0]?.modules[0]?.id);
+    // State Management
+    const [activeSection, setActiveSection] = useState(javaData.sections[0].id);
     const [openSubtopic, setOpenSubtopic] = useState(null);
 
-    // Scroll to top when changing modules
+    // Scroll to top when changing sections
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
-        setOpenSubtopic(null); // Close accordions when switching modules
-    }, [activeModuleId]);
+        setOpenSubtopic(null); // Close accordions when switching sections
+    }, [activeSection]);
 
-    // Active Data Pointers
-    const currentDomain = domains.find((d) => d.domain_id === activeDomainId);
-    const currentModule = currentDomain?.modules.find((m) => m.id === activeModuleId);
+    const currentSection = javaData.sections.find((s) => s.id === activeSection);
 
-    // 🎨 Custom parser for **bold** text
+    // Custom parser for **bold** text (Zero external dependencies needed)
     const renderText = (text) => {
         if (!text) return null;
         const parts = text.split(/(\*\*.*?\*\*)/g);
@@ -39,7 +33,8 @@ export default function JavaPreview() {
         });
     };
 
-    // 🖼️ Advanced parser for \n\n paragraphs and [Diagram of X] tags
+    // NEW: Advanced parser for \n\n paragraphs and  tags
+    // ⬇️ FIX 1: We added subId as the second parameter here!
     const renderContentWithImages = (text, subId) => {
         if (!text) return null;
 
@@ -56,6 +51,7 @@ export default function JavaPreview() {
                                 {/* Split by \n\n to create distinct paragraphs */}
                                 {part.split('\n\n').map((paragraph, pIndex) => (
                                     <p key={pIndex} className={`whitespace-pre-line ${pIndex > 0 ? "mt-5" : ""}`}>
+                                        {/* Still run the bold parser on the paragraph text! */}
                                         {renderText(paragraph)}
                                     </p>
                                 ))}
@@ -64,13 +60,14 @@ export default function JavaPreview() {
                     }
 
                     // Odd indexes are the text captured inside the image brackets
+                    // ⬇️ FIX 2: We set up exact paths for your public/images/ folder
                     let imageSrc = "";
                     if (subId === "1.1") {
                         imageSrc = "../../../images/java-compilation-diagram.jpg";
                     } else if (subId === "2.1") {
                         imageSrc = "../../";
                     } else {
-                        // Fallback placeholder
+                        // Fallback placeholder (with safe text length so it never crashes)
                         const safeText = part.length > 20 ? "Diagram" : encodeURIComponent(part);
                         imageSrc = `https://placehold.co/800x400/e11d48/ffffff?text=${safeText}`;
                     }
@@ -92,46 +89,30 @@ export default function JavaPreview() {
         );
     };
 
-    if (!currentModule) return <div className="p-10 text-center text-rose-500">Failed to load Java Course Data.</div>;
-
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 
             {/* 📱 MOBILE NAVIGATION (Hidden on Desktop) */}
-            <div className="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm">
-                <h1 className="text-lg font-black text-slate-900 mb-2">Java Fundamentals</h1>
-                <div className="flex flex-col gap-2 max-h-48 overflow-y-auto pb-2 scrollbar-hide">
-                    {domains.map((domain) => (
-                        <div key={domain.domain_id} className="flex gap-2 overflow-x-auto pb-2">
-                            <div className="text-[10px] font-bold uppercase text-slate-400 shrink-0 self-center w-12">
-                                D-{domain.domain_id}
-                            </div>
-                            {domain.modules.map((module) => {
-                                const isActive = activeDomainId === domain.domain_id && activeModuleId === module.id;
-                                return (
-                                    <button
-                                        key={module.id}
-                                        onClick={() => {
-                                            setActiveDomainId(domain.domain_id);
-                                            setActiveModuleId(module.id);
-                                        }}
-                                        className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-bold transition-all flex-shrink-0 border ${
-                                            isActive
-                                                ? "bg-rose-600 text-white border-rose-600 shadow-md shadow-rose-200"
-                                                : "bg-white text-slate-600 border-slate-200 hover:bg-rose-50 hover:border-rose-200"
-                                        }`}
-                                    >
-                                        Mod {module.id}
-                                    </button>
-                                );
-                            })}
-                        </div>
+            <div className="md:hidden sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm">
+                <h1 className="text-lg font-black text-slate-900 mb-3">Java Fundamentals</h1>
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    {javaData.sections.map((section) => (
+                        <button
+                            key={section.id}
+                            onClick={() => setActiveSection(section.id)}
+                            className={`whitespace-nowrap px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all flex-shrink-0 ${activeSection === section.id
+                                ? "bg-rose-600 text-white shadow-md shadow-rose-200"
+                                : "bg-slate-100 text-slate-600 hover:bg-rose-100"
+                                }`}
+                        >
+                            Sec {section.id}
+                        </button>
                     ))}
                 </div>
             </div>
 
             {/* 💻 DESKTOP SIDEBAR (Hidden on Mobile) */}
-            <aside className="w-80 bg-white border-r border-slate-200 p-6 hidden md:block sticky top-0 h-screen overflow-y-auto shadow-sm z-40 custom-scrollbar">
+            <aside className="w-80 bg-white border-r border-slate-200 p-6 hidden md:block sticky top-0 h-screen overflow-y-auto shadow-sm z-40">
                 <div className="mb-10 mt-4">
                     <span className="bg-rose-100 text-rose-700 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-widest mb-4 inline-block shadow-sm">
                         BSSE-351
@@ -142,43 +123,22 @@ export default function JavaPreview() {
                     </h1>
                 </div>
 
-                <nav className="space-y-8">
-                    {domains.map((domain) => (
-                        <div key={domain.domain_id} className="relative">
-                            {/* Domain Header */}
-                            <h3 className="text-[11px] font-black uppercase text-slate-400 tracking-widest mb-3 px-2 flex items-center gap-2">
-                                <span className="w-4 h-px bg-slate-300"></span>
-                                {domain.title}
-                            </h3>
-
-                            {/* Domain Modules */}
-                            <div className="space-y-2">
-                                {domain.modules.map((module) => {
-                                    const isActive = activeDomainId === domain.domain_id && activeModuleId === module.id;
-                                    return (
-                                        <button
-                                            key={module.id}
-                                            onClick={() => {
-                                                setActiveDomainId(domain.domain_id);
-                                                setActiveModuleId(module.id);
-                                            }}
-                                            className={`w-full text-left px-4 py-3 rounded-xl font-bold transition-all duration-200 border group ${
-                                                isActive
-                                                    ? "bg-rose-600 text-white border-rose-600 shadow-lg shadow-rose-200/50 scale-[1.02]"
-                                                    : "bg-slate-50 text-slate-600 border-slate-200 hover:border-rose-300 hover:bg-white hover:shadow-md"
-                                            }`}
-                                        >
-                                            <span className={`text-[10px] uppercase tracking-widest block mb-1 font-black ${
-                                                isActive ? "text-rose-200" : "text-slate-400 group-hover:text-rose-400"
-                                            }`}>
-                                                Module {module.id}
-                                            </span>
-                                            <span className="leading-snug block text-sm">{module.title}</span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                <nav className="space-y-3">
+                    {javaData.sections.map((section) => (
+                        <button
+                            key={section.id}
+                            onClick={() => setActiveSection(section.id)}
+                            className={`w-full text-left px-5 py-4 rounded-xl font-bold transition-all duration-200 border group ${activeSection === section.id
+                                ? "bg-rose-600 text-white border-rose-600 shadow-lg shadow-rose-200/50 scale-[1.02]"
+                                : "bg-slate-50 text-slate-600 border-slate-200 hover:border-rose-300 hover:bg-white hover:shadow-md"
+                                }`}
+                        >
+                            <span className={`text-[10px] uppercase tracking-widest block mb-1.5 font-black ${activeSection === section.id ? "text-rose-200" : "text-slate-400 group-hover:text-rose-400"
+                                }`}>
+                                Section {section.id}
+                            </span>
+                            <span className="leading-snug block">{section.title}</span>
+                        </button>
                     ))}
                 </nav>
             </aside>
@@ -186,39 +146,40 @@ export default function JavaPreview() {
             {/* 📄 MAIN CONTENT AREA */}
             <main className="flex-1 p-5 md:p-12 lg:p-16 max-w-4xl mx-auto w-full">
 
-                {/* Module Header */}
+                {/* Section Header */}
                 <header className="mb-10 md:mb-14">
                     <div className="inline-flex items-center gap-3 mb-3">
                         <span className="h-px w-8 bg-rose-600"></span>
                         <h2 className="text-rose-600 font-black uppercase tracking-widest text-xs md:text-sm">
-                            {currentDomain.title} / Module {currentModule.id}
+                            Section {currentSection.id}
                         </h2>
                     </div>
                     <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
-                        {currentModule.title}
+                        {currentSection.title}
                     </h1>
+                    <p className="text-slate-500 text-base md:text-lg leading-relaxed max-w-2xl">
+                        {javaData.description}
+                    </p>
                 </header>
 
-                {/* 🔻 ACCORDIONS FOR SUBTOPICS */}
+                {/* 🔻 ACCORDIONS */}
                 <div className="space-y-4 md:space-y-6">
-                    {currentModule.subtopics.map((sub) => {
+                    {currentSection.subtopics.map((sub) => {
                         const isOpen = openSubtopic === sub.id;
 
                         return (
                             <div
                                 key={sub.id}
-                                className={`bg-white border rounded-2xl transition-all duration-300 overflow-hidden ${
-                                    isOpen
-                                        ? "border-rose-300 shadow-xl shadow-rose-100/50 ring-1 ring-rose-100"
-                                        : "border-slate-200 hover:border-rose-200 shadow-sm hover:shadow-md"
-                                }`}
+                                className={`bg-white border rounded-2xl transition-all duration-300 overflow-hidden ${isOpen
+                                    ? "border-rose-300 shadow-xl shadow-rose-100/50 ring-1 ring-rose-100"
+                                    : "border-slate-200 hover:border-rose-200 shadow-sm hover:shadow-md"
+                                    }`}
                             >
                                 {/* Accordion Toggle Button */}
                                 <button
                                     onClick={() => setOpenSubtopic(isOpen ? null : sub.id)}
-                                    className={`w-full flex justify-between items-center p-5 md:p-7 text-left transition-colors group ${
-                                        isOpen ? "bg-rose-50/40" : "hover:bg-slate-50"
-                                    }`}
+                                    className={`w-full flex justify-between items-center p-5 md:p-7 text-left transition-colors group ${isOpen ? "bg-rose-50/40" : "hover:bg-slate-50"
+                                        }`}
                                 >
                                     <div className="pr-4">
                                         <span className="text-[10px] md:text-xs font-black text-rose-500 uppercase tracking-widest block mb-1.5">
@@ -229,11 +190,10 @@ export default function JavaPreview() {
                                         </h3>
                                     </div>
                                     <div
-                                        className={`shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-transform duration-300 shadow-sm border ${
-                                            isOpen
-                                                ? "bg-rose-600 text-white border-rose-600 rotate-180"
-                                                : "bg-white text-slate-400 border-slate-200 group-hover:border-rose-300 group-hover:text-rose-500"
-                                        }`}
+                                        className={`shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-transform duration-300 shadow-sm border ${isOpen
+                                            ? "bg-rose-600 text-white border-rose-600 rotate-180"
+                                            : "bg-white text-slate-400 border-slate-200 group-hover:border-rose-300 group-hover:text-rose-500"
+                                            }`}
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path></svg>
                                     </div>
@@ -243,7 +203,7 @@ export default function JavaPreview() {
                                 {isOpen && (
                                     <div className="p-5 md:p-8 pt-0 border-t border-slate-100 bg-white">
 
-                                        {/* Main Content Paragraphs & Images */}
+                                        {/* ⬇️ FIX 3: We must pass sub.id into the function here! */}
                                         {renderContentWithImages(sub.content, sub.id)}
 
                                         {/* Pro-Tip / Callout Box */}
