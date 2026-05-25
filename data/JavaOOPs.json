@@ -1,0 +1,177 @@
+{
+    "title": "Java Enterprise Architecture: Advanced OOP",
+    "description": "The foundational pillar of Java. Master the transition from procedural code to Object-Oriented Programming, covering Class blueprints, Constructors, the 'this' keyword, Static memory states, and strict Data Encapsulation.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: The Object-Oriented Paradigm",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Procedural vs. Object-Oriented Programming",
+                    "content": "Before OOP, languages used Procedural Programming, which is about writing separate procedures or methods that perform operations on floating data. This makes large systems chaotic and difficult to maintain.\n\nObject-Oriented Programming (OOP) is a programming paradigm based on the concept of 'objects' that contain both data (fields/attributes) and behavior (methods). It focuses on designing software that closely represents real-world entities. This architecture improves code reusability, enhances maintainability and scalability, and makes programs significantly easier to understand.",
+                    "callout_title": "The OOP Advantage 🚀",
+                    "callout_text": "By binding data and methods together into a single entity, OOP prevents outside code from accidentally corrupting your variables. This is the exact architecture used to build massive enterprise applications like banking software and operating systems."
+                },
+                {
+                    "id": "1.2",
+                    "title": "Classes: The Architectural Blueprint",
+                    "content": "A Class is a user-defined blueprint or prototype from which objects are created. It represents the set of properties or methods that are common to all objects of one type. Using classes, you can create multiple objects with the exact same behavior instead of writing their code multiple times.\n\nA class declaration includes specific components in a strict order: Modifiers (e.g., public), the Class Name (which must begin with a capital letter by convention), and the Class Body surrounded by braces `{}`.",
+                    "code_block": "// THE BLUEPRINT (Takes up no physical data memory!)\npublic class Car {\n    // Properties (State)\n    String brand;\n    String color;\n    int maxSpeed;\n\n    // Behaviors (Methods)\n    public void startEngine() {\n        System.out.println(\"The \" + brand + \" engine roars to life.\");\n    }\n}",
+                    "list_title": "Class Characteristics:",
+                    "list_items": [
+                        "**Abstract:** A class is a logical construct. You cannot 'drive' the Car class.",
+                        "**Reusable:** Write the blueprint once, generate millions of unique cars.",
+                        "**Encapsulated:** It acts as a protective capsule for its internal variables."
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "title": "Objects: The Physical Instance",
+                    "content": "An Object is a basic unit of OOP and represents the real-life physical entity. A typical Java program creates many objects, which as you know, interact by invoking methods. An object consists of three things:\n\n1. State: Represented by the attributes/properties.\n2. Behavior: Represented by the methods of an object.\n3. Identity: A unique name (reference) that allows it to interact with other objects.",
+                    "code_block": "public class Main {\n    public static void main(String[] args) {\n        // 1. Declaration: Associates a variable name with an object type.\n        Car myCar;\n        \n        // 2. Instantiation: The 'new' keyword physically allocates Heap Memory.\n        // 3. Initialization: The constructor initializes the new object.\n        myCar = new Car(); \n        \n        // Assigning state to this specific object instance\n        myCar.brand = \"BMW\";\n        myCar.maxSpeed = 220;\n        myCar.startEngine(); // Output: The BMW engine roars to life.\n    }\n}",
+                    "callout_title": "The 'new' Keyword Engine ⚙️",
+                    "callout_text": "The `new` operator instantiates a class by allocating physical RAM memory for a new object and returning a reference (a memory address) to that memory. Without `new`, you only have an empty variable, not an object!"
+                },
+                {
+                    "id": "1.4",
+                    "title": "Object State-Tracking (The Counter Trace)",
+                    "content": "To truly understand Object State, you must be able to trace how methods manipulate internal variables step-by-step. Let's look at a standard exam trace using a `Counter` class.",
+                    "code_block": "class Counter {\n    int counterIndex = 0;\n    \n    public void increase() { counterIndex++; }\n    public void decrease() { counterIndex--; }\n    public int getIndex() { return counterIndex; }\n}\n\n// THE TRACE EXAM:\nCounter c1 = new Counter();\nc1.increase(); // Index is now 1\nint a = c1.getIndex(); \n\nc1.increase(); // Index is now 2\nint b = c1.getIndex();\n\nif (a > b) { // 1 is NOT greater than 2\n    c1.increase();\n} else {\n    c1.decrease(); // This runs! Index drops back to 1\n}\nSystem.out.println(c1.getIndex()); // Final Output: 1",
+                    "callout_title": "Memory Persistence 🧠",
+                    "callout_text": "Notice how `c1` remembers its exact state (`counterIndex`) between method calls. This is the definition of Object State."
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: The Initialization Engine (Constructors)",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "What is a Constructor?",
+                    "content": "Creating an object and manually assigning its variables line-by-line is inefficient and highly dangerous. What if you forget to set a critical variable? The object will be broken.\n\nA Constructor is a special method used to initialize objects. It is called the exact millisecond an object of a class is created. It can be used to set initial values for object attributes seamlessly.",
+                    "list_title": "The Absolute Laws of Constructors:",
+                    "list_items": [
+                        "The constructor's name MUST exactly match the Class name.",
+                        "A constructor MUST NOT have a return type (not even `void`).",
+                        "It is triggered automatically by the `new` keyword."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "Default vs. Parameterized Constructors",
+                    "content": "If you do not create a constructor, Java automatically creates an invisible 'Default Constructor' that initializes all numbers to 0 and all Strings to null.\n\nHowever, a Parameterized Constructor allows you to pass specific data directly into the object the moment it is born, ensuring the object starts its life in a valid, fully-configured state.",
+                    "code_block": "class Student {\n    String name;\n    int rollNumber;\n\n    // PARAMETERIZED CONSTRUCTOR\n    public Student(String studentName, int studentRoll) {\n        name = studentName;\n        rollNumber = studentRoll;\n    }\n}\n\npublic class University {\n    public static void main(String[] args) {\n        // The object is perfectly initialized in one single line of code!\n        Student s1 = new Student(\"Usman Mughal\", 101);\n    }\n}",
+                    "callout_title": "The Default Deletion Trap 🪤",
+                    "callout_text": "The moment you write a custom parameterized constructor, Java permanently deletes the invisible Default Constructor. You can no longer say `new Student();` unless you manually write a blank constructor yourself!"
+                },
+                {
+                    "id": "2.3",
+                    "title": "Constructor Overloading",
+                    "content": "Just like standard methods, classes can have multiple constructors with the exact same name, as long as their parameter lists are different. This is called Constructor Overloading, and it provides massive flexibility (Polymorphism) when creating objects.",
+                    "code_block": "class Account {\n    String owner;\n    double balance;\n\n    // Constructor 1: For new customers with zero money\n    public Account(String ownerName) {\n        owner = ownerName;\n        balance = 0.0;\n    }\n\n    // Constructor 2: For wealthy customers transferring a starting balance\n    public Account(String ownerName, double startingBalance) {\n        owner = ownerName;\n        balance = startingBalance;\n    }\n}\n\n// Both work flawlessly because the JVM checks the signature!\nAccount basic = new Account(\"John\");\nAccount premium = new Account(\"Alice\", 5000.0);"
+                },
+                {
+                    "id": "2.4",
+                    "title": "Polymorphism & Method Overloading",
+                    "content": "Overloading isn't just for constructors; you can overload ANY standard method. Method Overloading is a form of Polymorphism where multiple methods share the same name but have different parameter types (signatures). The JVM automatically knows which one to execute based on the data you pass in.",
+                    "code_block": "class Compare {\n    // Method 1: Handles Integers\n    static int max(int a, int b) {\n        if (a > b) return a;\n        else return b;\n    }\n\n    // Method 2: Handles Strings\n    static String max(String a, String b) {\n        if (a.compareTo(b) > 0) return a;\n        else return b;\n    }\n}\n\n// The JVM routes the data automatically!\nCompare.max(10, 20);            // Triggers Method 1\nCompare.max(\"Sydney\", \"Perth\"); // Triggers Method 2",
+                    "list_title": "The Operator Overloading Trap:",
+                    "list_items": [
+                        "Polymorphism can also be achieved through **Operator Overloading** (making the `+` sign do custom things).",
+                        "**CRITICAL EXAM NOTE:** C++ supports Operator Overloading, but **Java DOES NOT**. Do not mix them up on your test!"
+                    ]
+                },
+                {
+                    "id": "2.5",
+                    "title": "The 3-Tier Initialization Pattern",
+                    "content": "A very common architectural pattern in Java is to provide 3 specific levels of constructors for a single class. This gives the programmer total flexibility on how much data they want to provide when creating the object.",
+                    "code_block": "public class Circle {\n    public double x, y, r;\n\n    // Tier 1: The Master Constructor (Provides everything)\n    public Circle(double centreX, double centreY, double radius) {\n        x = centreX; y = centreY; r = radius;\n    }\n\n    // Tier 2: The Partial Constructor (Defaults the center to 0,0)\n    public Circle(double radius) {\n        x = 0; y = 0; r = radius;\n    }\n\n    // Tier 3: The Empty Constructor (Defaults everything)\n    public Circle() {\n        x = 0; y = 0; r = 1.0;\n    }\n}"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Scope, Context, and the 'this' Keyword",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Variable Shadowing Crisis",
+                    "content": "In professional enterprise code, developers usually name their constructor parameters the exact same as their class variables to keep the code readable. However, this creates a severe compiler crisis called 'Variable Shadowing'.\n\nIf the class has a variable named `x`, and the constructor parameter is also named `x`, the local parameter 'shadows' (hides) the class variable. Writing `x = x;` does absolutely nothing; the parameter just overwrites itself, and the object's actual state remains empty.",
+                    "code_block": "class Point {\n    int x; // Class variable (State)\n    int y;\n\n    public Point(int x, int y) {\n        x = x; // ❌ LOGICAL ERROR! The object's x is untouched.\n        y = y; // ❌ LOGICAL ERROR! \n    }\n}"
+                },
+                {
+                    "id": "3.2",
+                    "title": "Resolving Ambiguity with 'this'",
+                    "content": "To solve variable shadowing, Java provides the `this` keyword. \n\nThe `this` keyword is a built-in reference that always points to the current physical object executing the method. By prefixing a variable with `this.`, you are explicitly telling the compiler: 'Ignore the local parameter. I want to access the physical object's memory.'",
+                    "code_block": "class Point {\n    int x; \n    int y;\n\n    // ✅ THE ARCHITECT'S SOLUTION\n    public Point(int x, int y) {\n        this.x = x; // Translates to: myObject.x = parameter_x;\n        this.y = y;\n    }\n}",
+                    "callout_title": "The Golden Rule of 'this' 🧭",
+                    "callout_text": "`this` acts as a safety bypass to access hidden instance variables. However, you CANNOT use the `this` keyword inside a `static` method, because static methods belong to the Class blueprint, not to any specific physical object!"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Memory Architecture (Static vs. Instance)",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "Instance Variables & Methods",
+                    "content": "By default, every variable and method you write inside a class is an 'Instance Member'. \n\nThis means the data belongs strictly to the specific object. If you create three `Circle` objects, the JVM carves out three completely separate boxes in the Heap memory for their radius values. Changing the radius of Circle A does absolutely nothing to Circle B. To call an instance method, you MUST use the object name (e.g., `myCircle.calculateArea()`)."
+                },
+                {
+                    "id": "4.2",
+                    "title": "Static Variables (Class State)",
+                    "content": "Sometimes, you want data to be shared across every single object in existence. By adding the `static` keyword, you remove the variable from the individual objects and attach it directly to the master Blueprint (the Class) itself.\n\nThere is only ONE single copy of a static variable in the entire computer's memory. If one object changes a static variable, every other object instantly sees the change.",
+                    "code_block": "class Player {\n    String name;         // Instance: Every player has their own name.\n    static int totalPlayers = 0; // Static: Shared by everyone!\n\n    public Player(String name) {\n        this.name = name;\n        totalPlayers++; // Increases the global class counter!\n    }\n}\n\n// We can access static variables without even creating an object!\nSystem.out.println(Player.totalPlayers);"
+                },
+                {
+                    "id": "4.3",
+                    "title": "Static Methods Restrictions",
+                    "content": "Static methods belong to the class, not the object. They can be called without creating an object (e.g., `Math.random()`). However, this incredible power comes with strict architectural restrictions.",
+                    "list_title": "The Static Laws:",
+                    "list_items": [
+                        "**Rule 1:** A static method CANNOT access a non-static instance variable. The Class does not know about individual objects!",
+                        "**Rule 2:** A static method CANNOT call a non-static instance method directly.",
+                        "**Rule 3:** The `this` keyword is strictly forbidden inside a static context."
+                    ]
+                },
+                {
+                    "id": "4.4",
+                    "title": "The Static Counter Pattern",
+                    "content": "One of the most common and heavily tested uses of a `static` variable is to act as a global counter that tracks exactly how many objects of a specific class have been created in the entire system.",
+                    "code_block": "public class Circle {\n    // STATIC GLOBAL VARIABLE\n    private static int numCircles = 0;\n    \n    // INSTANCE VARIABLES\n    private double x, y, r;\n\n    public Circle(double x, double y, double r) {\n        this.x = x;\n        this.y = y;\n        this.r = r;\n        \n        // The magic step: Increment the global counter every time 'new' is called!\n        numCircles++; \n    }\n}\n\n// Usage:\nCircle c1 = new Circle(5, 3, 10); // numCircles becomes 1\nCircle c2 = new Circle(10, 12, 20); // numCircles becomes 2",
+                    "callout_title": "The Factory Log 🏭",
+                    "callout_text": "Because `numCircles` is static, it does not reset to 0 when `c2` is created. It remembers the total count across the entire application's lifecycle."
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Security & Encapsulation",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The 4 Access Modifiers",
+                    "content": "In Java, access modifiers are essential tools that define how the members of a class (variables, methods) can be accessed from other parts of our program. They form the foundation of enterprise security.",
+                    "list_title": "Visibility Levels (From strictest to weakest):",
+                    "list_items": [
+                        "**private:** Maximum security. Accessible ONLY within the exact class in which they are declared.",
+                        "**default (No Keyword):** Package-Private. Only classes within the exact same package (folder) can access it.",
+                        "**protected:** Inheritance security. Accessible within the same package, OR by subclasses located in different packages.",
+                        "**public:** Zero security. Accessible from everywhere in the entire program."
+                    ]
+                },
+                {
+                    "id": "5.2",
+                    "title": "Data Hiding (Encapsulation)",
+                    "content": "The golden rule of OOP Encapsulation is: Make all instance variables `private`, and provide `public` methods to access them. \n\nBy hiding the data, we prevent outside classes from putting invalid information into our objects (like a negative radius for a circle). We force the outside world to interact with our object through secure channels called Accessors (Getters) and Mutators (Setters).",
+                    "code_block": "class Circle {\n    // 1. Private Data (Hidden from the outside world)\n    private double radius;\n\n    // 2. Public Getter (Read-Only Access)\n    public double getRadius() {\n        return this.radius;\n    }\n\n    // 3. Public Setter (Write Access with Bouncer Logic)\n    public void setRadius(double r) {\n        if (r < 0) {\n            System.out.println(\"Error: Radius cannot be negative!\");\n        } else {\n            this.radius = r;\n        }\n    }\n}",
+                    "callout_title": "The Black Box Design 🗄️",
+                    "callout_text": "Encapsulation turns your object into a Black Box. The outside world doesn't need to know *how* the Circle stores its radius, they just use `setRadius()`. If you later upgrade your internal code, the rest of your software doesn't break."
+                }
+            ]
+        }
+    ]
+}

@@ -149,6 +149,76 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Advanced Stream Manipulation",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "Object Serialization (Saving State)",
+                    "content": "Writing text to a file is easy, but what if you want to save an entire Java Object (like a `Student` with an ID, name, and GPA)? Instead of manually extracting every variable into a string, Java provides Serialization. By implementing the `Serializable` interface, you give the JVM permission to freeze the object, convert it into a stream of raw bytes, and save it directly to the disk using `ObjectOutputStream`.",
+                    "code_block": "// 1. The Class must implement Serializable (It acts as a permission flag)\nclass Student implements java.io.Serializable {\n    int id;\n    String name;\n}\n\n// 2. Saving the Object (Serialization)\ntry (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(\"student.dat\"))) {\n    Student s = new Student(101, \"Usman\");\n    oos.writeObject(s);\n}\n\n// 3. Loading the Object (Deserialization)\ntry (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(\"student.dat\"))) {\n    Student s = (Student) ois.readObject();\n}",
+                    "callout_title": "The Security Threat 🔒",
+                    "callout_text": "If your object contains sensitive data like a password, you do NOT want to serialize it to the disk where hackers can read it. You must mark that specific variable with the `transient` keyword (e.g., `transient String password;`), which tells the JVM to ignore it during serialization."
+                },
+                {
+                    "id": "4.2",
+                    "title": "Sequential vs. Random Access",
+                    "content": "Standard streams (like `FileInputStream`) are Sequential. This means they must read the file strictly from top to bottom, byte by byte. If you want to read the last sentence of a book, you are forced to read every page before it. \n\nJava provides `RandomAccessFile` to bypass this. It acts like a VCR fast-forward button. Using a 'file pointer', you can instantly jump to any exact byte position in the file to read or write data.",
+                    "code_block": "try (RandomAccessFile raf = new RandomAccessFile(\"data.txt\", \"rw\")) {\n    // Instantly jump 100 bytes into the file\n    raf.seek(100);\n    \n    // Read the exact byte at that position\n    char c = (char) raf.read();\n}",
+                    "list_title": "Access Modes:",
+                    "list_items": [
+                        "**Sequential Access:** Best for reading simple text files or streaming videos.",
+                        "**Random Access:** Best for databases where you need to jump directly to a specific user's record without loading everyone else."
+                    ]
+                },
+                {
+                    "id": "4.3",
+                    "title": "Merging Streams (SequenceInputStream)",
+                    "content": "Sometimes you need to combine two separate files into one continuous flow of data (e.g., merging Part 1 and Part 2 of a log file). Java provides `SequenceInputStream`, which seamlessly connects two input streams together. Once the first stream runs out of data, it automatically switches to reading the second stream.",
+                    "code_block": "FileInputStream file1 = new FileInputStream(\"File1.txt\");\nFileInputStream file2 = new FileInputStream(\"File2.txt\");\n\n// Merges both files into a single readable stream\nSequenceInputStream merged = new SequenceInputStream(file1, file2);\n\nint ch;\nwhile ((ch = merged.read()) != -1) {\n    System.out.print((char) ch);\n}"
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Hardware Architecture & File Metadata",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The Legacy File Class",
+                    "content": "Before modern NIO.2 (`Paths` and `Files`), Java developers used the `java.io.File` class to interact with the OS file system. It is critical to understand that creating a `File` object does NOT physically create a file on your hard drive. It merely creates an abstract representation of a path in RAM.",
+                    "code_block": "File f1 = new File(\"old_name.txt\");\nFile f2 = new File(\"new_name.txt\");\n\n// Using the legacy class to rename a file\nif (f1.exists()) {\n    boolean success = f1.renameTo(f2);\n}",
+                    "callout_title": "Metadata Operations 🗂️",
+                    "callout_text": "The `File` class is not used for reading or writing text. It is used strictly for metadata: checking `exists()`, `length()`, `isDirectory()`, and `delete()`."
+                },
+                {
+                    "id": "5.2",
+                    "title": "The 6-Layer OS Stack",
+                    "content": "File I/O is not magic; it relies on a strict hardware hierarchy. When your Java program requests to save a file, the request must travel down through 6 distinct architectural layers before it physically magnetizes the hard drive.",
+                    "list_title": "The Execution Flow:",
+                    "list_items": [
+                        "**1. User:** Initiates the save action.",
+                        "**2. Application Software:** Your Java code packages the data.",
+                        "**3. Operating System:** Windows/Linux receives the request and checks permissions.",
+                        "**4. File System:** Organizes the data into OS-specific sectors (NTFS, FAT32).",
+                        "**5. Disk Controller:** The hardware chip that physically routes the electrical signals.",
+                        "**6. Storage Device:** The physical SSD or Hard Drive where the data is permanently etched."
+                    ]
+                },
+                {
+                    "id": "5.3",
+                    "title": "Advanced Enterprise Architectures",
+                    "content": "Standard file handling works for basic applications, but massive enterprise systems require advanced architectural strategies.",
+                    "list_title": "Enterprise File Systems:",
+                    "list_items": [
+                        "**Memory-Mapped Files:** Maps a file directly into the CPU's virtual RAM address space. Used by high-speed databases to bypass the OS and read data instantaneously.",
+                        "**Journaling Files:** The system keeps a 'diary' of changes before it writes them. If the power goes out during a save, it reads the journal to recover the corrupted file.",
+                        "**Distributed Systems:** Files are broken into pieces and spread across thousands of different servers (like Google Drive or Hadoop). If one server catches fire, the file survives."
+                    ]
+                }
+            ]
         }
     ]
 }

@@ -1,0 +1,223 @@
+{
+    "title": "Java Advanced Algorithms: Recursion & Memory",
+    "description": "Master the Call Stack and the art of methods calling themselves. Dive deep into algorithmic divide-and-conquer, Tail Recursion optimization, the Towers of Hanoi, Merge Sort, and visual fractals.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Method Architecture & The Call Stack",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Method Abstraction & Javadoc Standards",
+                    "content": "Before understanding recursion, you must master standard methods. A method is a black box of code that performs a specific task. To document these properly for enterprise environments, Java uses Javadoc comments (`/** ... */`). These comments explicitly define what the method requires and what it returns, allowing IDEs to generate automatic documentation.",
+                    "code_block": "/**\n * Calculates the exponential power of a base number.\n * @param base The primary integer to be multiplied.\n * @param exp The power to raise the base to.\n * @return The mathematically calculated result.\n */\npublic int calculatePower(int base, int exp) {\n    // Implementation hidden from the user (Abstraction)\n}",
+                    "list_title": "Strict Javadoc Tags:",
+                    "list_items": [
+                        "**@param:** Must be used for EVERY input variable. Describes the required data.",
+                        "**@return:** Used only if the method is not `void`. Describes the output data type and meaning.",
+                        "**@throws:** Documents any exceptions the method might trigger if given invalid data."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "Pass-by-Value & Memory Allocation",
+                    "content": "Java strictly uses 'Pass-by-Value'. When you pass a primitive variable (like an `int` or `double`) into a method, the JVM does NOT send the original variable. It creates a brand-new copy of that data in a different memory location. Changing the parameter inside the method does absolutely nothing to the original variable.",
+                    "callout_title": "The Reference Trap 🪤",
+                    "callout_text": "If you pass an Object or an Array into a method, Java passes a copy of the *memory address* (the reference). This means both the method and the main program are pointing to the exact same physical object in the Heap. Changing an array inside a method WILL alter the original array permanently!"
+                },
+                {
+                    "id": "1.3",
+                    "title": "Method Overloading & Signatures",
+                    "content": "A Method Signature consists of two things: the method's name, and its parameter list. It does NOT include the return type. Java allows you to create multiple methods with the exact same name (Overloading), as long as their signatures are distinct. This is a foundational form of Polymorphism.",
+                    "code_block": "public class MathEngine {\n    // Method 1: Signature is max(int, int)\n    public int max(int a, int b) { return (a > b) ? a : b; }\n    \n    // Method 2: Signature is max(double, double). Valid Overload!\n    public double max(double a, double b) { return (a > b) ? a : b; }\n    \n    // ❌ ERROR: Signature is max(int, int). \n    // Changing the return type to 'long' does NOT trick the compiler!\n    // public long max(int a, int b) { return (long) a; }\n}"
+                },
+                {
+                    "id": "1.4",
+                    "title": "The Call Stack Physics (Pushing and Popping)",
+                    "content": "Every time a method is invoked, the JVM pauses the current method and allocates a block of memory called an 'Activation Record' or 'Stack Frame' on the Call Stack. This frame physically holds the method's local variables, parameters, and its 'Return Address' (where to go back to when finished).",
+                    "list_title": "The LIFO Execution Cycle:",
+                    "list_items": [
+                        "**Pushing:** When Method A calls Method B, Method B's frame is 'pushed' onto the top of the stack. Method A is frozen.",
+                        "**Executing:** The CPU only executes the frame at the absolute top of the stack.",
+                        "**Popping:** When Method B hits a `return` statement (or its closing brace), its frame is 'popped' (destroyed) from memory.",
+                        "**Resuming:** The JVM reads the Return Address and unfreezes Method A exactly where it left off."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: The Core Mechanics of Recursion",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "Recursion vs. Iteration",
+                    "content": "Recursion occurs when a method calls itself from within its own body to solve a smaller version of the same problem. Iteration, on the other hand, uses standard looping structures (`while`, `for`). Mathematically, anything that can be solved with iteration can be solved with recursion, and vice versa. However, recursion is architecturally superior for traversing complex, branching data structures like trees, directories, and fractals.",
+                    "list_title": "The Architectural Trade-off:",
+                    "list_items": [
+                        "**Iteration:** Uses less memory and runs faster (no Call Stack overhead). Best for simple linear tasks like array traversal.",
+                        "**Recursion:** Results in cleaner, vastly more readable code for complex problems, but consumes heavy Call Stack memory."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "The Base Case (The Stop Sign)",
+                    "content": "The Base Case is the most critical component of any recursive method. It represents the smallest, simplest possible version of the problem that can be solved directly, without needing to call the method again. It acts as the absolute 'Stop Sign' for the Call Stack.",
+                    "code_block": "public int calculateFactorial(int n) {\n    // THE BASE CASE\n    // If n is 1 or 0, we immediately know the answer is 1. No more recursion needed!\n    if (n <= 1) {\n        return 1; \n    }\n    // ... (Recursive case follows)\n}"
+                },
+                {
+                    "id": "2.3",
+                    "title": "The Recursive Case (Problem Reduction)",
+                    "content": "If the Base Case is not met, the method enters the Recursive (General) Case. This section does a small fraction of the current work, and then calls itself with a *modified, strictly smaller* piece of data. Every single recursive call MUST move the data one step closer to the Base Case.",
+                    "code_block": "public void printCountdown(int n) {\n    if (n == 0) {\n        System.out.println(\"Liftoff!\"); // Base Case\n    } else {\n        System.out.println(n);\n        \n        // THE RECURSIVE CASE\n        // (n - 1) guarantees we are moving towards the Base Case of 0.\n        printCountdown(n - 1); \n    }\n}",
+                    "callout_title": "The Golden Rule of State Reduction 📉",
+                    "callout_text": "If you call the recursive method with the exact same data (`printCountdown(n)`), the state never reduces. The method will never reach the base case, resulting in a fatal infinite loop."
+                },
+                {
+                    "id": "2.4",
+                    "title": "The StackOverflowError (Infinite Recursion)",
+                    "content": "In standard iterative loops, an infinite loop just freezes your program. In recursion, an infinite loop physically destroys the JVM memory space. If a base case is missing, unreachable, or poorly designed, the method will continuously spawn thousands of new Stack Frames on the Call Stack until the computer physically runs out of allocated RAM, resulting in a fatal `StackOverflowError`.",
+                    "list_title": "Top Causes of StackOverflow:",
+                    "list_items": [
+                        "**Missing Base Case:** The programmer forgot to write the `if` statement to stop the recursion.",
+                        "**Unreachable Base Case:** E.g., `if (n == 0)` but the method was called with `-1` and subtracts instead of adding.",
+                        "**Zero State Reduction:** Calling `method(n)` instead of `method(n-1)`."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Advanced Recursive Types & Optimization",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Direct vs. Indirect Recursion",
+                    "content": "Most recursion is 'Direct', meaning Method A calls Method A. However, your syllabus explicitly requires you to know 'Indirect Recursion' (also called Mutual Recursion). This occurs when Method A calls Method B, and Method B calls Method A. This creates a circular loop across multiple methods, which is incredibly dangerous and difficult to debug if the Base Cases are not perfectly aligned.",
+                    "code_block": "// Mutual Recursion Example: Checking Even/Odd\npublic boolean isEven(int n) {\n    if (n == 0) return true; // Base Case\n    else return isOdd(n - 1); // Calls the other method\n}\n\npublic boolean isOdd(int n) {\n    if (n == 0) return false; // Base Case\n    else return isEven(n - 1); // Calls the first method\n}"
+                },
+                {
+                    "id": "3.2",
+                    "title": "Memory Overhead & CPU Costs",
+                    "content": "Recursion is mathematically elegant, but it is highly inefficient for basic tasks. While an iterative `for` loop just updates a single integer in RAM, recursion requires the JVM to physically construct and destroy a new Stack Frame (allocating memory, copying parameters, saving return addresses) for every single call. This physical CPU overhead makes standard recursion significantly slower and more memory-heavy than iteration.",
+                    "list_title": "Enterprise Rules for Recursion:",
+                    "list_items": [
+                        "**Do NOT use recursion** for simple linear counting, basic math, or 1D array traversal.",
+                        "**The Depth Limit:** If an algorithm requires more than roughly 10,000 deep recursive calls, the JVM will crash. Use iteration instead."
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "Tail Recursion (Compiler Optimization)",
+                    "content": "Tail Recursion is a specific architectural design where the recursive call is the absolute LAST operation performed in the method. There is no pending math or work to do after the method returns. \n\nBecause there is no remaining work, smart compilers can optimize the code by reusing the exact same Stack Frame instead of creating thousands of new ones, dropping the space complexity from $O(N)$ to $O(1)$.",
+                    "code_block": "// ❌ NOT TAIL RECURSIVE (Pending Math)\n// The method must wait for factorial(n-1) to finish before it can multiply it by n.\npublic int factorial(int n) {\n    if (n == 1) return 1;\n    return n * factorial(n - 1); \n}\n\n// ✅ TAIL RECURSIVE (Uses an Accumulator)\n// The recursive call is the absolute last thing to happen.\npublic int tailFactorial(int n, int accumulator) {\n    if (n == 1) return accumulator;\n    return tailFactorial(n - 1, n * accumulator);\n}",
+                    "callout_title": "The Java Compiler Exception ⚠️",
+                    "callout_text": "While Tail Recursion is heavily tested in Computer Science theory and optimized in languages like C++ and Python, the standard Java compiler (javac) does NOT currently optimize tail calls. However, you are still required to know the architectural difference for exams."
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Mathematical & String Recursion",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "Factorial Calculations (N!)",
+                    "content": "The Factorial algorithm is the 'Hello World' of recursive mathematics. The factorial of 5 (written as 5!) is calculated as `5 * 4 * 3 * 2 * 1`. If you look closely at the math, you will notice a strictly repeating pattern: `5! = 5 * 4!`. This proves that the factorial of any number N is simply N multiplied by the factorial of (N-1).",
+                    "code_block": "public int factorial(int n) {\n    // 1. The Base Case: 0! and 1! both equal 1.\n    if (n <= 1) {\n        return 1;\n    } \n    // 2. The Recursive Case: Multiply N by the factorial of N-1\n    else {\n        return n * factorial(n - 1);\n    }\n}"
+                },
+                {
+                    "id": "4.2",
+                    "title": "The Fibonacci Sequence & Branching",
+                    "content": "In the Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13...), every number is the sum of the two numbers immediately preceding it. Recursive Fibonacci is a beautiful mathematical translation, but it introduces 'Multi-Branch Recursion'.",
+                    "code_block": "public int fibonacci(int n) {\n    // Base Cases: The first two numbers in the sequence\n    if (n == 0) return 0;\n    if (n == 1) return 1;\n    \n    // Multi-Branch Recursive Case\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}",
+                    "callout_title": "The Exponential Danger ⚠️",
+                    "callout_text": "Because it branches twice on every call, `fibonacci(5)` calls `fib(4)` and `fib(3)`. `fib(4)` then recalculates `fib(3)` all over again. This creates massive CPU waste, resulting in an exponential Time Complexity of O(2^N). This is why Iteration is vastly preferred for Fibonacci."
+                },
+                {
+                    "id": "4.3",
+                    "title": "Recursive String Processing (Palindromes)",
+                    "content": "Strings can be elegantly processed recursively by extracting the first (and sometimes last) character, and then passing the remaining 'substring' back into the method. A classic exam question is checking for a Palindrome (a word that reads the same forwards and backwards, like 'RADAR').",
+                    "list_title": "The Recursive Palindrome Strategy:",
+                    "list_items": [
+                        "**Base Case 1:** If the string length is 0 or 1, it is mathematically a palindrome. Return true.",
+                        "**Base Case 2:** Compare the first letter and the last letter. If they DO NOT match, return false immediately.",
+                        "**Recursive Case:** If they DO match, chop off the first and last letters, and recursively call the method on the remaining inner string (e.g., 'ADA')."
+                    ]
+                },
+                {
+                    "id": "4.4",
+                    "title": "Greatest Common Divisor (Euclid's Algorithm)",
+                    "content": "Euclid's Algorithm is one of the oldest known recursive algorithms, used to find the Greatest Common Divisor (GCD) of two numbers. The mathematical rule is simple: The GCD of two numbers `a` and `b` is exactly the same as the GCD of `b` and the remainder of `(a % b)`.",
+                    "code_block": "public int gcd(int a, int b) {\n    // Base Case: If the remainder reaches 0, 'a' is the Greatest Common Divisor.\n    if (b == 0) {\n        return a;\n    } \n    // Recursive Case: Pass 'b' as the new 'a', and the remainder as the new 'b'.\n    else {\n        return gcd(b, a % b);\n    }\n}"
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Recursive Searching & Sorting",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "Recursive Binary Search (O(log N))",
+                    "content": "Binary Search is vastly superior to Linear Search, dropping the time complexity from $O(N)$ to $O(\\log N)$. However, it requires a strictly pre-sorted array. The recursive implementation works by checking the exact middle of the array. If the target is not found, it recursively calls itself, passing in ONLY the left half or the right half of the array, effectively cutting the problem size in half with every Stack Frame.",
+                    "code_block": "public int binarySearch(int[] arr, int target, int low, int high) {\n    // Base Case 1: The pointers crossed, meaning the target does NOT exist.\n    if (low > high) return -1; \n    \n    int mid = (low + high) / 2;\n    \n    // Base Case 2: Target found exactly at the middle!\n    if (arr[mid] == target) return mid; \n    \n    // Recursive Cases: Discard half the array and search the rest\n    if (arr[mid] > target) {\n        return binarySearch(arr, target, low, mid - 1); // Search Left Half\n    } else {\n        return binarySearch(arr, target, mid + 1, high); // Search Right Half\n    }\n}"
+                },
+                {
+                    "id": "5.2",
+                    "title": "Merge Sort: The Decomposition Phase",
+                    "content": "Merge Sort is an elite, highly efficient sorting algorithm ($O(N \\log N)$) that utilizes the 'Divide and Conquer' architectural strategy. The first phase is strict recursive decomposition. The algorithm aggressively chops the array in half over and over until it is left with sub-arrays of size 1.",
+                    "callout_title": "The Base Case of Sorting 📉",
+                    "callout_text": "Why chop it down to size 1? Because an array of size 1 is mathematically impossible to be out of order. It is inherently sorted. This acts as the absolute Base Case that stops the recursive division."
+                },
+                {
+                    "id": "5.3",
+                    "title": "Merge Sort: The Composition (Merge) Phase",
+                    "content": "Once the array is completely decomposed into single elements, the recursion hits the base cases and the Call Stack begins to collapse (pop). As the stack unwinds, it executes the 'Merge' phase. It takes two sorted sub-arrays and meticulously pieces them back together into a larger sorted array.",
+                    "list_title": "The Merge Mechanics:",
+                    "list_items": [
+                        "Create a temporary array large enough to hold both halves.",
+                        "Use two pointers (one for each half) to compare the smallest available numbers.",
+                        "Copy the smaller number into the temporary array.",
+                        "Repeat until both halves are completely merged, then copy the temporary array back into the original array."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "title": "Module 6: Exponential Algorithms & Visual Fractals",
+            "subtopics": [
+                {
+                    "id": "6.1",
+                    "title": "The Towers of Hanoi (The O(2^N) Trap)",
+                    "content": "The Towers of Hanoi is a legendary algorithmic puzzle. You have 3 pegs (Source, Destination, and Temp) and N disks of decreasing size. You must move all disks to the Destination peg, moving one disk at a time, without ever placing a larger disk on top of a smaller one. This problem forces developers to understand how to use an intermediate 'Temp' peg via multi-branch recursion."
+                },
+                {
+                    "id": "6.2",
+                    "title": "Moving Disks: Step-by-Step Execution Trace",
+                    "content": "The Hanoi algorithm is mathematically terrifying because its time complexity doubles with every single disk added. Moving 3 disks takes 7 steps. Moving 64 disks would take 18 quintillion steps. The recursive strategy is a strict 3-step composition: Move the N-1 stack to the Temp peg, move the largest disk to the Destination peg, and finally move the N-1 stack from Temp onto the Destination.",
+                    "code_block": "public void solveHanoi(int numDisks, char source, char temp, char dest) {\n    // Base Case: Only 1 disk left to move\n    if (numDisks == 1) {\n        System.out.println(\"Move disk from \" + source + \" to \" + dest);\n    } \n    // Recursive Case: The 3-Step Multi-Branch Strategy\n    else {\n        // Step 1: Move the stack of N-1 disks out of the way to the Temp peg\n        solveHanoi(numDisks - 1, source, dest, temp); \n        \n        // Step 2: Move the largest base disk directly to the Destination peg\n        System.out.println(\"Move disk from \" + source + \" to \" + dest);\n        \n        // Step 3: Move the N-1 stack from Temp onto the Destination peg\n        solveHanoi(numDisks - 1, temp, source, dest); \n    }\n}"
+                },
+                {
+                    "id": "6.3",
+                    "title": "Visual Recursion: Sierpinski Gaskets (Fractals)",
+                    "content": "Recursion is the absolute foundation of Computer Graphics and fractal generation. A Sierpinski Gasket is a massive triangle. The algorithm finds the exact midpoints of its 3 sides, draws an upside-down triangle inside it, and then recursively calls the function to do the exact same thing to the 3 new, smaller corner triangles it just created.",
+                    "callout_title": "The Beauty of Fractals 🎨",
+                    "callout_text": "Fractals prove that incredibly complex, infinitely detailed visual patterns can be generated by a recursive method that is only 5 lines of code long. The recursion only stops when the pixels become too small to render on the screen (The Visual Base Case)."
+                },
+                {
+                    "id": "6.4",
+                    "title": "Multi-Branch Recursion Limits",
+                    "content": "Both the Towers of Hanoi and the Sierpinski Gasket are examples of 'Multi-Branch Recursion' (where the method calls itself two or three times per execution). While this is powerful for rendering trees, graphs, and fractals, it scales terribly in system memory.",
+                    "list_title": "The Architectural Ceiling:",
+                    "list_items": [
+                        "**Linear Recursion:** Calls itself once per frame (e.g., Factorial). Stack depth is exactly N.",
+                        "**Binary Recursion:** Calls itself twice (e.g., Fibonacci, Merge Sort). Generates massive CPU overhead but is necessary for divide-and-conquer sorting.",
+                        "**Multi-Branch Recursion:** Calls itself 3+ times (e.g., Fractals, pathfinding). If not strictly bounded by an aggressive Base Case, it will instantly trigger a `StackOverflowError`."
+                    ]
+                }
+            ]
+        }
+    ]
+}

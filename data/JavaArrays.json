@@ -552,6 +552,57 @@
                     ]
                 }
             ]
+        },{
+            "id": "7",
+            "title": "Module 7: Advanced Matrix Operations",
+            "subtopics": [
+                {
+                    "id": "7.1",
+                    "title": "Ragged (Irregular) Arrays",
+                    "content": "A standard 2D array is a perfect rectangle (e.g., 3x4). However, because Java treats a 2D array as an 'Array of Arrays', each row can actually have a completely different length. This is called a Ragged or Irregular Array. It is highly memory-efficient when you have varying amounts of data per row.",
+                    "code_block": "// 1. Declare the number of rows, but leave columns blank\nint[][] irregularArray = new int[3][];\n\n// 2. Instantiate each row with a different size\nirregularArray[0] = new int[5]; // Row 0 has 5 columns\nirregularArray[1] = new int[2]; // Row 1 has 2 columns\nirregularArray[2] = new int[7]; // Row 2 has 7 columns",
+                    "callout_title": "Triangular Arrays 📐",
+                    "callout_text": "A Lower Triangular Matrix (where all numbers are on or below the diagonal, and the rest are 0) can be mapped directly into a 1D array to save memory using Row-Major order, skipping the zeros entirely."
+                },
+                {
+                    "id": "7.2",
+                    "title": "Matrix Multiplication (O(N^3))",
+                    "content": "Multiplying two 2D matrices is one of the most heavily tested algorithms in computer science. Unlike simple addition, Matrix Multiplication requires multiplying the rows of the first matrix by the columns of the second matrix. This requires a notoriously complex 3-nested-loop architecture.",
+                    "code_block": "int[][] product = new int[r1][c2];\n\n// The 3-Loop Algorithm\nfor(int i = 0; i < r1; i++) {              // Loop through rows of Matrix 1\n    for (int j = 0; j < c2; j++) {         // Loop through cols of Matrix 2\n        for (int k = 0; k < c1; k++) {     // The Dot-Product execution loop\n            product[i][j] += firstMatrix[i][k] * secondMatrix[k][j];\n        }\n    }\n}",
+                    "list_title": "Mathematical Constraints:",
+                    "list_items": [
+                        "You can ONLY multiply two matrices if the **Columns** of the first matrix equal the **Rows** of the second matrix (`c1 == r2`)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "title": "Module 8: Algorithmic Searching & Sorting",
+            "subtopics": [
+                {
+                    "id": "8.1",
+                    "title": "Linear Search vs. Binary Search",
+                    "content": "Searching an array is a fundamental operation, but efficiency scales based on the algorithm. Linear Search checks every single element from left to right. Binary Search is drastically faster—it checks the middle element and cuts the array in half every time, but it has one strict mathematical rule.",
+                    "callout_title": "The Binary Rule ⚖️",
+                    "callout_text": "Binary Search CANNOT be used on random data. The array MUST be sorted first. If it is sorted, Binary Search drops the Time Complexity from O(N) to O(log N).",
+                    "list_title": "Traversal Techniques:",
+                    "list_items": [
+                        "**Linear Traversal:** `for(int i = 0; i < arr.length; i++)` (Starts at index 0).",
+                        "**Reverse Traversal:** `for(int i = arr.length - 1; i >= 0; i--)` (Starts at the last index and walks backward)."
+                    ]
+                },
+                {
+                    "id": "8.2",
+                    "title": "Bubble Sort & Insertion Sort",
+                    "content": "When an array is out of order, we use Sorting Algorithms. Your syllabus focuses on two fundamental techniques, both of which have an Average/Worst-Case Time Complexity of O(N^2).",
+                    "list_title": "The Sorting Mechanics:",
+                    "list_items": [
+                        "**Bubble Sort:** Compares two adjacent elements. If the left is bigger than the right, it swaps them. The largest numbers 'bubble' to the end of the array. It is notoriously slow.",
+                        "**Insertion Sort:** Mimics sorting playing cards in your hand. It assumes the first element is sorted, takes the next element, and shifts it left until it finds its perfect spot. Highly efficient for small or mostly-sorted arrays."
+                    ]
+                }
+            ]
         }
     ]
 }

@@ -98,6 +98,78 @@
                     ]
                 }
             ]
+        },{
+    "title": "Java Systems Architecture: Exception Handling",
+    "description": "Master the JVM's error handling mechanics. Learn the Throwable hierarchy, propagation through the Call Stack, and how to engineer resilient, crash-proof enterprise software.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: The Error Taxonomy & Throwable Hierarchy",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "The 3 Types of Software Errors",
+                    "content": "Software engineers must anticipate and defend against three distinct categories of failure:\n\n1. Compile-Time Errors: Syntax mistakes (missing semicolons, misspelled keywords). The code refuses to compile.\n2. Logical Errors: The code compiles and runs, but the math or business logic is flawed (e.g., subtracting instead of adding).\n3. Runtime Errors: The code is syntactically perfect, but an unexpected external event (like a missing file or a user typing text instead of a number) causes the JVM to crash during execution.",
+                    "callout_title": "The Runtime Threat 🚨",
+                    "callout_text": "Exception Handling is strictly designed to manage Runtime Errors. You cannot 'catch' a syntax error, and you cannot 'catch' bad math. You only catch unpredictable runtime events."
+                },
+                {
+                    "id": "1.2",
+                    "title": "The Throwable Hierarchy",
+                    "content": "In Java, every error is an Object. At the very top of the architecture is the `Throwable` class. It splits into two massive branches:\n\n1. Error: Catastrophic hardware/JVM failures (e.g., `OutOfMemoryError`, `StackOverflowError`). You should NEVER try to catch these. Let the program die.\n2. Exception: Software-level issues that a good program should catch and recover from (e.g., `IOException`, `ArithmeticException`).",
+                    "list_title": "Checked vs. Unchecked Exceptions:",
+                    "list_items": [
+                        "**Checked Exceptions:** (e.g., `IOException`). The compiler FORCES you to handle these before it even lets you run the code. They represent external threats outside your control.",
+                        "**Unchecked Exceptions:** (e.g., `RuntimeException`, `NullPointerException`). The compiler ignores these. They usually represent poor programming (like dividing by zero) that you should fix with an `if` statement, not a try/catch block."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: The Try-Catch-Finally Engine",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "The Defense Perimeter (Try/Catch)",
+                    "content": "When a dangerous operation is about to occur, you wrap it in a `try` block. If the JVM detects a fatal error inside that block, it immediately halts execution and 'throws' an Exception object. The `catch` block acts as a safety net, catching the object and executing a backup plan without crashing the software.",
+                    "code_block": "try {\n    // Dangerous Code\n    int result = 100 / 0; \n    System.out.println(\"This line will NEVER print.\");\n} catch (ArithmeticException e) {\n    // The Backup Plan\n    System.out.println(\"Error Detected: Cannot divide by zero!\");\n}",
+                    "callout_title": "The Polymorphic Catch 🎣",
+                    "callout_text": "You can have multiple catch blocks to handle different errors. But remember the Golden Rule of Polymorphism: Always catch the most specific exceptions first, and the generic `Exception` last!"
+                },
+                {
+                    "id": "2.2",
+                    "title": "The Absolute Guarantee (Finally)",
+                    "content": "The `finally` block is attached to the end of a try/catch structure. The code inside the `finally` block is mathematically guaranteed to execute, regardless of whether an error occurred, whether it was caught, or even if the method has a `return` statement inside the try block.",
+                    "code_block": "try {\n    // Open a connection to a Database\n} catch (Exception e) {\n    // Handle connection failure\n} finally {\n    // THIS ALWAYS RUNS.\n    // Used to close the database connection to prevent memory leaks!\n    System.out.println(\"Executing mandatory cleanup...\");\n}",
+                    "list_title": "The Only Exception to Finally:",
+                    "list_items": [
+                        "The `finally` block will run no matter what, UNLESS you explicitly kill the JVM memory process by calling `System.exit(0)` before it gets there."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: Propagation & Custom Exceptions",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Throwing and Ducking (throws)",
+                    "content": "Sometimes, a method doesn't want to handle an error. Instead, it uses the `throws` keyword in its signature to 'duck' and pass the responsibility up to whoever called it. This is called Exception Propagation. If no method catches the exception, it bubbles all the way up to the `main` method, crashing the program.",
+                    "code_block": "// The 'throws' keyword warns the system: \"I might cause an error, YOU deal with it.\"\npublic void readFile() throws IOException {\n    // The 'throw' keyword manually triggers a brand new error!\n    throw new IOException(\"File is corrupted.\");\n}",
+                    "callout_title": "Throw vs. Throws 🥊",
+                    "callout_text": "`throw` (singular) is an action verb used INSIDE the method to physically launch an error object. `throws` (plural) is a warning label attached to the method SIGNATURE."
+                },
+                {
+                    "id": "3.2",
+                    "title": "Engineering Custom Exceptions",
+                    "content": "Enterprise applications often need errors specific to their business logic (e.g., `InsufficientFundsException` for a bank). You can create your own exception by inheriting from the `Exception` class.",
+                    "code_block": "// 1. Create the Custom Exception Blueprint\nclass AgeViolationException extends Exception {\n    public AgeViolationException(String message) {\n        super(message); // Pass message up to the parent Exception class\n    }\n}\n\n// 2. Use it in your business logic\npublic void registerUser(int age) throws AgeViolationException {\n    if (age < 18) {\n        throw new AgeViolationException(\"User must be 18 or older.\");\n    }\n}"
+                }
+            ]
         }
+    ]
+}
     ]
 }
