@@ -89,6 +89,16 @@ export default function JavaPreview() {
         );
     };
 
+    const theme = {
+        text: "text-orange-600",
+        bg: "bg-orange-600",
+        bgLight: "bg-orange-50/40",
+        border: "border-orange-200",
+        ring: "ring-orange-100",
+        hover: "hover:bg-orange-50",
+        shadow: "shadow-orange-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 

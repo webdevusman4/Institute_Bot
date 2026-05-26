@@ -15,6 +15,16 @@ export default function JavaStringMethodsPreview() {
 
     const currentCategoryData = categories.find((c) => c.category === activeCategory);
 
+    const theme = {
+        text: "text-cyan-600",
+        bg: "bg-cyan-600",
+        bgLight: "bg-cyan-50/40",
+        border: "border-cyan-200",
+        ring: "ring-cyan-100",
+        hover: "hover:bg-cyan-50",
+        shadow: "shadow-cyan-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-cyan-200">
             {/* MOBILE NAVIGATION */}

@@ -85,6 +85,16 @@ export default function DataFormatsPage() {
         );
     };
 
+    const theme = {
+        text: "text-pink-600",
+        bg: "bg-pink-600",
+        bgLight: "bg-pink-50/40",
+        border: "border-pink-200",
+        ring: "ring-pink-100",
+        hover: "hover:bg-pink-50",
+        shadow: "shadow-pink-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 

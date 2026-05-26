@@ -85,6 +85,16 @@ export default function ExceptionsPage() {
         );
     };
 
+    const theme = {
+        text: "text-yellow-600",
+        bg: "bg-yellow-600",
+        bgLight: "bg-yellow-50/40",
+        border: "border-yellow-200",
+        ring: "ring-yellow-100",
+        hover: "hover:bg-yellow-50",
+        shadow: "shadow-yellow-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 

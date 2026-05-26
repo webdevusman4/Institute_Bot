@@ -85,6 +85,16 @@ export default function OOPsPage() {
         );
     };
 
+    const theme = {
+        text: "text-violet-600",
+        bg: "bg-violet-600",
+        bgLight: "bg-violet-50/40",
+        border: "border-violet-200",
+        ring: "ring-violet-100",
+        hover: "hover:bg-violet-50",
+        shadow: "shadow-violet-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 

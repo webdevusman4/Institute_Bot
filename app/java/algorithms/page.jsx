@@ -85,6 +85,16 @@ export default function AlgorithmsPage() {
         );
     };
 
+    const theme = {
+        text: "text-red-600",
+        bg: "bg-red-600",
+        bgLight: "bg-red-50/40",
+        border: "border-red-200",
+        ring: "ring-red-100",
+        hover: "hover:bg-red-50",
+        shadow: "shadow-red-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 

@@ -89,6 +89,16 @@ export default function JavaPreview() {
         );
     };
 
+    const theme = {
+        text: "text-lime-600",
+        bg: "bg-lime-600",
+        bgLight: "bg-lime-50/40",
+        border: "border-lime-200",
+        ring: "ring-lime-100",
+        hover: "hover:bg-lime-50",
+        shadow: "shadow-lime-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 

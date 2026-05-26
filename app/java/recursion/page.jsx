@@ -85,6 +85,16 @@ export default function RecursionPage() {
         );
     };
 
+    const theme = {
+        text: "text-sky-600",
+        bg: "bg-sky-600",
+        bgLight: "bg-sky-50/40",
+        border: "border-sky-200",
+        ring: "ring-sky-100",
+        hover: "hover:bg-sky-50",
+        shadow: "shadow-sky-100/50"
+    };
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
 
