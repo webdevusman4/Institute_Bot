@@ -92,10 +92,10 @@ export default function JavaPreview() {
     const theme = {
         text: "text-rose-600",
         bg: "bg-rose-600",
-        bgLight: "bg-rose-50/40",
+        bgLight: "bg-rose-50",
         border: "border-rose-200",
         ring: "ring-rose-100",
-        hover: "hover:bg-rose-50",
+        hover: "hover:border-rose-300",
         shadow: "shadow-rose-100/50"
     };
 

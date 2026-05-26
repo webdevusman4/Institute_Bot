@@ -88,20 +88,20 @@ export default function AlgorithmsPage() {
     const theme = {
         text: "text-red-600",
         bg: "bg-red-600",
-        bgLight: "bg-red-50/40",
+        bgLight: "bg-red-50",
         border: "border-red-200",
         ring: "ring-red-100",
-        hover: "hover:bg-red-50",
+        hover: "hover:border-red-300",
         shadow: "shadow-red-100/50"
     };
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-rose-200">
+        <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-red-200">
 
             {/* 📱 MOBILE NAVIGATION (Hidden on Desktop) */}
             <div className="md:hidden sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
-                    <Link href="/java" className="text-rose-600 hover:text-rose-700">
+                    <Link href="/java" className="text-red-600 hover:text-red-700">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     </Link>
                     <h1 className="text-lg font-black text-slate-900">Java Algorithms</h1>
@@ -112,8 +112,8 @@ export default function AlgorithmsPage() {
                             key={section.id}
                             onClick={() => setActiveSection(section.id)}
                             className={`whitespace-nowrap px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all flex-shrink-0 ${activeSection === section.id
-                                ? "bg-rose-600 text-white shadow-md shadow-rose-200"
-                                : "bg-slate-100 text-slate-600 hover:bg-rose-100"
+                                ? "bg-red-600 text-white shadow-md shadow-red-200"
+                                : "bg-slate-100 text-slate-600 hover:bg-red-100"
                                 }`}
                         >
                             Sec {section.id}
@@ -124,17 +124,17 @@ export default function AlgorithmsPage() {
 
             {/* 💻 DESKTOP SIDEBAR (Hidden on Mobile) */}
             <aside className="w-80 bg-white border-r border-slate-200 p-6 hidden md:block sticky top-0 h-screen overflow-y-auto shadow-sm z-40">
-                <Link href="/java" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-rose-600 transition-colors mb-6 group">
+                <Link href="/java" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-red-600 transition-colors mb-6 group">
                     <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Back to Dashboard
                 </Link>
                 <div className="mb-4">
-                    <span className="bg-rose-100 text-rose-700 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-widest mb-4 inline-block shadow-sm">
+                    <span className="bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-widest mb-4 inline-block shadow-sm">
                         BSSE-351
                     </span>
                     <h1 className="text-3xl font-black text-slate-900 leading-tight tracking-tight">
                         Java <br />
-                        <span className="text-rose-600">Algorithms</span>
+                        <span className="text-red-600">Algorithms</span>
                     </h1>
                 </div>
 
@@ -144,11 +144,11 @@ export default function AlgorithmsPage() {
                             key={section.id}
                             onClick={() => setActiveSection(section.id)}
                             className={`w-full text-left px-5 py-4 rounded-xl font-bold transition-all duration-200 border group ${activeSection === section.id
-                                ? "bg-rose-600 text-white border-rose-600 shadow-lg shadow-rose-200/50 scale-[1.02]"
-                                : "bg-slate-50 text-slate-600 border-slate-200 hover:border-rose-300 hover:bg-white hover:shadow-md"
+                                ? "bg-red-600 text-white border-red-600 shadow-lg shadow-red-200/50 scale-[1.02]"
+                                : "bg-slate-50 text-slate-600 border-slate-200 hover:border-red-300 hover:bg-white hover:shadow-md"
                                 }`}
                         >
-                            <span className={`text-[10px] uppercase tracking-widest block mb-1.5 font-black ${activeSection === section.id ? "text-rose-200" : "text-slate-400 group-hover:text-rose-400"
+                            <span className={`text-[10px] uppercase tracking-widest block mb-1.5 font-black ${activeSection === section.id ? "text-red-200" : "text-slate-400 group-hover:text-red-400"
                                 }`}>
                                 Section {section.id}
                             </span>
@@ -164,8 +164,8 @@ export default function AlgorithmsPage() {
                 {/* Section Header */}
                 <header className="mb-10 md:mb-14">
                     <div className="inline-flex items-center gap-3 mb-3">
-                        <span className="h-px w-8 bg-rose-600"></span>
-                        <h2 className="text-rose-600 font-black uppercase tracking-widest text-xs md:text-sm">
+                        <span className="h-px w-8 bg-red-600"></span>
+                        <h2 className="text-red-600 font-black uppercase tracking-widest text-xs md:text-sm">
                             Section {currentSection.id}
                         </h2>
                     </div>
@@ -186,28 +186,28 @@ export default function AlgorithmsPage() {
                             <div
                                 key={sub.id}
                                 className={`bg-white border rounded-2xl transition-all duration-300 overflow-hidden ${isOpen
-                                    ? "border-rose-300 shadow-xl shadow-rose-100/50 ring-1 ring-rose-100"
-                                    : "border-slate-200 hover:border-rose-200 shadow-sm hover:shadow-md"
+                                    ? "border-red-300 shadow-xl shadow-red-100/50 ring-1 ring-red-100"
+                                    : "border-slate-200 hover:border-red-200 shadow-sm hover:shadow-md"
                                     }`}
                             >
                                 {/* Accordion Toggle Button */}
                                 <button
                                     onClick={() => setOpenSubtopic(isOpen ? null : sub.id)}
-                                    className={`w-full flex justify-between items-center p-5 md:p-7 text-left transition-colors group ${isOpen ? "bg-rose-50/40" : "hover:bg-slate-50"
+                                    className={`w-full flex justify-between items-center p-5 md:p-7 text-left transition-colors group ${isOpen ? "bg-red-50/40" : "hover:bg-slate-50"
                                         }`}
                                 >
                                     <div className="pr-4">
-                                        <span className="text-[10px] md:text-xs font-black text-rose-500 uppercase tracking-widest block mb-1.5">
+                                        <span className="text-[10px] md:text-xs font-black text-red-500 uppercase tracking-widest block mb-1.5">
                                             Topic {sub.id}
                                         </span>
-                                        <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-rose-700 transition-colors">
+                                        <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-red-700 transition-colors">
                                             {sub.title}
                                         </h3>
                                     </div>
                                     <div
                                         className={`shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-transform duration-300 shadow-sm border ${isOpen
-                                            ? "bg-rose-600 text-white border-rose-600 rotate-180"
-                                            : "bg-white text-slate-400 border-slate-200 group-hover:border-rose-300 group-hover:text-rose-500"
+                                            ? "bg-red-600 text-white border-red-600 rotate-180"
+                                            : "bg-white text-slate-400 border-slate-200 group-hover:border-red-300 group-hover:text-red-500"
                                             }`}
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path></svg>
@@ -249,23 +249,23 @@ export default function AlgorithmsPage() {
 
                                         {/* Original Formula/Concept Box */}
                                         {sub.formula && (
-                                            <div className="bg-slate-900 text-rose-300 p-6 md:p-8 rounded-2xl font-mono text-center text-base md:text-lg shadow-inner mb-8 border border-slate-800 relative overflow-hidden">
-                                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-500 to-orange-400 opacity-50"></div>
+                                            <div className="bg-slate-900 text-red-300 p-6 md:p-8 rounded-2xl font-mono text-center text-base md:text-lg shadow-inner mb-8 border border-slate-800 relative overflow-hidden">
+                                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-400 opacity-50"></div>
                                                 {sub.formula}
                                             </div>
                                         )}
 
                                         {/* Content Lists */}
                                         {sub.list_items && (
-                                            <div className="bg-rose-50/50 p-6 md:p-8 rounded-2xl border border-rose-100">
-                                                <h4 className="font-black text-rose-900 uppercase text-xs md:text-sm tracking-widest mb-6 flex items-center gap-2">
-                                                    <svg className="w-4 h-4 text-rose-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path></svg>
+                                            <div className="bg-red-50/50 p-6 md:p-8 rounded-2xl border border-red-100">
+                                                <h4 className="font-black text-red-900 uppercase text-xs md:text-sm tracking-widest mb-6 flex items-center gap-2">
+                                                    <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path></svg>
                                                     {sub.list_title}
                                                 </h4>
                                                 <ul className="space-y-4">
                                                     {sub.list_items.map((item, i) => (
                                                         <li key={i} className="flex gap-4 text-slate-700 leading-relaxed text-sm md:text-base">
-                                                            <span className="text-rose-500 font-black mt-1 text-lg leading-none shrink-0">
+                                                            <span className="text-red-500 font-black mt-1 text-lg leading-none shrink-0">
                                                                 ↳
                                                             </span>
                                                             <span>{renderText(item)}</span>
@@ -279,7 +279,7 @@ export default function AlgorithmsPage() {
                                         <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
                                             <button
                                                 onClick={() => setOpenSubtopic(null)}
-                                                className="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold py-2.5 px-6 rounded-xl transition-colors text-sm flex items-center gap-2 border border-rose-200 hover:border-rose-300"
+                                                className="bg-red-50 hover:bg-red-100 text-red-700 font-bold py-2.5 px-6 rounded-xl transition-colors text-sm flex items-center gap-2 border border-red-200 hover:border-red-300"
                                             >
                                                 Complete & Close
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>

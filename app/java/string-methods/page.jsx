@@ -18,10 +18,10 @@ export default function JavaStringMethodsPreview() {
     const theme = {
         text: "text-cyan-600",
         bg: "bg-cyan-600",
-        bgLight: "bg-cyan-50/40",
+        bgLight: "bg-cyan-50",
         border: "border-cyan-200",
         ring: "ring-cyan-100",
-        hover: "hover:bg-cyan-50",
+        hover: "hover:border-cyan-300",
         shadow: "shadow-cyan-100/50"
     };
 

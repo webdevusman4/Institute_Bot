@@ -24,7 +24,7 @@ export default function JavaPreview() {
         return parts.map((part, i) => {
             if (part.startsWith("**") && part.endsWith("**")) {
                 return (
-                    <strong key={i} className="font-extrabold text-slate-900 bg-indigo-50/50 px-1 rounded">
+                    <strong key={i} className="font-extrabold text-slate-900 bg-blue-50/50 px-1 rounded">
                         {part.slice(2, -2)}
                     </strong>
                 );
@@ -76,7 +76,7 @@ export default function JavaPreview() {
                                 alt={part}
                                 className="rounded-xl max-w-full h-auto shadow-sm border border-slate-200"
                             />
-                            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-indigo-400 mt-4 mb-1 text-center font-mono">
+                            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-blue-400 mt-4 mb-1 text-center font-mono">
                                 // Figure: {part}
                             </span>
                         </div>
@@ -89,15 +89,15 @@ export default function JavaPreview() {
     const theme = {
         text: "text-blue-600",
         bg: "bg-blue-600",
-        bgLight: "bg-blue-50/40",
+        bgLight: "bg-blue-50",
         border: "border-blue-200",
         ring: "ring-blue-100",
-        hover: "hover:bg-blue-50",
+        hover: "hover:border-blue-300",
         shadow: "shadow-blue-100/50"
     };
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-200 selection:text-indigo-900">
+        <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-200 selection:text-blue-900">
 
             {/* 📱 MOBILE NAVIGATION */}
             <div className="md:hidden sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm">
@@ -108,8 +108,8 @@ export default function JavaPreview() {
                             key={section.id}
                             onClick={() => setActiveSection(section.id)}
                             className={`whitespace-nowrap px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all flex-shrink-0 ${activeSection === section.id
-                                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
-                                    : "bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600"
+                                    ? "bg-blue-600 text-white shadow-md shadow-blue-200"
+                                    : "bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-600"
                                 }`}
                         >
                             Module {section.id}
@@ -121,12 +121,12 @@ export default function JavaPreview() {
             {/* 💻 DESKTOP SIDEBAR */}
             <aside className="w-80 bg-white border-r border-slate-200 p-6 hidden md:block sticky top-0 h-screen overflow-y-auto shadow-sm z-40">
                 <div className="mb-10 mt-4">
-                    <span className="bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-widest mb-4 inline-block border border-indigo-100">
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-widest mb-4 inline-block border border-blue-100">
                         BSSE-351
                     </span>
                     <h1 className="text-3xl font-black text-slate-900 leading-tight tracking-tight">
                         Java <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">
                             Fundamentals
                         </span>
                     </h1>
@@ -138,11 +138,11 @@ export default function JavaPreview() {
                             key={section.id}
                             onClick={() => setActiveSection(section.id)}
                             className={`w-full text-left px-5 py-4 rounded-xl font-bold transition-all duration-200 border group ${activeSection === section.id
-                                    ? "bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-200/50 scale-[1.02]"
-                                    : "bg-slate-50 text-slate-600 border-slate-200 hover:border-indigo-200 hover:bg-white hover:shadow-md"
+                                    ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-200/50 scale-[1.02]"
+                                    : "bg-slate-50 text-slate-600 border-slate-200 hover:border-blue-200 hover:bg-white hover:shadow-md"
                                 }`}
                         >
-                            <span className={`text-[10px] uppercase tracking-widest block mb-1.5 font-black ${activeSection === section.id ? "text-indigo-200" : "text-slate-400 group-hover:text-indigo-400"
+                            <span className={`text-[10px] uppercase tracking-widest block mb-1.5 font-black ${activeSection === section.id ? "text-blue-200" : "text-slate-400 group-hover:text-blue-400"
                                 }`}>
                                 Module {section.id}
                             </span>
@@ -158,8 +158,8 @@ export default function JavaPreview() {
                 {/* Section Header */}
                 <header className="mb-10 md:mb-14">
                     <div className="inline-flex items-center gap-3 mb-3">
-                        <span className="h-px w-8 bg-indigo-600"></span>
-                        <h2 className="text-indigo-600 font-black uppercase tracking-widest text-xs md:text-sm">
+                        <span className="h-px w-8 bg-blue-600"></span>
+                        <h2 className="text-blue-600 font-black uppercase tracking-widest text-xs md:text-sm">
                             Module {currentSection.id}
                         </h2>
                     </div>
@@ -180,28 +180,28 @@ export default function JavaPreview() {
                             <div
                                 key={sub.id}
                                 className={`bg-white border rounded-2xl transition-all duration-300 overflow-hidden ${isOpen
-                                        ? "border-indigo-300 shadow-xl shadow-indigo-100/50 ring-1 ring-indigo-50"
-                                        : "border-slate-200 hover:border-indigo-200 shadow-sm hover:shadow-md"
+                                        ? "border-blue-300 shadow-xl shadow-blue-100/50 ring-1 ring-blue-50"
+                                        : "border-slate-200 hover:border-blue-200 shadow-sm hover:shadow-md"
                                     }`}
                             >
                                 {/* Accordion Toggle Button */}
                                 <button
                                     onClick={() => setOpenSubtopic(isOpen ? null : sub.id)}
-                                    className={`w-full flex justify-between items-center p-5 md:p-7 text-left transition-colors group ${isOpen ? "bg-indigo-50/30" : "hover:bg-slate-50"
+                                    className={`w-full flex justify-between items-center p-5 md:p-7 text-left transition-colors group ${isOpen ? "bg-blue-50/30" : "hover:bg-slate-50"
                                         }`}
                                 >
                                     <div className="pr-4">
-                                        <span className="text-[10px] md:text-xs font-black text-indigo-500 uppercase tracking-widest block mb-1.5 font-mono">
+                                        <span className="text-[10px] md:text-xs font-black text-blue-500 uppercase tracking-widest block mb-1.5 font-mono">
                                             // Topic {sub.id}
                                         </span>
-                                        <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-indigo-700 transition-colors">
+                                        <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
                                             {sub.title}
                                         </h3>
                                     </div>
                                     <div
                                         className={`shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-transform duration-300 shadow-sm border ${isOpen
-                                                ? "bg-indigo-600 text-white border-indigo-600 rotate-180"
-                                                : "bg-white text-slate-400 border-slate-200 group-hover:border-indigo-300 group-hover:text-indigo-500"
+                                                ? "bg-blue-600 text-white border-blue-600 rotate-180"
+                                                : "bg-white text-slate-400 border-slate-200 group-hover:border-blue-300 group-hover:text-blue-500"
                                             }`}
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path></svg>
@@ -246,15 +246,15 @@ export default function JavaPreview() {
 
                                         {/* Content Lists */}
                                         {sub.list_items && (
-                                            <div className="bg-indigo-50/50 p-6 md:p-8 rounded-2xl border border-indigo-100">
-                                                <h4 className="font-black text-indigo-900 uppercase text-xs md:text-sm tracking-widest mb-6 flex items-center gap-2">
-                                                    <svg className="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path></svg>
+                                            <div className="bg-blue-50/50 p-6 md:p-8 rounded-2xl border border-blue-100">
+                                                <h4 className="font-black text-blue-900 uppercase text-xs md:text-sm tracking-widest mb-6 flex items-center gap-2">
+                                                    <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path></svg>
                                                     {sub.list_title}
                                                 </h4>
                                                 <ul className="space-y-4">
                                                     {sub.list_items.map((item, i) => (
                                                         <li key={i} className="flex gap-4 text-slate-700 leading-relaxed text-sm md:text-base">
-                                                            <span className="text-indigo-500 font-black mt-1 text-lg leading-none shrink-0 font-mono">
+                                                            <span className="text-blue-500 font-black mt-1 text-lg leading-none shrink-0 font-mono">
                                                                 {'>'}
                                                             </span>
                                                             <span>{renderText(item)}</span>
@@ -268,7 +268,7 @@ export default function JavaPreview() {
                                         <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
                                             <button
                                                 onClick={() => setOpenSubtopic(null)}
-                                                className="bg-slate-50 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 font-bold py-2.5 px-6 rounded-xl transition-colors text-sm flex items-center gap-2 border border-slate-200 hover:border-indigo-200"
+                                                className="bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 font-bold py-2.5 px-6 rounded-xl transition-colors text-sm flex items-center gap-2 border border-slate-200 hover:border-blue-200"
                                             >
                                                 Mark as Complete
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
