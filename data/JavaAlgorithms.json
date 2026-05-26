@@ -1,0 +1,102 @@
+{
+    "title": "Java Engineering: Algorithm Design & Pseudo-code",
+    "description": "Master the software engineering process before writing a single line of code. Learn deep problem decomposition, visual flowcharting, standard pseudo-code conventions, and seamless algorithmic translation.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: The Engineering Mindset",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Problem Statement Analysis (The IPO Model)",
+                    "content": "Amateurs read a problem and immediately start typing Java code, which leads to chaotic, broken software. Real engineers spend 80% of their time planning and 20% typing. Before writing any code, you must mathematically decompose the problem statement into three distinct phases: Inputs, Processes, and Outputs (The IPO Model).",
+                    "list_title": "The IPO Architectural Model (Example: ATM Withdrawal):",
+                    "list_items": [
+                        "**1. Inputs (What do we need from the user?):** The user's PIN code, their current account balance, and the amount they want to withdraw.",
+                        "**2. Processes (What logic must the CPU execute?):** Verify the PIN is correct. Check IF the withdrawal amount is less than or equal to the balance. Subtract the amount from the balance.",
+                        "**3. Outputs (What is the final result?):** Dispense the cash and print the updated receipt."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "Algorithmic Decomposition",
+                    "content": "An algorithm is a finite, step-by-step sequence of strict instructions designed to solve a specific problem. Decomposition is the act of breaking a massive, impossible problem (like 'Build a university portal') into tiny, manageable algorithms (like 'Login checker', 'Grade calculator', 'Password reset'). By solving the tiny problems, the massive problem solves itself."
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: Visualizing Logic (Flowcharts)",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "Flowchart Architecture",
+                    "content": "A flowchart is the universal visual language of software engineers. It maps the exact execution path of an algorithm using standardized geometric shapes. Because it uses pictures instead of code, a Java developer, a Python developer, and a Project Manager can all read the exact same flowchart and understand the logic perfectly.",
+                    "list_title": "The 5 Universal Flowchart Symbols:",
+                    "list_items": [
+                        "**Oval (Terminator):** Marks the absolute START and END points of the program. Every flowchart must have exactly one Start and at least one End.",
+                        "**Parallelogram (I/O):** Represents Data Inputs (reading from a keyboard/scanner) or Outputs (printing to a screen).",
+                        "**Rectangle (Process):** Represents silent background work: mathematical equations, data manipulation, or variable assignments (e.g., `tax = price * 0.05`).",
+                        "**Diamond (Decision):** The most powerful shape. It represents an `if` statement or `while` loop condition. It ALWAYS has one arrow going in, and exactly two arrows coming out (True and False).",
+                        "**Arrows (Flowlines):** Dictate the exact direction of execution. You follow the arrows exactly as the CPU would."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "The Infinite Loop Trap",
+                    "content": "When drawing flowcharts for loops (iteration), an arrow from the bottom of the logic will point all the way back up to the Diamond (Decision) above it. If the logic inside the loop never changes the condition to False, the arrow will circle endlessly. This is how engineers visually identify a fatal Infinite Loop before it crashes the computer."
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: The Universal Language (Pseudo-code)",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Bridging Human and Machine",
+                    "content": "Flowcharts are great for simple logic, but drawing 500 boxes for a complex enterprise system is impossible. Pseudo-code (Fake Code) is a structural bridge between human English and machine syntax. It uses programming logic (like loops and if-statements) but completely ignores strict syntax rules (like semicolons, curly braces, and data types).",
+                    "code_block": "// THE PROBLEM: Find if a number is even or odd.\\n\\n// 1. STANDARD ENGLISH:\\n// Ask the user for a number. Divide it by 2. If the remainder is 0, print Even. Otherwise, print Odd.\\n\\n// 2. ENGINEERED PSEUDO-CODE:\\nSTART\\n   INPUT number\\n   IF number MOD 2 == 0 THEN\\n      PRINT \"Even\"\\n   ELSE\\n      PRINT \"Odd\"\\n   END IF\\nEND",
+                    "callout_title": "The Golden Rule of Pseudo-code 📜",
+                    "callout_text": "There is no 'official' compiler for pseudo-code. It will not run on a computer. As long as your logic is mathematically sound and your keywords (IF, WHILE, INPUT, PRINT) are clear and capitalized, it is perfectly valid for any university exam."
+                },
+                {
+                    "id": "3.2",
+                    "title": "Standard Pseudo-code Constructs",
+                    "content": "While there is no strict compiler, universities expect you to use standardized, capitalized keywords to represent control flow so your professors can read it easily.",
+                    "list_title": "University Standard Keywords:",
+                    "list_items": [
+                        "**Variables:** Use `SET` or an arrow. `SET total TO 0` or `total <- 0`",
+                        "**Input/Output:** Use `INPUT`, `READ`, `PRINT`, or `DISPLAY`.",
+                        "**Conditionals:** `IF [condition] THEN ... ELSE ... END IF`",
+                        "**Iteration (Counted):** `FOR i = 1 TO 10 ... END FOR`",
+                        "**Iteration (Condition):** `WHILE [condition] DO ... END WHILE`"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: Algorithmic Translation (Pseudo-code to Java)",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "The Syntax Translation Phase",
+                    "content": "Once the pseudo-code is verified via a Dry Run (Trace Table), the final step is translating it into Java. Because the difficult logic is already solved in the pseudo-code, this phase is purely about applying Java's strict syntactical rules. You are simply translating loosely-typed English into strictly-typed Java.",
+                    "list_title": "The 3 Translation Rules:",
+                    "list_items": [
+                        "1. **Apply Strict Data Types:** Change `INPUT number` into `int number = input.nextInt();`.",
+                        "2. **Inject Boilerplate & Punctuation:** Add semicolons `;` at the end of every process, and replace `THEN` and `DO` with curly braces `{ }`.",
+                        "3. **Convert Keywords:** Change `PRINT` to `System.out.println()`. Change `MOD` to `%`."
+                    ]
+                },
+                {
+                    "id": "4.2",
+                    "title": "1-to-1 Translation Example",
+                    "content": "Here is exactly how a professional translates pseudo-code into enterprise Java code.",
+                    "code_block": "// --- THE PSEUDO-CODE ---\\n// SET counter TO 0\\n// WHILE counter < 3 DO\\n//    PRINT \"Scanning...\"\\n//    SET counter TO counter + 1\\n// END WHILE\\n\\n// --- THE JAVA TRANSLATION ---\\nint counter = 0; // Added explicit 'int' type and semicolon\\nwhile (counter < 3) { // Lowercased 'while' and replaced DO with '{'\\n    System.out.println(\"Scanning...\"); // Replaced PRINT and added quotes/semicolon\\n    counter++; // Optimized the math syntax\\n} // Replaced END WHILE with closing bracket '}'"
+                }
+            ]
+        }
+    ]
+}

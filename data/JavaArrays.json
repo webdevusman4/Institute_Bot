@@ -552,7 +552,8 @@
                     ]
                 }
             ]
-        },{
+        },
+        {
             "id": "7",
             "title": "Module 7: Advanced Matrix Operations",
             "subtopics": [

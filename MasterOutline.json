@@ -1,0 +1,534 @@
+"title": "Module 4: Maps (Key-Value Dictionaries)",
+            "subtopics": {
+                "4.1": "HashMap Architecture"
+            }
+        },
+        "5": {
+            "title": "Module 5: Advanced Iteration & Sorting",
+            "subtopics": {
+                "5.1": "The Iterator & Fail-Fast Mechanics"
+            }
+        }
+    },
+    "JavaConditionals.json": {
+        "1": {
+            "title": "Module 1: Survival (The Exam Essentials)",
+            "subtopics": {
+                "1.1": "Introduction to Branching Logic",
+                "1.2": "The Standard Block (if { })",
+                "1.3": "The Single-Line if (No braces)",
+                "1.4": "Boolean Reduction (The Clean Way)",
+                "1.5": "The Binary Fork (if-else)",
+                "1.6": "The Logic Ladder (else if)",
+                "1.7": "The Nested if (Pyramid of Doom)",
+                "1.8": "Short-Circuit AND/OR (&&, ||)",
+                "1.9": "The NOT Inversion (!)",
+                "1.10": "The Legacy Switch & Default (Pre-Java 14)"
+            }
+        },
+        "2": {
+            "title": "Module 2: The Professional (Clean Code & Flow)",
+            "subtopics": {
+                "2.1": "The Guard Clause (Early Return)",
+                "2.2": "The Bouncer Pattern (Throwing Exceptions)",
+                "2.3": "Flag Variables (State Tracking)",
+                "2.4": "The Ternary Operator (? :)",
+                "2.5": "Switch Expressions (Java 14+)",
+                "2.6": "Utility Class Booleans (The Cleaners)"
+            }
+        },
+        "3": {
+            "title": "Module 3: The Bleeding Edge (Modern Java 16–21+)",
+            "subtopics": {
+                "3.1": "Pattern Matching for instanceof (Java 16+)",
+                "3.2": "Switch Pattern Matching & Guards (Java 21+)",
+                "3.3": "Record Pattern Destructuring (Java 21+)"
+            }
+        },
+        "4": {
+            "title": "Module 4: Advanced Engine Mechanics (The Deep Math)",
+            "subtopics": {
+                "4.1": "Exclusive OR (^): The XOR Check",
+                "4.2": "Strict AND/OR (&, |): Bypassing Short-Circuit",
+                "4.3": "De Morgan’s Laws (Logic Reversal)",
+                "4.4": "Bitwise Masking (Binary Flags)",
+                "4.5": "Functional Predicates (Predicate<T>)",
+                "4.6": "Assignment Inside Condition (The C-Style Hack)"
+            }
+        },
+        "5": {
+            "title": "Module 5: The Architect (The Anti-If Patterns)",
+            "subtopics": {
+                "5.1": "The Dictionary Router (Map Dispatch)",
+                "5.2": "Polymorphism (Let the Objects Decide)",
+                "5.3": "The Strategy Pattern",
+                "5.4": "The Optional<T> Wrapper (Java 8+)"
+            }
+        },
+        "6": {
+            "title": "Module 6: The Exiled (Anti-Patterns to Avoid)",
+            "subtopics": {
+                "6.1": "Nested Ternary Operators",
+                "6.2": "Exceptions as Control Flow",
+                "6.3": "Assertions (assert)"
+            }
+        }
+    },
+    "JavaDataFormats.json": {
+        "1": {
+            "title": "Module 1: Human-to-Machine (The Scanner Class)",
+            "subtopics": {
+                "1.1": "Interactive Console Input",
+                "1.2": "The Infamous Scanner Bug (Exam Trap)"
+            }
+        },
+        "2": {
+            "title": "Module 2: CSV (Comma-Separated Values)",
+            "subtopics": {
+                "2.1": "Tabular Data Architecture",
+                "2.2": "The CSV Delimiter Trap"
+            }
+        },
+        "3": {
+            "title": "Module 3: XML (Extensible Markup Language)",
+            "subtopics": {
+                "3.1": "Hierarchical Data & Tags",
+                "3.2": "The Weight of XML"
+            }
+        },
+        "4": {
+            "title": "Module 4: JSON (JavaScript Object Notation)",
+            "subtopics": {
+                "4.1": "The Modern Enterprise Standard"
+            }
+        },
+        "5": {
+            "title": "Module 5: Serialization & Deserialization",
+            "subtopics": {
+                "5.1": "The Object Translation Bridge",
+                "5.2": "Enterprise Parsing Libraries"
+            }
+        },
+        "6": {
+            "title": "Module 6: Capstone - The Architectural Trade-offs",
+            "subtopics": {
+                "6.1": "Which format should you choose?"
+            }
+        }
+    },
+    "JavaExceptions.json": {
+        "1": {
+            "title": "Module 1: The JVM Error Taxonomy & Hierarchy",
+            "subtopics": {
+                "1.1": "The 3 Types of Software Errors",
+                "1.2": "The Throwable Master Class",
+                "1.3": "Checked Exceptions (The Compiler's Mandate)",
+                "1.4": "Unchecked Exceptions (Programmer Negligence)"
+            }
+        },
+        "2": {
+            "title": "Module 2: The Defensive Engine (Try-Catch Mechanics)",
+            "subtopics": {
+                "2.1": "The try Block (Setting the Defense Perimeter)",
+                "2.2": "The catch Block (The Backup Plan)",
+                "2.3": "Polymorphic Catching (Multiple Catch Blocks)",
+                "2.4": "The JVM Default Exception Handler"
+            }
+        },
+        "3": {
+            "title": "Module 3: The Absolute Guarantee & Scope",
+            "subtopics": {
+                "3.1": "The finally Block Mechanics",
+                "3.2": "The System.exit(0) Trap",
+                "3.3": "Nested Try-Catch Structures",
+                "3.4": "Variable Scope Warnings"
+            }
+        },
+        "4": {
+            "title": "Module 4: Exception Propagation & The Call Stack",
+            "subtopics": {
+                "4.1": "Unwinding the Call Stack (Bubbling Up)",
+                "4.2": "The Stack Trace (The Breadcrumb Trail)",
+                "4.3": "Propagation Limitations (Checked vs. Unchecked)"
+            }
+        },
+        "5": {
+            "title": "Module 5: Active Error Routing (Throw vs. Throws)",
+            "subtopics": {
+                "5.1": "The throws Keyword (Ducking Responsibility)",
+                "5.2": "The throw Keyword (Weaponizing Exceptions)",
+                "5.3": "throw vs. throws: The Exam Distinction",
+                "5.4": "Re-throwing Exceptions"
+            }
+        },
+        "6": {
+            "title": "Module 6: Enterprise Architecture (Custom Exceptions)",
+            "subtopics": {
+                "6.1": "Engineering Custom Exceptions",
+                "6.2": "Injecting Business Logic",
+                "6.3": "Method Overriding Restrictions"
+            }
+        }
+    },
+    "JavaFoundations.json": {
+        "1": {
+            "title": "Module 1: Origins, Architecture & Structure",
+            "subtopics": {
+                "1.1": "The History & Evolution of Java",
+                "1.2": "The Hybrid Engine: Compilers vs. Interpreters",
+                "1.3": "The 'J' Trinity: JDK, JRE & JVM",
+                "1.4": "Core OOP: Classes vs. Objects",
+                "1.5": "The Boilerplate Shell",
+                "1.6": "Decoding the Engine: The Main Method",
+                "1.7": "The Standard Output Stream & Syntax Laws",
+                "1.8": "Execution Failures: The 3 Types of Errors",
+                "1.9": "Lexical Rules & Professional Naming Conventions"
+            }
+        },
+        "2": {
+            "title": "Module 2: Hardware Execution",
+            "subtopics": {
+                "2.1": "Hardware Execution: The Von Neumann Architecture"
+            }
+        },
+        "3": {
+            "title": "Module 3: Variables, Data Types & Literals",
+            "subtopics": {
+                "3.1": "Variable Architecture: The Stack/Heap Divide & Static Typing",
+                "3.2": "The Integer Family & Two's Complement",
+                "3.3": "The Floating-Point Family & IEEE 754",
+                "3.4": "Variable Lifecycle: Declare, Initialize & Update",
+                "3.5": "The Logical & Textual Families: char & boolean"
+            }
+        }
+    },
+    "JavaIO.json": {
+        "1": {
+            "title": "Module 1: Architecture & Data Persistence",
+            "subtopics": {
+                "1.1": "The Memory-to-Disk Bridge"
+            }
+        },
+        "2": {
+            "title": "Module 2: The Legacy Engine (java.io)",
+            "subtopics": {
+                "2.1": "The File Object Blueprint",
+                "2.2": "Creating & Deleting Files",
+                "2.3": "Writing Data (Overwrite vs Append)",
+                "2.4": "Parsing Files (The Scanner Class)",
+                "2.5": "High-Performance Reading (BufferedReader)"
+            }
+        },
+        "3": {
+            "title": "Module 3: The Modern Engine (NIO.2)",
+            "subtopics": {
+                "3.1": "The NIO.2 Revolution (java.nio.file)"
+            }
+        },
+        "4": {
+            "title": "Module 4: Advanced Stream Manipulation",
+            "subtopics": {
+                "4.1": "Object Serialization (Saving State)",
+                "4.2": "Sequential vs. Random Access",
+                "4.3": "Merging Streams (SequenceInputStream)"
+            }
+        },
+        "5": {
+            "title": "Module 5: Hardware Architecture & File Metadata",
+            "subtopics": {
+                "5.1": "The Legacy File Class",
+                "5.2": "The 6-Layer OS Stack",
+                "5.3": "Advanced Enterprise Architectures"
+            }
+        }
+    },
+    "JavaLoops.json": {
+        "1": {
+            "title": "Module 1: Core Loop Architectures",
+            "subtopics": {
+                "1.1": "1. The while Loop",
+                "1.2": "2. break and continue (Standard)",
+                "1.3": "3. The do-while Loop"
+            }
+        },
+        "2": {
+            "title": "Module 2: Precision Counters & Advanced Mechanics",
+            "subtopics": {
+                "2.1": "4. The for Loop",
+                "2.2": "5. The for-each Loop",
+                "2.3": "6. Labeled Loops with break and continue",
+                "2.4": "7. Beyond the Basics: Advanced Iteration"
+            }
+        },
+        "3": {
+            "title": "Module 3: Modern Iteration & Engine Secrets",
+            "subtopics": {
+                "3.1": "Java 21+: Reverse for-each Loops 🔄",
+                "3.2": "Java 10+: Local Variable Type Inference (var)",
+                "3.3": "The Compiler Illusion: Syntactic Sugar"
+            }
+        },
+        "4": {
+            "title": "Module 4: Exam Traps & Compiler Anomalies",
+            "subtopics": {
+                "4.1": "8. The for Loop Scope Crash",
+                "4.2": "9. The Floating-Point Infinite Loop",
+                "4.3": "10. The Execution Order Proof",
+                "4.4": "11. The Multi-Type for Loop Ban",
+                "4.5": "12. Variable Shadowing in the for Block",
+                "4.6": "13. The Bytecode Performance Myth"
+            }
+        }
+    },
+    "JavaMethods.json": {
+        "1": {
+            "title": "Module 1: Method Architecture & The Signature",
+            "subtopics": {
+                "1.1": "Anatomy of a Method",
+                "1.2": "The Void vs. Return Protocol",
+                "1.3": "Arguments vs. Parameters (The Vocabulary Trap)"
+            }
+        },
+        "2": {
+            "title": "Module 2: Memory Execution & Scope",
+            "subtopics": {
+                "2.1": "The Call Stack",
+                "2.2": "Java's Strict 'Pass-by-Value' Rule",
+                "2.3": "Local Variable Scope"
+            }
+        },
+        "3": {
+            "title": "Module 3: Advanced Method Mechanics",
+            "subtopics": {
+                "3.1": "Method Overloading (Compile-Time Polymorphism)",
+                "3.2": "Recursion (The Method Loop)",
+                "3.3": "Overloading Ambiguity & Type Promotion"
+            }
+        },
+        "4": {
+            "title": "Module 4: The OOP Bridge & Libraries",
+            "subtopics": {
+                "4.1": "The Static Divide (Instance vs. Class Methods)",
+                "4.2": "Modules, Libraries, and the API",
+                "4.3": "Access Modifiers (Encapsulation)"
+            }
+        },
+        "5": {
+            "title": "Module 5: The Enterprise Edge",
+            "subtopics": {
+                "5.1": "Variable Arguments (Varargs)",
+                "5.2": "Demystifying the Main Method",
+                "5.3": "Professional Javadoc Architecture"
+            }
+        }
+    },
+    "JavaOOPs.json": {
+        "1": {
+            "title": "Module 1: The Object-Oriented Paradigm",
+            "subtopics": {
+                "1.1": "Procedural vs. Object-Oriented Programming",
+                "1.2": "Classes: The Architectural Blueprint",
+                "1.3": "Objects: The Physical Instance",
+                "1.4": "Object State-Tracking (The Counter Trace)"
+            }
+        },
+        "2": {
+            "title": "Module 2: The Initialization Engine (Constructors)",
+            "subtopics": {
+                "2.1": "What is a Constructor?",
+                "2.2": "Default vs. Parameterized Constructors",
+                "2.3": "Constructor Overloading",
+                "2.4": "Polymorphism & Method Overloading",
+                "2.5": "The 3-Tier Initialization Pattern"
+            }
+        },
+        "3": {
+            "title": "Module 3: Scope, Context, and the 'this' Keyword",
+            "subtopics": {
+                "3.1": "Variable Shadowing Crisis",
+                "3.2": "Resolving Ambiguity with 'this'"
+            }
+        },
+        "4": {
+            "title": "Module 4: Memory Architecture (Static vs. Instance)",
+            "subtopics": {
+                "4.1": "Instance Variables & Methods",
+                "4.2": "Static Variables (Class State)",
+                "4.3": "Static Methods Restrictions",
+                "4.4": "The Static Counter Pattern"
+            }
+        },
+        "5": {
+            "title": "Module 5: Security & Encapsulation",
+            "subtopics": {
+                "5.1": "The 4 Access Modifiers",
+                "5.2": "Data Hiding (Encapsulation)"
+            }
+        }
+    },
+    "JavaOperators.json": {
+        "1": {
+            "title": "Module 1: Arithmetic & Computational Engines",
+            "subtopics": {
+                "1.1": "The Arithmetic Engine & Integer Truncation",
+                "1.2": "Compound Assignment & Implicit Type Casting",
+                "1.3": "Widening Math: Implicit Numeric Type Promotion",
+                "1.4": "Advanced Computation: The Static Math Library",
+                "1.5": "Computational Geometry: Trigonometry & Cached Constants"
+            }
+        },
+        "2": {
+            "title": "Module 2: Relational & Logical Evaluation",
+            "subtopics": {
+                "2.1": "Value Comparisons & Relational Boundary Rules",
+                "2.2": "The Reference Identity Trap: String Equality",
+                "2.3": "Boolean Logic Gating: AND, OR, NOT",
+                "2.4": "Short-Circuit Optimization & Exception Prevention",
+                "2.5": "Dynamic Type Verification: The instanceof Engine",
+                "2.6": "Unary Operations: Prefix vs. Postfix Memory Mechanics",
+                "2.7": "Inline Conditionals: The Ternary Expression Engine"
+            }
+        },
+        "3": {
+            "title": "Module 3: Low-Level Operations & Precedence",
+            "subtopics": {
+                "3.1": "Execution Topography: The Precedence Matrix",
+                "3.2": "Hardware-Level Logic: Bitwise Masking & Shift Gates"
+            }
+        }
+    },
+    "JavaRecursion.json": {
+        "1": {
+            "title": "Module 1: Method Architecture & The Call Stack",
+            "subtopics": {
+                "1.1": "Method Abstraction & Javadoc Standards",
+                "1.2": "Pass-by-Value & Memory Allocation",
+                "1.3": "Method Overloading & Signatures",
+                "1.4": "The Call Stack Physics (Pushing and Popping)"
+            }
+        },
+        "2": {
+            "title": "Module 2: The Core Mechanics of Recursion",
+            "subtopics": {
+                "2.1": "Recursion vs. Iteration",
+                "2.2": "The Base Case (The Stop Sign)",
+                "2.3": "The Recursive Case (Problem Reduction)",
+                "2.4": "The StackOverflowError (Infinite Recursion)"
+            }
+        },
+        "3": {
+            "title": "Module 3: Advanced Recursive Types & Optimization",
+            "subtopics": {
+                "3.1": "Direct vs. Indirect Recursion",
+                "3.2": "Memory Overhead & CPU Costs",
+                "3.3": "Tail Recursion (Compiler Optimization)"
+            }
+        },
+        "4": {
+            "title": "Module 4: Mathematical & String Recursion",
+            "subtopics": {
+                "4.1": "Factorial Calculations (N!)",
+                "4.2": "The Fibonacci Sequence & Branching",
+                "4.3": "Recursive String Processing (Palindromes)",
+                "4.4": "Greatest Common Divisor (Euclid's Algorithm)"
+            }
+        },
+        "5": {
+            "title": "Module 5: Recursive Searching & Sorting",
+            "subtopics": {
+                "5.1": "Recursive Binary Search (O(log N))",
+                "5.2": "Merge Sort: The Decomposition Phase",
+                "5.3": "Merge Sort: The Composition (Merge) Phase"
+            }
+        },
+        "6": {
+            "title": "Module 6: Exponential Algorithms & Visual Fractals",
+            "subtopics": {
+                "6.1": "The Towers of Hanoi (The O(2^N) Trap)",
+                "6.2": "Moving Disks: Step-by-Step Execution Trace",
+                "6.3": "Visual Recursion: Sierpinski Gaskets (Fractals)",
+                "6.4": "Multi-Branch Recursion Limits"
+            }
+        }
+    },
+    "JavaStringMethods.json": {},
+    "JavaStrings.json": {
+        "1": {
+            "title": "Module 1: String Fundamentals & Creation Methods",
+            "subtopics": {
+                "1.1": "Introduction & Origins of the Java String",
+                "1.2": "Method 1: The Literal (The VIP Pool)",
+                "1.3": "Method 2: The 'new' Object (Memory Bypass)",
+                "1.4": "Method 3: Text Blocks (Modern Multi-Line)",
+                "1.5": "Method 4: Mutable Builders (The Whiteboards)",
+                "1.6": "Method 5: Raw Character Arrays (Under the Hood)"
+            }
+        },
+        "2": {
+            "title": "Module 2: String Utility Methods & Parsing",
+            "subtopics": {
+                "2.1": "Core Operations: Search & Inspection",
+                "2.2": "Core Operations: Extraction & Slicing",
+                "2.3": "Core Operations: Modification & Formatting",
+                "2.4": "Core Operations: Equality & Comparison",
+                "2.5": "Core Operations: Parsing (The Shapeshifter)",
+                "2.6": "Reference: The Complete Method Dictionary"
+            }
+        },
+        "3": {
+            "title": "Module 3: The String Method Dictionary",
+            "subtopics": {
+                "3.1": "Size & Blank Checks: .length(), .isEmpty(), .isBlank()",
+                "3.2": "Character Hunting: .charAt() & .indexOf()",
+                "3.3": "Text Slicing: .substring()",
+                "3.4": "Data Chopping: .split() & String.join()",
+                "3.5": "The Judges: .equals() & .equalsIgnoreCase()",
+                "3.6": "The Cleaners: .trim(), .strip(), .toLowerCase()",
+                "3.7": "The Swappers: .replace() & .replaceAll()",
+                "3.8": "The Translators: String.valueOf() & .toCharArray()",
+                "3.9": "The Advanced Judges: .compareTo(), .startsWith(), .matches()",
+                "3.10": "Assembly & Raw Data: .format(), .concat(), .repeat(), .getBytes()"
+            }
+        },
+        "4": {
+            "title": "Module 4: Advanced Architecture & Mechanics",
+            "subtopics": {
+                "4.1": "The Memory Trap: == vs .equals()",
+                "4.2": "Mechanics: Encoding (UTF-16)",
+                "4.3": "Mechanics: Escape Sequences",
+                "4.4": "Grandmaster Tool: Memory Override (.intern)",
+                "4.5": "Grandmaster Tool: Regular Expressions (RegEx)"
+            }
+        },
+        "5": {
+            "title": "Module 5: The Bleeding Edge & Engine Secrets",
+            "subtopics": {
+                "5.1": "The Concatenation Illusion (The '+' Operator)",
+                "5.2": "Java 21+: String Templates (Interpolation)"
+            }
+        }
+    },
+    "JavaTraceTable.json": {
+        "1": {
+            "title": "Module 1: Theory of Algorithmic Verification",
+            "subtopics": {
+                "1.1": "The Dry Run (Mental Execution)",
+                "1.2": "Trace Table Architecture"
+            }
+        },
+        "2": {
+            "title": "Module 2: Execution Scenarios",
+            "subtopics": {
+                "2.1": "Scenario 1: Tracing a Standard Iteration",
+                "2.2": "Scenario 2: Catching the 'Off-By-One' Error"
+            }
+        },
+        "3": {
+            "title": "Module 3: Test Data Engineering",
+            "subtopics": {
+                "3.1": "Designing Defensive Testcases",
+                "3.2": "Applying Boundary Value Analysis"
+            }
+        }
+    }
+}

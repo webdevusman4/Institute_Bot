@@ -92,6 +92,46 @@ export default function JavaDashboard() {
             link: "/JAVA/collections",
             headerColor: "bg-fuchsia-600",
             status: "Ready"
+        },
+        {
+            title: "Algorithms",
+            description: "Sorting, searching, and algorithmic complexity.",
+            icon: "🧠",
+            link: "/JAVA/algorithms",
+            headerColor: "bg-red-600",
+            status: "Ready"
+        },
+        {
+            title: "Data Formats",
+            description: "JSON, XML, and data serialization.",
+            icon: "📄",
+            link: "/JAVA/data-formats",
+            headerColor: "bg-pink-600",
+            status: "Ready"
+        },
+        {
+            title: "Exceptions",
+            description: "Try-catch blocks, custom exceptions, and error handling.",
+            icon: "⚠️",
+            link: "/JAVA/exceptions",
+            headerColor: "bg-yellow-600",
+            status: "Ready"
+        },
+        {
+            title: "OOPs",
+            description: "Inheritance, Polymorphism, Encapsulation, and Abstraction.",
+            icon: "🏗️",
+            link: "/JAVA/oops",
+            headerColor: "bg-violet-600",
+            status: "Ready"
+        },
+        {
+            title: "Recursion",
+            description: "Base cases, call stack unwinding, and recursive logic.",
+            icon: "🔄",
+            link: "/JAVA/recursion",
+            headerColor: "bg-sky-600",
+            status: "Ready"
         }
     ];
 

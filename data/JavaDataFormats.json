@@ -1,0 +1,133 @@
+{
+    "title": "Java Enterprise Architecture: Data Parsing & Formats",
+    "description": "Master the art of reading external data. Learn how to securely ingest human input via the Scanner, and how to architect, parse, and serialize structured enterprise data using CSV, XML, and JSON.",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Module 1: Human-to-Machine (The Scanner Class)",
+            "subtopics": [
+                {
+                    "id": "1.1",
+                    "title": "Interactive Console Input",
+                    "content": "Before reading files, software must know how to read live human input. In Java, this is achieved using the `java.util.Scanner` class. While `System.out` pushes data out to the console, `System.in` pulls the physical keystrokes in from the keyboard.",
+                    "code_block": "import java.util.Scanner;\n\n// 1. Open the communication channel to the keyboard\nScanner input = new Scanner(System.in);\n\nSystem.out.print(\"Enter your name: \");\n// 2. Halts the program and waits for the user to type and press ENTER\nString name = input.nextLine(); \n\nSystem.out.println(\"Welcome, \" + name);",
+                    "list_title": "Strict Extraction Methods:",
+                    "list_items": [
+                        "**`nextLine()`:** Reads the entire line of text including spaces.",
+                        "**`nextInt()`:** Extracts only the next integer.",
+                        "**`nextDouble()`:** Extracts a floating-point number.",
+                        "**`next()`:** Reads a single word (stops at the first space)."
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "title": "The Infamous Scanner Bug (Exam Trap)",
+                    "content": "There is a fatal flaw in the Scanner class that ruins freshmen exams. When you use `nextInt()` or `nextDouble()`, the Scanner reads the number but leaves the invisible 'Enter Key' (`\\n`) stuck in the memory buffer. If you try to read a `nextLine()` immediately after, it will read that leftover Enter key and instantly skip the user's input!",
+                    "code_block": "// ❌ THE FATAL TRAP:\nint age = input.nextInt(); // User types \"20\" and hits Enter.\nString name = input.nextLine(); // SKIPS! Reads the leftover Enter key.\n\n// ✅ THE ARCHITECT'S SOLUTION:\nint age = input.nextInt();\ninput.nextLine(); // Clear the phantom Enter key from the buffer!\nString name = input.nextLine(); // Works perfectly.",
+                    "callout_title": "The Flush Rule 🚽",
+                    "callout_text": "Whenever you transition from reading numbers (`nextInt`, `nextDouble`) to reading text (`nextLine`), you MUST insert a blank `input.nextLine();` to flush the memory buffer."
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Module 2: CSV (Comma-Separated Values)",
+            "subtopics": [
+                {
+                    "id": "2.1",
+                    "title": "Tabular Data Architecture",
+                    "content": "CSV is the absolute oldest and simplest data format. It is essentially an Excel spreadsheet translated into raw text. Each line of the file represents one 'Row' of data, and every 'Column' is separated by a comma. It is incredibly lightweight and fast to read.",
+                    "code_block": "// Example CSV File (students.csv):\n// ID,Name,Grade,Major\n// 101,Usman Mughal,A,Software Engineering\n// 102,Ali Khan,B,Computer Science",
+                    "list_title": "Parsing CSV in Java:",
+                    "list_items": [
+                        "1. Use a `Scanner` or `BufferedReader` to read the file line by line.",
+                        "2. Use the `String.split(\",\")` method to chop the line into a String Array.",
+                        "3. `array[0]` holds the ID, `array[1]` holds the Name, etc."
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "title": "The CSV Delimiter Trap",
+                    "content": "CSV is fast, but it has a massive architectural weakness. What happens if the data itself contains a comma? For example, if a user's address is `\"Karachi, Sindh\"`. The `split(\",\")` method will blindly chop the address in half, corrupting your entire database.",
+                    "callout_title": "The Text Qualifier Fix 🛡️",
+                    "callout_text": "To fix this, enterprise CSVs wrap volatile data in double quotes (e.g., `101,\"Karachi, Sindh\",Pakistan`). However, standard `split()` cannot handle this, forcing engineers to use advanced Regular Expressions (Regex) or third-party libraries like OpenCSV."
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Module 3: XML (Extensible Markup Language)",
+            "subtopics": [
+                {
+                    "id": "3.1",
+                    "title": "Hierarchical Data & Tags",
+                    "content": "When data became too complex for flat CSV files (e.g., an Order that contains multiple Items), the industry invented XML. XML looks exactly like HTML, but instead of using tags to design websites (`<h1>`), you invent your own tags to describe raw data. It organizes data into a strict Parent-Child hierarchy.",
+                    "code_block": "\n<university>\n    <student id=\"101\">\n        <name>Usman Mughal</name>\n        <major>Software Engineering</major>\n        <skills>\n            <skill>Java</skill>\n            <skill>React</skill>\n        </skills>\n    </student>\n</university>"
+                },
+                {
+                    "id": "3.2",
+                    "title": "The Weight of XML",
+                    "content": "XML is highly secure, strict, and readable by both humans and machines. However, it is architecturally 'heavy'. Notice how every piece of data requires an opening tag AND a closing tag (`<name>Usman</name>`). In a file with 1 million users, you are wasting megabytes of hard drive space just storing the repetitive closing tags."
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Module 4: JSON (JavaScript Object Notation)",
+            "subtopics": [
+                {
+                    "id": "4.1",
+                    "title": "The Modern Enterprise Standard",
+                    "content": "JSON was created as a lightweight rebellion against XML. Originally designed for JavaScript, it is now the undisputed global standard for data transfer across the internet (APIs). Instead of heavy tags, JSON uses minimalist brackets. It is built entirely on 'Key-Value Pairs'.",
+                    "code_block": "{\n    \"university\": {\n        \"student\": {\n            \"id\": 101,\n            \"name\": \"Usman Mughal\",\n            \"major\": \"Software Engineering\",\n            \"skills\": [\"Java\", \"React\"]\n        }\n    }\n}",
+                    "list_title": "The 3 Rules of JSON Architecture:",
+                    "list_items": [
+                        "**Objects:** Wrapped in curly braces `{}`. They hold Key-Value pairs.",
+                        "**Arrays:** Wrapped in square brackets `[]`. They hold lists of items.",
+                        "**Keys:** Must ALWAYS be wrapped in double quotes (e.g., `\"name\"`)."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Module 5: Serialization & Deserialization",
+            "subtopics": [
+                {
+                    "id": "5.1",
+                    "title": "The Object Translation Bridge",
+                    "content": "Java programs use Objects (e.g., `Student usman = new Student()`). But you cannot send a live Java Object through a network cable or save it directly to a text file. You must translate it.",
+                    "callout_title": "The Two-Way Translation 🔄",
+                    "callout_text": "**Serialization:** Converting a live Java Object in RAM into a raw JSON or XML string so it can be saved or transmitted.\n**Deserialization:** Reading a raw JSON string and converting it backwards, reconstructing the live Java Object in memory."
+                },
+                {
+                    "id": "5.2",
+                    "title": "Enterprise Parsing Libraries",
+                    "content": "Unlike JavaScript, Java does not understand JSON natively. You cannot just type `JSON.parse()` in standard Java. In enterprise environments, engineers rely on powerful third-party dependencies (libraries) to perform Serialization.",
+                    "list_title": "Industry Standard Libraries:",
+                    "list_items": [
+                        "**Jackson:** The absolute industry standard. It is the default JSON engine used by Spring Boot (the largest Java framework in the world).",
+                        "**Gson:** Built by Google. Highly efficient and widely used in Android development."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "title": "Module 6: Capstone - The Architectural Trade-offs",
+            "subtopics": [
+                {
+                    "id": "6.1",
+                    "title": "Which format should you choose?",
+                    "content": "A senior software engineer doesn't just know how to write code; they know how to choose the right architecture for the problem. Your exam will likely ask you to justify when to use which format.",
+                    "list_title": "The Engineer's Decision Matrix:",
+                    "list_items": [
+                        "**Choose CSV when:** You are dealing with massive, millions-of-rows of flat mathematical data (like Bank Transactions or Sensor Logs). It is the fastest to parse and takes up the least hard drive space.",
+                        "**Choose XML when:** You are integrating with legacy systems (like old government databases or banking mainframes) that require strict schema validation.",
+                        "**Choose JSON when:** You are building modern Web Applications, Mobile Apps, or RESTful APIs. It is lightweight, supports arrays natively, and communicates seamlessly with frontend frameworks like React and Next.js."
+                    ]
+                }
+            ]
+        }
+    ]
+}
