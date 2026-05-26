@@ -91,7 +91,7 @@ export default function OOPsPage() {
             {/* 📱 MOBILE NAVIGATION (Hidden on Desktop) */}
             <div className="md:hidden sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
-                    <Link href="/JAVA" className="text-rose-600 hover:text-rose-700">
+                    <Link href="/java" className="text-rose-600 hover:text-rose-700">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     </Link>
                     <h1 className="text-lg font-black text-slate-900">Java OOPs</h1>
@@ -114,7 +114,7 @@ export default function OOPsPage() {
 
             {/* 💻 DESKTOP SIDEBAR (Hidden on Mobile) */}
             <aside className="w-80 bg-white border-r border-slate-200 p-6 hidden md:block sticky top-0 h-screen overflow-y-auto shadow-sm z-40">
-                <Link href="/JAVA" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-rose-600 transition-colors mb-6 group">
+                <Link href="/java" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-rose-600 transition-colors mb-6 group">
                     <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Back to Dashboard
                 </Link>

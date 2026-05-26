@@ -9,7 +9,7 @@ export default function JavaDashboard() {
             title: "Foundations & Memory",
             description: "JVM Architecture, Primitive Types, and the Stack/Heap Divide.",
             icon: "☕",
-            link: "/JAVA/foundations",
+            link: "/java/foundations",
             headerColor: "bg-orange-500",
             status: "Ready"
         },
@@ -17,7 +17,7 @@ export default function JavaDashboard() {
             title: "Operators & Logic",
             description: "Arithmetic truncation, relational routing, and bitwise hardware logic.",
             icon: "⚙️",
-            link: "/JAVA/operators",
+            link: "/java/operators",
             headerColor: "bg-blue-600",
             status: "Ready"
         },
@@ -25,7 +25,7 @@ export default function JavaDashboard() {
             title: "Conditionals",
             description: "Branching logic, guard clauses, and Java 21+ pattern matching.",
             icon: "🔀",
-            link: "/JAVA/conditionals",
+            link: "/java/conditionals",
             headerColor: "bg-emerald-600",
             status: "Ready"
         },
@@ -33,7 +33,7 @@ export default function JavaDashboard() {
             title: "Loops & Iteration",
             description: "While, For, For-Each, and advanced loop compiler mechanics.",
             icon: "🔁",
-            link: "/JAVA/loops",
+            link: "/java/loops",
             headerColor: "bg-purple-600",
             status: "Ready"
         },
@@ -41,7 +41,7 @@ export default function JavaDashboard() {
             title: "Methods & Stack",
             description: "Call stack physics, pass-by-value, and method overloading.",
             icon: "📦",
-            link: "/JAVA/methods",
+            link: "/java/methods",
             headerColor: "bg-indigo-600",
             status: "Ready"
         },
@@ -49,7 +49,7 @@ export default function JavaDashboard() {
             title: "Arrays & Memory",
             description: "Contiguous RAM, multi-dimensional matrices, and sorting.",
             icon: "📚",
-            link: "/JAVA/arrays",
+            link: "/java/arrays",
             headerColor: "bg-rose-600",
             status: "Ready"
         },
@@ -57,7 +57,7 @@ export default function JavaDashboard() {
             title: "Strings",
             description: "The String Pool, Immutability, and RegEx parsing.",
             icon: "🔤",
-            link: "/JAVA/strings",
+            link: "/java/strings",
             headerColor: "bg-teal-600",
             status: "Ready"
         },
@@ -65,7 +65,7 @@ export default function JavaDashboard() {
             title: "String Methods",
             description: "Advanced string manipulation and common utility methods.",
             icon: "🛠️",
-            link: "/JAVA/string-methods",
+            link: "/java/string-methods",
             headerColor: "bg-cyan-600",
             status: "Ready"
         },
@@ -73,7 +73,7 @@ export default function JavaDashboard() {
             title: "Trace Tables",
             description: "Variable state tracking, debugging logic, and algorithmic execution.",
             icon: "📋",
-            link: "/JAVA/trace-table",
+            link: "/java/trace-table",
             headerColor: "bg-amber-600",
             status: "Ready"
         },
@@ -81,7 +81,7 @@ export default function JavaDashboard() {
             title: "File I/O",
             description: "Reading and writing files, streams, and data persistence.",
             icon: "📁",
-            link: "/JAVA/io",
+            link: "/java/io",
             headerColor: "bg-lime-600",
             status: "Ready"
         },
@@ -89,7 +89,7 @@ export default function JavaDashboard() {
             title: "Collections",
             description: "Lists, Sets, Maps, and the Java Collections Framework.",
             icon: "🗃️",
-            link: "/JAVA/collections",
+            link: "/java/collections",
             headerColor: "bg-fuchsia-600",
             status: "Ready"
         },
@@ -97,7 +97,7 @@ export default function JavaDashboard() {
             title: "Algorithms",
             description: "Sorting, searching, and algorithmic complexity.",
             icon: "🧠",
-            link: "/JAVA/algorithms",
+            link: "/java/algorithms",
             headerColor: "bg-red-600",
             status: "Ready"
         },
@@ -105,7 +105,7 @@ export default function JavaDashboard() {
             title: "Data Formats",
             description: "JSON, XML, and data serialization.",
             icon: "📄",
-            link: "/JAVA/data-formats",
+            link: "/java/data-formats",
             headerColor: "bg-pink-600",
             status: "Ready"
         },
@@ -113,7 +113,7 @@ export default function JavaDashboard() {
             title: "Exceptions",
             description: "Try-catch blocks, custom exceptions, and error handling.",
             icon: "⚠️",
-            link: "/JAVA/exceptions",
+            link: "/java/exceptions",
             headerColor: "bg-yellow-600",
             status: "Ready"
         },
@@ -121,7 +121,7 @@ export default function JavaDashboard() {
             title: "OOPs",
             description: "Inheritance, Polymorphism, Encapsulation, and Abstraction.",
             icon: "🏗️",
-            link: "/JAVA/oops",
+            link: "/java/oops",
             headerColor: "bg-violet-600",
             status: "Ready"
         },
@@ -129,7 +129,7 @@ export default function JavaDashboard() {
             title: "Recursion",
             description: "Base cases, call stack unwinding, and recursive logic.",
             icon: "🔄",
-            link: "/JAVA/recursion",
+            link: "/java/recursion",
             headerColor: "bg-sky-600",
             status: "Ready"
         }
