@@ -138,22 +138,6 @@ export default function JavaDashboard() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
 
-            {/* ✨ Glassmorphism Sticky Header */}
-            <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                        <span className="bg-slate-900 text-white p-2 rounded-lg text-xl leading-none">☕</span>
-                        <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
-                            Java<span className="text-indigo-600">Mastery</span>
-                        </h1>
-                    </div>
-                    <div className="text-sm font-medium text-slate-500 hidden md:flex items-center gap-3">
-                        <span className="bg-slate-100 px-3 py-1 rounded-full text-slate-700">BSSE Engine</span>
-                        <span className="text-slate-900 font-bold">Usman Mughal</span>
-                    </div>
-                </div>
-            </header>
-
             {/* Hero Section */}
             <div className="bg-slate-900 text-white py-16 px-6 shadow-inner">
                 <div className="max-w-4xl mx-auto text-center">
