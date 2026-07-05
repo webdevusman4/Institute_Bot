@@ -1,143 +1,140 @@
 "use client";
 
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import AuthHero from "./components/AuthHero";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
 
-export default function MathDashboard() {
+export default function LoginPage() {
+  const router = useRouter();
+  const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isMounting, setIsMounting] = useState(true); // <--- Added anti-flash state
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-    const chapters = [
-        {
-            title: "Functional English",
-            description: "Communication process, verbal/non-verbal types, and ESP.",
-            icon: "✍️",
-            link: "/preview/english",
-            headerColor: "bg-rose-600",
-            status: "Ready"
-        },
-        {
-            title: "Matrices & Determinants",
-            description: "Order, Determinants, Cramer's Rule, and Inverses.",
-            icon: "📐",
-            link: "/preview", // Update with your actual route if different
-            headerColor: "bg-indigo-600",
-            status: "Ready"
-        },
-        {
-            title: "Discrete Structures",
-            description: "Logic, Propositions, Sets, and Truth Tables.",
-            icon: "🧠",
-            link: "/preview/discrete",
-            headerColor: "bg-emerald-600",
-            status: "Ready"
-        },
-        {
-            title: "Number Systems",
-            description: "Binary, Hex, Decimal conversions and logic.",
-            icon: "💻",
-            link: "/preview/numbers",
-            headerColor: "bg-blue-600",
-            status: "Ready"
-        },
-        {
-            title: "Trigonometry",
-            description: "Identities, Formulas, and Triangles.",
-            icon: "tri",
-            link: "/preview/trigonometry",
-            headerColor: "bg-slate-500",
-            status: "Coming Soon"
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    goal: ""
+  });
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+    if (user) {
+      router.replace("/dashboard"); // replace is better for auth redirects
+    } else {
+      setIsMounting(false); // Only show the login UI if no user is found
+    }
+  }, [router]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    setTimeout(() => {
+      const users = JSON.parse(localStorage.getItem("studymate_users")) || [];
+
+      if (isLogin) {
+        const user = users.find(u => u.email === formData.email && u.password === formData.password);
+
+        if (user) {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          router.push("/dashboard");
+        } else {
+          setError("Invalid email or password.");
+          setLoading(false);
         }
-    ];
 
+      } else {
+        if (users.find(u => u.email === formData.email)) {
+          setError("User already exists.");
+          setLoading(false);
+          return;
+        }
+
+        const newUser = { ...formData };
+        users.push(newUser);
+        localStorage.setItem("studymate_users", JSON.stringify(users));
+
+        setSuccess("Account created successfully! Redirecting...");
+        setLoading(false);
+
+        setTimeout(() => {
+          setIsLogin(true);
+          setSuccess("");
+          setFormData(prev => ({ ...prev, password: "" }));
+        }, 2000);
+      }
+    }, 1000);
+  };
+
+  // While checking localStorage, show a clean background or loader
+  if (isMounting) {
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <div className="min-h-screen w-full bg-background flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
 
-            {/* ✨ Glassmorphism Sticky Header */}
-            <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                        <span className="bg-slate-900 text-white p-2 rounded-lg text-xl leading-none">∑</span>
-                        <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
-                            Math<span className="text-indigo-600">Mastery</span>
-                        </h1>
-                    </div>
-                    <div className="text-sm font-medium text-slate-500 hidden md:flex items-center gap-3">
-                        <span className="bg-slate-100 px-3 py-1 rounded-full text-slate-700">Student</span>
-                        <span className="text-slate-900 font-bold">Usman Mughal</span>
-                    </div>
-                </div>
-            </header>
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-background text-text transition-colors duration-500">
+      
+      {/* Background Decor */}
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] animate-pulse" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-secondary/20 rounded-full blur-[100px] animate-pulse delay-1000" />
 
-            {/* Hero Section */}
-            <div className="bg-slate-900 text-white py-16 px-6 shadow-inner">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
-                        Master Mathematics, <br /> One Chapter at a Time.
-                    </h2>
-                    <p className="text-indigo-200 text-lg mb-8 max-w-2xl mx-auto">
-                        Comprehensive notes, examples, and detailed solutions for BSSE students.
-                    </p>
-                </div>
+      <main className="w-full max-w-sm md:max-w-4xl h-auto md:h-[600px] glass-panel rounded-3xl shadow-2xl relative flex flex-col md:flex-row overflow-hidden border border-white/10">
+        <AuthHero
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          setError={setError}
+          setSuccess={setSuccess}
+        />
+
+        <section className={`
+          w-full md:w-1/2 p-8 md:p-12 bg-surface/80 backdrop-blur-sm flex flex-col justify-center
+          transition-all duration-500 ease-in-out
+          ${!isLogin ? "md:-translate-x-full" : "translate-x-0"}
+        `}>
+          <div className="max-w-sm mx-auto w-full">
+            <div className="mb-8 text-center md:text-left">
+              <h2 className="text-2xl font-bold text-text mb-2">
+                {isLogin ? "Sign In" : "Create Account"}
+              </h2>
+              <p className="text-text-muted text-sm">
+                {isLogin ? "Enter your credentials to access your account." : "Fill in your details to get started."}
+              </p>
             </div>
 
-            {/* Dashboard Grid */}
-            <main className="max-w-6xl mx-auto px-6 -mt-10 mb-20">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {chapters.map((chapter, idx) => {
-
-                        const isReady = chapter.status === "Ready";
-
-                        return (
-                            <Link
-                                key={idx}
-                                href={isReady ? chapter.link : "#"}
-                                className={`group relative flex flex-col bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 
-                  ${isReady ? 'hover:-translate-y-1 hover:shadow-xl hover:border-indigo-200' : 'opacity-75 grayscale cursor-not-allowed'}`}
-                            >
-
-                                {/* ✨ Colored Header Section */}
-                                <div className={`h-24 ${chapter.headerColor} relative flex items-center px-6`}>
-                                    {/* Icon */}
-                                    <div className="text-4xl text-white/90 drop-shadow-md group-hover:scale-110 transition-transform duration-300">
-                                        {chapter.icon === "tri" ? (
-                                            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        ) : (
-                                            chapter.icon
-                                        )}
-                                    </div>
-
-                                    {/* ✨ Badges moved inside the header */}
-                                    <div className="absolute top-4 right-4">
-                                        <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm 
-                      ${isReady ? "bg-white/20 text-white backdrop-blur-sm" : "bg-white/50 text-slate-800"}`}>
-                                            {chapter.status}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Card Body */}
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors">
-                                        {chapter.title}
-                                    </h3>
-                                    <p className="text-slate-500 text-sm leading-relaxed flex-grow">
-                                        {chapter.description}
-                                    </p>
-
-                                    {/* ✨ Upgraded Explicit Button */}
-                                    <div className="mt-6">
-                                        <div className={`w-full text-center py-2.5 rounded-xl font-bold text-sm transition-all duration-300 
-                      ${isReady
-                                                ? 'bg-indigo-50 text-indigo-700 group-hover:bg-indigo-600 group-hover:text-white'
-                                                : 'bg-slate-100 text-slate-400'}`}>
-                                            {isReady ? "Start Learning" : "Under Construction"}
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </main>
-
-        </div>
-    );
+            {isLogin ? (
+              <LoginForm
+                formData={formData}
+                setFormData={setFormData}
+                handleSubmit={handleSubmit}
+                loading={loading}
+                error={error}
+                success={success}
+              />
+            ) : (
+              <SignupForm
+                formData={formData}
+                setFormData={setFormData}
+                handleSubmit={handleSubmit}
+                loading={loading}
+                error={error}
+                success={success}
+              />
+            )}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
